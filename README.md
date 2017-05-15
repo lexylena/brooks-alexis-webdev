@@ -1,8 +1,13 @@
-# web-dev-template
+# Web Development
 
-1. git clone https://github.com/jannunzi/web-dev-template.git
-1. cd web-dev-template
-1. npm install
-1. mongod
-1. node server.js
-1. browse to localhost:3000
+Contains assignments, lecture notes, and the main project of
+CS4550/5610.
+
+   - Root to hosted environment: https://brooks-alexis-webdev.herokuapp.com/
+   - Project:
+   - Assignment:
+
+
+### Author: Alexis Brooks
+I am a computer science undergrad student at Northeastern. While on co-op, I did
+automated UI testing, so I have some experience with Angular.
