@@ -4,8 +4,8 @@ Contains assignments, lecture notes, and the main project of
 CS4550/5610.
 
    - Root to hosted environment: https://brooks-alexis-webdev.herokuapp.com/
-   - Project:
-   - Assignment:
+   - Project: https://brooks-alexis-webdev.herokuapp.com/project/index.html
+   - Assignment: https://brooks-alexis-webdev.herokuapp.com/assignment/index.html
 
 
 ### Author: Alexis Brooks
