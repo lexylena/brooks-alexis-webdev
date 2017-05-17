@@ -5,3 +5,16 @@ input.form-control {
 body {
     padding-top: 36px;
 }
+
+.content {
+    padding-top: 36px;
+}
+
+.description {
+    margin-bottom: 15px;
+}
+
+.centered {
+    width: 600px;
+    margin: auto;
+}
