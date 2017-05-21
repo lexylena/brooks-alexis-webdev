@@ -8,10 +8,30 @@ body {
     padding-top: 68px;
     padding-bottom: 48px;
     height: 100%;
+    background-color: #eeaa7b;
 }
 
 .navbar {
-    background-color: lavender;
+    background-color: #07889b;
+}
+
+.navbar-default .navbar-brand {
+    color: whitesmoke;
+}
+
+.navbar-default .navbar-text {
+    color: whitesmoke;
+}
+
+.glyphicon-chevron-left,
+.glyphicon-plus,
+.glyphicon-ok,
+.glyphicon-user {
+    color: whitesmoke;
+}
+
+.btn-block {
+    margin-bottom: 15px;
 }
 
 .wd-centered {
@@ -49,4 +69,24 @@ body {
     overflow: scroll;
     padding-top: 15px;
     padding-bottom: 42px;
+}
+
+.responsive-video {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 60px; overflow: hidden;
+}
+
+.responsive-video iframe,
+.responsive-video object,
+.responsive-video embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wd-widget-list {
+    background-color: whitesmoke;
 }
