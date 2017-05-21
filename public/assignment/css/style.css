@@ -1,20 +1,52 @@
-input.form-control {
-    margin-bottom: 5px;
-}
-
-body {
-    padding-top: 36px;
-}
-
-.content {
-    padding-top: 36px;
-}
-
-.description {
+input.form-control,
+textarea.form-control,
+select.form-control {
     margin-bottom: 15px;
 }
 
-.centered {
-    width: 600px;
-    margin: auto;
+body {
+    padding-top: 68px;
+    padding-bottom: 48px;
+    height: 100%;
+}
+
+.navbar {
+    background-color: lavender;
+}
+
+.wd-centered {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wd-form {
+    width: 300px;
+    padding-bottom: 20px;
+}
+
+.wd-widget {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.wd-toolbar {
+    position: absolute;
+    background-color: white;
+    top: 0px;
+    right: 0px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 10px;
+    opacity: 0.8;
+}
+
+.wd-scrollable-left-split {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    overflow: scroll;
+    padding-top: 15px;
+    padding-bottom: 42px;
 }
