@@ -26,7 +26,7 @@
             </div>
 
             <div class="col-md-8">
-                <div class="navbar-text pull-left">
+                <div class="navbar-text pull-left hidden-md hidden-lg">
                     <a href="website-list.html">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
@@ -85,18 +85,21 @@
         </div>
 
         <div class="col-md-8">
-            <label for="edit-website-name">Website Name</label>
-            <input type="text"
-                   id="edit-website-name"
-                   class="form-control"
-                   placeholder="Website Name"/>
-            <label for="edit-website-description">Website Description</label>
-            <textarea id="edit-website-description" class="form-control description"></textarea>
-            <a href="website-list.html" class="btn btn-block btn-danger">Delete</a>
+            <form>
+                <label for="edit-website-name">Website Name</label>
+                <input type="text"
+                       id="edit-website-name"
+                       class="form-control"
+                       value="Address Book App"
+                       placeholder="Website Name"/>
+                <label for="edit-website-description">Website Description</label>
+                <textarea id="edit-website-description" class="form-control description"></textarea>
+                <a href="website-list.html" class="btn btn-block btn-danger">Delete</a>
+            </form>
         </div>
     </div>
 
-    <div class="navbar navbar-default navbar-fixed-bottom">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
             <div class="navbar-text pull-right">
                 <a href="profile.html">
@@ -104,6 +107,6 @@
                 </a>
             </div>
         </div>
-    </div>
+    </nav>
 </body>
 </html>

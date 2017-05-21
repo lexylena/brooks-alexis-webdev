@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-brand">
+                Profile
+            </div>
+            <div class="navbar-text pull-right">
+                <a class="btn btn-xs btn-danger" href="../index.html">
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid wd-centered">
+        <form class="wd-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input readonly value="john123" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="pw">Password</label>
+                <input type="password" class="form-control" id="pw">
+            </div>
+            <div class="form-group">
+                <label for="verify-pw">Verify Password</label>
+                <input type="password" class="form-control" id="verify-pw">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" class="form-control" id="first-name" value="John">
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" class="form-control" id="last-name" value="Doe">
+            </div>
+
+            <a class="btn btn-primary btn-block" href="../website/website-list.html">
+                Websites
+            </a>
+            <a class="btn btn-success btn-block" href="">
+                Save Profile Settings
+            </a>
+        </form>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-text pull-right">
+                <a href="profile.html">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+</body>
+</html>
