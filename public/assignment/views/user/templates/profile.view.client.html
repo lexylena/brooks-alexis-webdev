@@ -1,0 +1,63 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-brand">
+            Profile
+        </div>
+        <div class="navbar-text pull-right">
+            <a class="btn btn-xs btn-danger" href="/">
+                Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid wd-centered">
+    <form class="wd-form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input readonly ng-model="model.user.username" class="form-control" id="username" value="alice">
+        </div>
+
+        <div ng-show="model.error" class="alert alert-danger">
+            {{model.error}}
+        </div>
+
+        <div class="form-group">
+            <label for="pw">Password</label>
+            <input ng-model="password" type="password" class="form-control" id="pw">
+        </div>
+        <div class="form-group">
+            <label for="verify-pw">Verify Password</label>
+            <input ng-model="password2" type="password" class="form-control" id="verify-pw">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input ng-model="model.user.email" type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input ng-model="model.user.firstName" type="text" class="form-control" id="first-name">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input ng-model="model.user.lastName" type="text" class="form-control" id="last-name">
+        </div>
+
+        <a class="btn btn-primary btn-block" href="#!/user/{{model.user._id}}/website">
+            Websites
+        </a>
+        <a ng-click="model.updateUser(password, password2)" class="btn btn-success btn-block">
+            Save Profile Settings
+        </a>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a href="#!/user/{{model.user._id}}">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+        </div>
+    </div>
+</nav>

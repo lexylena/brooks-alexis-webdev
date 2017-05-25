@@ -1,0 +1,25 @@
+ <div class="container-fluid wd-centered">
+    <form class="wd-form">
+        <h1>Login</h1>
+
+        <div ng-show="model.message" class="alert alert-danger">
+            {{model.message}}
+        </div>
+
+        <label for="login-username">Username</label>
+        <input type="text"
+               id="login-username"
+               ng-model="username"
+               class="form-control"
+               placeholder="Username"/>
+        <label for="login-pw">Password</label>
+        <input type="password"
+               id="login-pw"
+               ng-model="password"
+               class="form-control"
+               placeholder="Password"/>
+        <a ng-click="model.login(username, password)" class="btn btn-primary btn-block">Login</a>
+        <a class="btn btn-success btn-block"
+           href="#!/register">Register</a>
+    </form>
+</div>
