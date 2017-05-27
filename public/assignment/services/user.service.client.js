@@ -21,6 +21,7 @@
             deleteUser: deleteUser
         };
 
+        // creates new user and returns new user's ID
         function createUser(user) {
             user._id = (new Date()).getTime() + "";
             users.push(user);

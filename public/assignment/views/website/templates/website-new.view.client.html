@@ -1,228 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../css/style.css" rel="stylesheet"/>
-</head>
-<body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="row container-fluid">
-            <div class="col-sm-4 hidden-xs">
-                <div class="navbar-text pull-left">
-                    <a href="website-list.html">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                </div>
-                <div class="navbar-header navbar-brand">
-                    Websites
-                </div>
-                <div class="navbar-text pull-right">
-                    <a href="website-new.html">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </a>
-                </div>
+ <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="row container-fluid">
+
+        <!-- nav part only shown on small+ screens -->
+        <div class="col-sm-4 hidden-xs">
+            <div class="navbar-text pull-left">
+                <a href="#!/user/{{vm.uid}}/website">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
             </div>
-
-            <div class="col-sm-8">
-                <div class="navbar-text pull-left hidden-sm hidden-md hidden-lg">
-                    <a href="website-list.html">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                </div>
-                <div class="navbar-header navbar-brand">
-                    New Website
-                </div>
-                <div class="navbar-text pull-right">
-                    <a href="website-list.html">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </a>
-                </div>
+            <div class="navbar-header navbar-brand">
+                Websites
             </div>
-        </div>
-    </nav>
-
-    <div class="row container-fluid wd-content">
-        <div class="col-sm-4 hidden-xs wd-scrollable-left-split">
-            <ul class="list-group wd-padded-list">
-                <li class="list-group-item">
-                    <a href="../page/page-list.html">
-                        Address Book App
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../page/page-list.html">
-                        Blogger
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../page/page-list.html">
-                        Blogging App
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../page/page-list.html">
-                        Script Testing App
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-
-                <li class="list-group-item">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                    <a href="website-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="col-sm-8 col-sm-offset-4">
-            <form>
-                <label for="new-website-name">Name</label>
-                <input type="text"
-                       id="new-website-name"
-                       class="form-control"
-                       placeholder="Website Name"/>
-                <label for="new-website-description">Description</label>
-                <textarea id="new-website-description" class="form-control description"></textarea>
-            </form>
-        </div>
-    </div>
-
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
             <div class="navbar-text pull-right">
-                <a href="../user/profile.html">
-                    <span class="glyphicon glyphicon-user pull-right"></span>
+                <a href="#!/user/{{vm.uid}}/website/new">
+                    <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </div>
         </div>
-    </nav>
-</body>
-</html>
+
+        <!-- nav part shown on all screen sizes-->
+        <div class="col-sm-8">
+            <div class="navbar-text pull-left hidden-sm hidden-md hidden-lg">
+                <a href="#!/user/{{vm.uid}}/website">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <div class="navbar-header navbar-brand">
+                New Website
+            </div>
+            <div class="navbar-text pull-right">
+                <a ng-click="vm.createWebsite(website)">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="row container-fluid">
+
+    <!-- website list shown on small+ screens -->
+    <div class="col-sm-4 hidden-xs wd-scrollable-left-split">
+        <ul class="list-group">
+            <li ng-repeat="website in vm.websites" class="list-group-item">
+                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page">
+                    {{website.name}}
+                </a>
+                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- shown on all screens -->
+    <div class="col-sm-8 col-sm-offset-4">
+        <form>
+            <label for="new-website-name">Name</label>
+            <input type="text"
+                   ng-model="website.name"
+                   id="new-website-name"
+                   class="form-control"
+                   placeholder="Website Name"/>
+            <label for="new-website-description">Description</label>
+            <textarea id="new-website-description"
+                      ng-model="website.description"
+                      class="form-control description"></textarea>
+            <a ng-click="vm.createWebsite(website)" class="btn btn-block btn-success">Create Website</a>
+        </form>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a href="#!/user/{{vm.uid}}">
+                <span class="glyphicon glyphicon-user pull-right"></span>
+            </a>
+        </div>
+    </div>
+</nav>

@@ -11,8 +11,9 @@ body {
     background-color: #eeaa7b;
 }
 
-.navbar {
+.navbar.navbar-default {
     background-color: #07889b;
+    background-image: none;
 }
 
 .navbar-default .navbar-brand {

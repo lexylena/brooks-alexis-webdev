@@ -34,21 +34,25 @@
             })
 
 
-            // websites url
+            // website urls
             .when('/user/:uid/website', {
                 templateUrl: 'views/website/templates/website-list.view.client.html',
                 controller: 'websiteListController',
                 controllerAs: 'vm'
             })
             .when('/user/:uid/website/new', {
-                templateUrl: 'views/website/templates/website-new.view.client.html'
+                templateUrl: 'views/website/templates/website-new.view.client.html',
+                controller: 'websiteNewController',
+                controllerAs: 'vm'
             })
             .when('/user/:uid/website/:wid', {
-                templateUrl: 'views/website/templates/website-edit.view.client.html'
+                templateUrl: 'views/website/templates/website-edit.view.client.html',
+                controller: 'websiteEditController',
+                controllerAs: 'vm'
             })
 
 
-            // page urls
+            // page routing
             .when('/user/:uid/website/:wid/page', {
                 templateUrl: 'views/page/templates/page-list.view.client.html'
             })
@@ -60,9 +64,11 @@
             })
 
 
-            // widget urls
+            // widget routing
             .when('/user/:uid/website/:wid/page/:pid/widget', {
-                templateUrl: 'views/widget/templates/widget-list.view.client.html'
+                templateUrl: 'views/widget/templates/widget-list.view.client.html',
+                controller: 'widgetListController',
+                controllerAs: 'vm'
             })
             .when('/user/:uid/website/:wid/page/:pid/widget/new', {
                 templateUrl: 'views/widget/templates/widget-chooser.view.client.html'
