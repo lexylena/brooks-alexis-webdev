@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../css/style.css" rel="stylesheet"/>
-</head>
-<body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-left">
-            <a href="../website/website-list.html">
+            <a href="#!/user/{{vm.uid}}/website">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
@@ -19,7 +9,7 @@
             Pages
         </div>
         <div class="navbar-text pull-right">
-            <a href="page-new.html">
+            <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/new">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
@@ -42,357 +32,21 @@
             </div>
         </li>
 
-        <li class="list-group-item">
+        <li ng-repeat="page in vm.pages" class="list-group-item">
             <div class="row">
                 <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Blog Post
+                    <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{page._id}}/widget">
+                        {{page.name}}
                     </a>
                 </div>
                 <div class="col-sm-3 hidden-xs">
-                    3/5/2017
+                    {{page.created | date}}
                 </div>
                 <div class="col-sm-3 hidden-xs">
-                    5/8/2017
+                    {{page.updated | date}}
                 </div>
                 <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Blogs
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/18/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Home
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    3/25/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    4/18/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        About
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    3/5/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    5/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Contact Us
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-sm-5 col-xs-11">
-                    <a href="../widget/widget-list.html">
-                        Lorem ipsum
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    1/1/2017
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    2/1/2017
-                </div>
-                <div class="col-sm-1">
-                    <a href="page-edit.html">
+                    <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{page._id}}">
                         <span class="glyphicon glyphicon-cog pull-right"></span>
                     </a>
                 </div>
@@ -404,11 +58,9 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-text pull-right">
-            <a href="../user/profile.html">
+            <a href="#!/user/{{vm.uid}}">
                 <span class="glyphicon glyphicon-user pull-right"></span>
             </a>
         </div>
     </div>
 </nav>
-</body>
-</html>
