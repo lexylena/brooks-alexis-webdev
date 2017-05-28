@@ -8,16 +8,16 @@
 
     function loginController($location, userService) {
 
-        var model = this;
+        var vm = this;
 
-        model.login = function (username, password) {
+        vm.login = function (username, password) {
 
             var found = userService.findUserByCredentials(username, password);
 
             if(found !== null) {
                 $location.url('/user/' + found._id);
             } else {
-                model.message = "Username " + username + " not found, please try again";
+                vm.message = "Username and password combination not found. Please try again.";
             }
         };
     }

@@ -2,8 +2,8 @@
     <form class="wd-form">
         <h1>Login</h1>
 
-        <div ng-show="model.message" class="alert alert-danger">
-            {{model.message}}
+        <div ng-show="vm.message" class="alert alert-danger">
+            {{vm.message}}
         </div>
 
         <label for="login-username">Username</label>
@@ -18,7 +18,7 @@
                ng-model="password"
                class="form-control"
                placeholder="Password"/>
-        <a ng-click="model.login(username, password)" class="btn btn-primary btn-block">Login</a>
+        <a ng-click="vm.login(username, password)" class="btn btn-primary btn-block">Login</a>
         <a class="btn btn-success btn-block"
            href="#!/register">Register</a>
     </form>

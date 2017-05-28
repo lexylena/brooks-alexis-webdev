@@ -20,17 +20,17 @@
             .when('/login', {
                 templateUrl: 'views/user/templates/login.view.client.html',
                 controller: 'loginController',
-                controllerAs: 'model' // refer to controller instance as this identifier (usually vm for view model)
+                controllerAs: 'vm' // refer to controller instance as this identifier (usually vm for view model)
             })
             .when('/register', {
                 templateUrl: 'views/user/templates/register.view.client.html',
                 controller: 'registerController',
-                controllerAs: 'model'
+                controllerAs: 'vm'
             })
             .when('/user/:uid', {
                 templateUrl: 'views/user/templates/profile.view.client.html',
                 controller: 'profileController',
-                controllerAs: 'model'
+                controllerAs: 'vm'
             })
 
 

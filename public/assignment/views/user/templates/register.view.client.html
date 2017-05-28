@@ -2,8 +2,8 @@
     <form class="wd-form">
         <h1>Register</h1>
 
-        <div ng-show="model.error" class="alert alert-danger">
-            {{model.error}}
+        <div ng-show="vm.error" class="alert alert-danger">
+            {{vm.error}}
         </div>
 
         <label for="email">Email</label>
@@ -26,7 +26,7 @@
                ng-model="password2"
                id="verify-pw"
                class="form-control"/>
-        <a ng-click="model.register(username, password, password2, email)" class="btn btn-primary btn-block">
+        <a ng-click="vm.register(username, password, password2, email)" class="btn btn-primary btn-block">
             Register</a>
         <a class="btn btn-danger  btn-block"
            href="#!/login">Cancel</a>
