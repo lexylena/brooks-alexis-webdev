@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../css/style.css" rel="stylesheet"/>
-</head>
-<body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+ <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-text pull-left">
-                <a href="widget-list.html">
+                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </div>
@@ -21,64 +11,62 @@
         </div>
     </nav>
 
+<div class="container-fluid">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="" ng-click="vm.newWidget('heading')">
+                Header
+            </a>
+        </li>
+
+        <li class="list-group-item disabled">
+            Label
+        </li>
+
+        <li class="list-group-item disabled">
+            HTML
+        </li>
+
+        <li class="list-group-item disabled">
+            Text Input
+        </li>
+
+        <li class="list-group-item disabled">
+            Link
+        </li>
+
+        <li class="list-group-item disabled">
+            Button
+        </li>
+
+        <li class="list-group-item">
+            <a href="" ng-click="vm.newWidget('image')">
+                Image
+            </a>
+        </li>
+
+        <li class="list-group-item">
+            <a href="" ng-click="vm.newWidget('youtube')">
+                Youtube
+            </a>
+        </li>
+
+        <li class="list-group-item disabled">
+            Data Table
+        </li>
+
+        <li class="list-group-item disabled">
+            Repeater
+        </li>
+    </ul>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a href="widget-heading.html">
-                    Header
-                </a>
-            </li>
-
-            <li class="list-group-item disabled">
-                Label
-            </li>
-
-            <li class="list-group-item disabled">
-                HTML
-            </li>
-
-            <li class="list-group-item disabled">
-                Text Input
-            </li>
-
-            <li class="list-group-item disabled">
-                Link
-            </li>
-
-            <li class="list-group-item disabled">
-                Button
-            </li>
-
-            <li class="list-group-item">
-                <a href="widget-image.html">
-                    Image
-                </a>
-            </li>
-
-            <li class="list-group-item">
-                <a href="widget-youtube.html">
-                    Youtube
-                </a>
-            </li>
-
-            <li class="list-group-item disabled">
-                Data Table
-            </li>
-
-            <li class="list-group-item disabled">
-                Repeater
-            </li>
-        </ul>
-    </div>
-
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
-            <div class="navbar-text pull-right">
-                <a href="../user/profile.html">
-                    <span class="glyphicon glyphicon-user pull-right"></span>
-                </a>
-            </div>
+        <div class="navbar-text pull-right">
+            <a href="#!/user/{{vm.uid}}">
+                <span class="glyphicon glyphicon-user pull-right"></span>
+            </a>
         </div>
-    </nav>
-</body>
-</html>
+    </div>
+</nav>

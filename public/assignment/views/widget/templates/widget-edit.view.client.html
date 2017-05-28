@@ -1,0 +1,52 @@
+<!-- header -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a ng-click="vm.navBack()">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-header navbar-brand">
+            {{vm.title}}
+        </div>
+        <div class="navbar-text pull-right">
+            <a ng-click="vm.saveWidget()">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- editor content -->
+<div class="container-fluid wd-centered">
+    <form class="wd-form">
+        <div ng-switch="vm.cur.widgetType">
+            <div ng-switch-when="HEADING">
+                <div ng-include="'views/widget/templates/editors/widget-heading-edit.view.client.html'"></div>
+            </div>
+
+            <div ng-switch-when="IMAGE">
+                <div ng-include="'views/widget/templates/editors/widget-image-edit.view.client.html'"></div>
+            </div>
+
+            <div ng-switch-when="YOUTUBE">
+                <div ng-include="'views/widget/templates/editors/widget-youtube-edit.view.client.html'"></div>
+            </div>
+        </div>
+
+        <a ng-click="vm.saveWidget()" class="btn btn-block btn-success">{{vm.btnSave}}</a>
+        <a ng-hide="vm.isNew" ng-click="vm.deleteWidget()" class="btn btn-block btn-danger">Delete</a>
+    </form>
+</div>
+
+
+<!-- footer -->
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a href="#!/user/{{vm.uid}}">
+                <span class="glyphicon glyphicon-user pull-right"></span>
+            </a>
+        </div>
+    </div>
+</nav>
