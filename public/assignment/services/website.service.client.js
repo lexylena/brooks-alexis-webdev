@@ -28,8 +28,11 @@
 
 
         function createWebsite(uid, website) {
-            website._id = (new Date()).getTime() + "";
+            var now = (new Date()).getTime() + "";
+            website._id = now;
             website.developerId = uid;
+            website.created = now;
+            website.updated = now;
             websites.push(website);
             return website._id;
         }
@@ -57,6 +60,8 @@
             Object.keys(update).forEach(function (key) {
                 update[key] = website[key];
             });
+
+            update.updated = (new Date()).getTime() + "";
         }
 
         function deleteWebsite(websiteId) {

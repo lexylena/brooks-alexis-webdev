@@ -25,6 +25,11 @@
         vm.deletePage = deletePage;
 
         function updatePage() {
+            if (vm.cur.name === "") {
+                vm.error = 'Page name is required';
+                return;
+            }
+
             pageService.updatePage(vm.pid, vm.cur);
             $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
         }

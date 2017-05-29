@@ -21,6 +21,10 @@
         vm.createWebsite = createWebsite;
 
         function createWebsite(website) {
+            if (website === undefined || website.name === undefined || website.name === "") {
+                vm.error = 'Website name is required';
+                return;
+            }
             websiteService.createWebsite(vm.uid, website);
             $location.url('/user/' + vm.uid + '/website');
         }

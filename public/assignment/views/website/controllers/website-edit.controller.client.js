@@ -25,6 +25,10 @@
 
         function updateWebsite() {
             websiteService.updateWebsite(vm.wid, vm.cur);
+            if (vm.cur.name === "") {
+                vm.error = 'Website Name is required';
+                return;
+            }
             var updated = websiteService.findWebsiteById(vm.wid);
             console.log(updated);
             $location.url('/user/' + vm.uid + '/website');

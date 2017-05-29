@@ -56,6 +56,11 @@
     <!-- shows on all screen sizes -->
     <div class="col-sm-8 col-sm-offset-4">
         <form>
+
+            <div ng-show="vm.error" class="alert alert-danger">
+                {{vm.error}}
+            </div>
+
             <label for="new-page-name">Name</label>
             <input type="text"
                    id="new-page-name"

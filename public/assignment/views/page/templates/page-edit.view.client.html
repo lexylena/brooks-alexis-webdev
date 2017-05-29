@@ -56,6 +56,11 @@
     <!-- page editor shown on all screen sizes -->
     <div class="col-sm-8 col-sm-offset-4">
         <form>
+
+            <div ng-show="vm.error" class="alert alert-danger">
+                {{vm.error}}
+            </div>
+
             <label for="edit-page-name">Name</label>
             <input type="text"
                    id="edit-page-name"
