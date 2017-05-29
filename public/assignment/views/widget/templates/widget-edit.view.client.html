@@ -20,6 +20,11 @@
 <!-- editor content -->
 <div class="container-fluid wd-centered">
     <form class="wd-form">
+
+        <div ng-show="vm.error" class="alert alert-danger">
+            {{vm.error}}
+        </div>
+
         <div ng-switch="vm.cur.widgetType">
             <div ng-switch-when="HEADING">
                 <div ng-include="'views/widget/templates/editors/widget-heading-edit.view.client.html'"></div>
@@ -36,6 +41,7 @@
 
         <a ng-click="vm.saveWidget()" class="btn btn-block btn-success">{{vm.btnSave}}</a>
         <a ng-hide="vm.isNew" ng-click="vm.deleteWidget()" class="btn btn-block btn-danger">Delete</a>
+        </div>
     </form>
 </div>
 

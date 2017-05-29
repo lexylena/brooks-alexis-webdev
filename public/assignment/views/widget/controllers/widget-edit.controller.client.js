@@ -44,12 +44,9 @@
         }
 
         function saveWidget() {
-            if (vm.isNew) {
-                vm.cur._id = (new Date()).getTime() + "";
-            }
-
             if (vm.cur.url !== undefined) { // either image or youtube
-                if (vm.cur.url === "") {
+                console.log('image or youtube');
+                if (!vm.cur.url) {
                     vm.error = 'URL is required';
                     return;
                 }
@@ -59,9 +56,14 @@
                     vm.error = 'Please enter a width percentage between 0 and 100';
                     return;
                 }
-            } else { // heading widget
-                if (vm.cur.text === "" || vm.cur.text === null) {
+            }
+            if (vm.cur.size !== undefined) { // heading widget
+                console.log('heading widget');
+                console.log(vm.cur.text);
+                if (!vm.cur.text) {
+
                     vm.error = 'Heading Text is required';
+                    console.log('heading text req');
                     return;
                 }
             }

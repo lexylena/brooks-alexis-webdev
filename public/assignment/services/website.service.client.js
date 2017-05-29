@@ -58,7 +58,7 @@
         function updateWebsite(websiteId, website) {
             var update = findWebsiteById(websiteId);
 
-            Object.keys(update).forEach(function (key) {
+            Object.keys(website).forEach(function (key) {
                 update[key] = website[key];
             });
 

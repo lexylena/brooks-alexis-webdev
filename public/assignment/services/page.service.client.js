@@ -54,7 +54,7 @@
         function updatePage(pid, page) {
             var update = findPageById(pid);
 
-            Object.keys(update).forEach(function (key) {
+            Object.keys(page).forEach(function (key) {
                 update[key] = page[key];
             });
 

@@ -40,7 +40,7 @@
                 return user._id === userId;
             });
 
-            Object.keys(update).forEach(function (key) {
+            Object.keys(user).forEach(function (key) {
                 update[key] = user[key];
             });
         }

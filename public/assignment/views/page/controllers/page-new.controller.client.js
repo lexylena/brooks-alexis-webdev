@@ -22,7 +22,6 @@
         vm.createPage = createPage;
 
         function createPage(page) {
-            console.log(page.name);
             if (page === undefined || page.name === undefined || page.name === "") {
                 vm.error = 'Page name is required';
                 return;
