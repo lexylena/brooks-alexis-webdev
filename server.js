@@ -13,12 +13,12 @@ require ("./test/app.js")(app);
 var port = process.env.PORT || 3000;
 
 /*
-var myApp = require('./lectures/firstAngular/app.js');
+var myApp = require('./lectures/todo/app.js');
 console.log(myApp);
 console.log(sayHello);
 myApp('this is the message');
 */
-var todo = require('./lectures/firstAngular/app.js');
+var todo = require('./lectures/todo/app.js');
 todo(app);
 
 app.listen(port);
