@@ -19,7 +19,7 @@
                 return;
             }
 
-            if (password !== password2) {
+            if (!password || password !== password2) {
                 vm.error = "Passwords must match";
                 return;
             }
@@ -31,7 +31,7 @@
                 return;
             }
 
-            if (email === null || email === undefined || email === "") {
+            if (!email) {
                 vm.error = "Must enter valid email";
                 return;
             }
