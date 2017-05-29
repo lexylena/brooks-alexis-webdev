@@ -48,7 +48,26 @@
                 vm.cur._id = (new Date()).getTime() + "";
             }
 
+            if (vm.cur.url !== undefined) { // either image or youtube
+                if (vm.cur.url === "") {
+                    vm.error = 'URL is required';
+                    return;
+                }
+
+                var width = parseInt(vm.cur.width);
+                if (width < 0 || width > 100) {
+                    vm.error = 'Please enter a width percentage between 0 and 100';
+                    return;
+                }
+            } else { // heading widget
+                if (vm.cur.text === "" || vm.cur.text === null) {
+                    vm.error = 'Heading Text is required';
+                    return;
+                }
+            }
+
             widgetService.updateWidget(vm.wgid, vm.cur);
+            $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
         }
 
         function navBack() {

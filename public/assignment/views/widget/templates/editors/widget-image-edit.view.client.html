@@ -1,16 +1,27 @@
 <label for="image-name">Name</label>
 <input type="text"
        id="image-name"
+       ng-model="vm.cur.name"
        class="form-control"/>
 <label for="image-text">Text</label>
 <input type="text"
        id="image-text"
+       ng-model="vm.cur.text"
        class="form-control"/>
 <label for="url">URL</label>
 <input type="url"
        id="url"
+       ng-model="vm.cur.url"
        class="form-control"/>
 <label for="file">File Upload</label>
 <input type="file"
        id="file"
        class="form-control"/>
+<label for="width">Width</label>
+<div class="input-group">
+    <input type="text"
+           id="width"
+           ng-model="vm.cur.width"
+           class="form-control">
+    <span class="input-group-addon">%</span>
+</div>

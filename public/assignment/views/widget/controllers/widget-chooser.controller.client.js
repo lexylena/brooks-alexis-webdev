@@ -23,16 +23,17 @@
             if (type === 'heading') {
                 widget = { "_id": "0000", "widgetType": "HEADING", "pageId": vm.pid, "size": "1", "text": null};
             } else if (type === 'image') {
-                widget = { "_id": "0000", "widgetType": "IMAGE", "pageId": vm.pid, "width": "100%",
+                widget = { "_id": "0000", "widgetType": "IMAGE", "pageId": vm.pid, "width": "100",
                     "url": null};
             } else if (type === 'youtube') {
-                widget = { "_id": "0000", "widgetType": "YOUTUBE", "pageId": vm.pid, "width": "100%",
+                widget = { "_id": "0000", "widgetType": "YOUTUBE", "pageId": vm.pid, "width": "100",
                     "url": null};
             } else {
                 return null;
             }
 
             widgetService.createWidget(vm.pid, widget);
+            console.log(widgetService.findWidgetsByPageId(vm.pid));
             $location.url(editUrl);
         }
     }

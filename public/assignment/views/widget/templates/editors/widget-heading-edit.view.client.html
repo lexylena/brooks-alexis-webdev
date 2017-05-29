@@ -1,13 +1,15 @@
 <label for="heading-name">Name</label>
 <input type="text"
        id="heading-name"
+       ng-model="vm.cur.name"
        class="form-control"/>
 <label for="heading-text">Text</label>
 <input type="text"
        id="heading-text"
+       ng-model="vm.cur.text"
        class="form-control"/>
 <label for="heading-size">Size</label>
-<select id="heading-size" class="form-control">
+<select id="heading-size" ng-model="vm.cur.size" class="form-control">
     <option value="1">1 (largest)</option>
     <option value="2">2</option>
     <option value="3">3</option>
