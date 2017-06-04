@@ -13,7 +13,10 @@
         vm.uid = $routeParams['uid'];
 
         function init() {
-            vm.websites = websiteService.findWebsitesByUser(vm.uid);
+            websiteService.findWebsitesByUser(vm.uid)
+                .then(function (websites) {
+                    vm.websites = websites;
+                })
         }
 
         init();
@@ -25,8 +28,10 @@
                 vm.error = 'Website name is required';
                 return;
             }
-            websiteService.createWebsite(vm.uid, website);
-            $location.url('/user/' + vm.uid + '/website');
+            websiteService.createWebsite(vm.uid, website)
+                .then(function () {
+                    $location.url('/user/' + vm.uid + '/website');
+                });
         }
     }
 })();

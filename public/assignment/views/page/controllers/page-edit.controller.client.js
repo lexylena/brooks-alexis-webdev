@@ -15,8 +15,15 @@
         vm.pid = $routeParams['pid'];
 
         function init() {
-            vm.pages = pageService.findPageByWebsiteId(vm.wid);
-            vm.cur = pageService.findPageById(vm.pid);
+            pageService.findPageByWebsiteId(vm.wid)
+                .then(function (pages) {
+                    vm.pages = pages;
+                });
+
+            pageService.findPageById(vm.pid)
+                .then(function (page) {
+                    vm.cur = page;
+                });
         }
 
         init();
@@ -30,13 +37,19 @@
                 return;
             }
 
-            pageService.updatePage(vm.pid, vm.cur);
-            $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+            pageService.updatePage(vm.pid, vm.cur)
+                .then(function (res) {
+                    console.log(res.status);
+                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+                })
         }
 
         function deletePage() {
-            pageService.deletePage(vm.pid);
-            $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+            pageService.deletePage(vm.pid)
+                .then(function (res) {
+                    console.log(res.statusCode);
+                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+                })
         }
     }
 })();

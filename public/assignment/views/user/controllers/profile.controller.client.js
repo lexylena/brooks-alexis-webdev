@@ -9,10 +9,26 @@
     function profileController($location, userService, $routeParams) {
 
         var vm = this;
-        var userId = $routeParams['uid'];
-
-        vm.user = userService.findUserById(userId);
+        vm.uid = $routeParams['uid'];
         vm.updateUser = updateUser;
+        vm.deleteUser = deleteUser;
+
+
+        userService
+            .findUserById(vm.uid)
+            .then(renderUser);
+
+        function renderUser (user) {
+            vm.user = user;
+        }
+
+        function deleteUser() {
+            userService
+                .deleteUser(vm.uid)
+                .then(function () {
+                    $location.url('/login');
+                });
+        }
 
         function updateUser(password, password2) {
             if (password !== password2) {
@@ -20,15 +36,19 @@
                 return;
             }
 
-            var email = vm.user.email;
+            var email = vm.user['email'];
             if (email === null || email === undefined || email === "") {
                 vm.error = "Must enter valid email";
                 return;
             }
 
             vm.user['password'] = password;
-            userService.updateUser(userId, vm.user);
-            vm.error = null;
+
+            userService
+                .updateUser(vm.uid, vm.user)
+                .then(function () {
+                    vm.message = "User updated successfully";
+                });
         }
     }
 })();

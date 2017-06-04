@@ -14,8 +14,15 @@
         vm.wid = $routeParams['wid'];
 
         function init() {
-            vm.websites = websiteService.findWebsitesByUser(vm.uid);
-            vm.cur = websiteService.findWebsiteById(vm.wid);
+            websiteService.findWebsitesByUser(vm.uid)
+                .then(function (websites) {
+                    vm.websites = websites;
+                });
+
+            websiteService.findWebsiteById(vm.wid)
+                .then(function (website) {
+                    vm.cur = website;
+                });
         }
 
         init();
@@ -24,19 +31,27 @@
         vm.deleteWebsite = deleteWebsite;
 
         function updateWebsite() {
-            websiteService.updateWebsite(vm.wid, vm.cur);
             if (vm.cur.name === "") {
                 vm.error = 'Website Name is required';
                 return;
             }
-            var updated = websiteService.findWebsiteById(vm.wid);
-            console.log(updated);
-            $location.url('/user/' + vm.uid + '/website');
+            websiteService.updateWebsite(vm.wid, vm.cur)
+                .then(function () {
+                    // websiteService.findWebsiteById(vm.wid)
+                    //     .then(function (website) {
+                    //         console.log(website);
+                    //     });
+
+                    $location.url('/user/' + vm.uid + '/website');
+                });
         }
 
         function deleteWebsite() {
-            websiteService.deleteWebsite(vm.wid);
-            $location.url('/user/' + vm.uid + '/website');
+            websiteService.deleteWebsite(vm.wid)
+                .then(function (res) {
+                    console.log(res.status);
+                    $location.url('/user/' + vm.uid + '/website');
+                })
         }
     }
 })();

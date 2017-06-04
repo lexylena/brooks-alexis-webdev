@@ -7,14 +7,10 @@
         .module('WAM')
         .factory('pageService', pageService);
 
-    function pageService() {
+    function pageService($http) {
 
-        var pages = [
-            { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
-            { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-            { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" },
-            { "_id": "654", "name": "TestPage", "websiteId": "321", "description": "Lorem" }
-        ];
+        var rootUrl1 = '/api/assignment/website/';
+        var rootUrl2 = '/api/assignment/page/';
 
         return {
             createPage: createPage,
@@ -25,46 +21,43 @@
         };
 
         function createPage(wid, page) {
-            var now = (new Date()).getTime() + "";
-            page._id = now;
-            page.websiteId = wid;
-            page.created = now;
-            page.updated = now;
-            pages.push(page);
-            return page._id;
+            var url = rootUrl1 + wid + '/page';
+            return $http.post(url, page)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function findPageByWebsiteId(wid) {
-            var resultSet = [];
-            for (var p in pages) {
-                if (pages[p].websiteId === wid) {
-                    resultSet.push(pages[p]);
-                }
-            }
-
-            return resultSet;
+            var url = rootUrl1 + wid + '/page';
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function findPageById(pid) {
-            return pages.find(function (page) {
-                return page._id === pid;
-            });
+            var url = rootUrl2 + pid;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function updatePage(pid, page) {
-            var update = findPageById(pid);
-
-            Object.keys(page).forEach(function (key) {
-                update[key] = page[key];
-            });
-
-            update.updated = (new Date()).getTime() + "";
+            var url = rootUrl2 + pid;
+            return $http.put(url, page)
+                .then(function (response) {
+                    return response;
+                })
         }
 
         function deletePage(pid) {
-            var deleted = findPageById(pid);
-            var index = pages.indexOf(deleted);
-            pages.splice(index, 1);
+            var url = rootUrl2 + pid;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response;
+                })
         }
     }
 })();

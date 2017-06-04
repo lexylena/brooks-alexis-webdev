@@ -14,7 +14,10 @@
         vm.wid = $routeParams['wid'];
 
         function init() {
-            vm.pages = pageService.findPageByWebsiteId(vm.wid);
+            pageService.findPageByWebsiteId(vm.wid)
+                .then(function (pages) {
+                    vm.pages = pages;
+                })
         }
 
         init();
@@ -26,8 +29,10 @@
                 vm.error = 'Page name is required';
                 return;
             }
-            pageService.createPage(vm.wid, page);
-            $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+            pageService.createPage(vm.wid, page)
+                .then(function () {
+                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+                })
         }
     }
 })();

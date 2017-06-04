@@ -20,6 +20,10 @@
             {{vm.error}}
         </div>
 
+        <div ng-show="vm.message" class="alert alert-success">
+            {{vm.message}}
+        </div>
+
         <div class="form-group">
             <label for="username">Username</label>
             <input readonly ng-model="vm.user.username" class="form-control" id="username">

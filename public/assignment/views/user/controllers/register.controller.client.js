@@ -6,8 +6,7 @@
         .module('WAM')
         .controller('registerController', registerController);
 
-    function registerController($location, userService) { // loginController treated like constructor, so has this as a reference to it
-        // tie instance of controller to namespace stuff instead of using $scope
+    function registerController($location, userService) {
 
         var vm = this;
 
@@ -24,25 +23,30 @@
                 return;
             }
 
-            var found = userService.findUserByUsername(username);
+            return userService.findUserByUsername(username)
+                .then(usernameFound, usernameAvailable);
 
-            if (found !== undefined) {
+            function usernameFound(user) {
                 vm.error = "Username is not available";
-                return;
             }
 
-            if (!email) {
-                vm.error = "Must enter valid email";
-                return;
-            }
+            function usernameAvailable() {
+                if (!email) {
+                    vm.error = "Must enter valid email";
+                    return;
+                }
 
-            var user = {
-                username: username,
-                password: password,
-                email: email
-            };
-            var newUserId = userService.createUser(user);
-            $location.url('/user/' + newUserId);
+                var user = {
+                    username: username,
+                    password: password,
+                    email: email
+                };
+
+                userService.createUser(user)
+                    .then(function (newUser) {
+                        $location.url('/user/' + newUser._id);
+                    });
+            }
         }
     }
 })();

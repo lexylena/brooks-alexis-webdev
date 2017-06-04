@@ -6,21 +6,13 @@
         .module('WAM')
         .factory('websiteService', websiteService);
 
-    function websiteService() {
+    function websiteService($http) {
 
-        var websites = [
-            { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem" },
-            { "_id": "234", "name": "Tweeter",     "developerId": "456", "description": "Lorem" },
-            { "_id": "456", "name": "Gizmodo",     "developerId": "456", "description": "Lorem" },
-            { "_id": "890", "name": "Go",          "developerId": "123", "description": "Lorem" },
-            { "_id": "567", "name": "Tic Tac Toe", "developerId": "123", "description": "Lorem" },
-            { "_id": "678", "name": "Checkers",    "developerId": "123", "description": "Lorem" },
-            { "_id": "789", "name": "Chess",       "developerId": "234", "description": "Lorem" },
-            { "_id": "321", "name": "Test",        "developerId": "567", "description": "Lorem" }
-        ];
+        var rootUrl1 = '/api/assignment/user/';
+        var rootUrl2 = '/api/assignment/website/';
 
         return {
-          createWebsite: createWebsite,
+            createWebsite: createWebsite,
             findWebsitesByUser: findWebsitesByUser,
             findWebsiteById: findWebsiteById,
             updateWebsite: updateWebsite,
@@ -29,46 +21,43 @@
 
 
         function createWebsite(uid, website) {
-            var now = (new Date()).getTime() + "";
-            website._id = now;
-            website.developerId = uid;
-            website.created = now;
-            website.updated = now;
-            websites.push(website);
-            return website._id;
+            var url = rootUrl1 + uid + '/website';
+            return $http.post(url, website)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function findWebsitesByUser(uid) {
-            var resultSet = [];
-            for (var w in websites) {
-                if (websites[w].developerId === uid) {
-                    resultSet.push(websites[w]);
-                }
-            }
-
-            return resultSet;
+            var url = rootUrl1 + uid + '/website';
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function findWebsiteById(websiteId) {
-            return websites.find(function (website) {
-                return website._id === websiteId;
-            });
+            var url = rootUrl2 + websiteId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function updateWebsite(websiteId, website) {
-            var update = findWebsiteById(websiteId);
-
-            Object.keys(website).forEach(function (key) {
-                update[key] = website[key];
-            });
-
-            update.updated = (new Date()).getTime() + "";
+            var url = rootUrl2 + websiteId;
+            return $http.put(url, website)
+                .then(function (response) {
+                    return response;
+                })
         }
 
         function deleteWebsite(websiteId) {
-            var deleted = findWebsiteById(websiteId);
-            var index = websites.indexOf(deleted);
-            websites.splice(index, 1);
+            var url = rootUrl2 + websiteId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response;
+                })
         }
     }
 
