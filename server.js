@@ -1,5 +1,6 @@
 var express = require('express');
-var app = express();
+// var app = express();
+var app = require('./express');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -20,5 +21,7 @@ myApp('this is the message');
 */
 var todo = require('./lectures/todo/app.js');
 todo(app);
+
+require('./assignment/app.js');
 
 app.listen(port);
