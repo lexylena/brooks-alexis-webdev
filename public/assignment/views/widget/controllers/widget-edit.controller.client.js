@@ -52,7 +52,8 @@
         function saveWidget() {
             if (vm.cur.url !== undefined) { // either image or youtube
                 console.log('image or youtube');
-                if (!vm.cur.url) {
+                if ((!vm.cur.url && vm.cur.widgetType === 'YOUTUBE') ||
+                    (!vm.cur.url && !vm.cur.flickrUrl && vm.cur.widgetType === 'IMAGE')) {
                     vm.error = 'URL is required';
                     return;
                 }

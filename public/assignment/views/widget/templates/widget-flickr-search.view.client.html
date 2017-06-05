@@ -1,0 +1,42 @@
+<!-- header -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget/{{vm.wgid}}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-header navbar-brand">
+            Flickr Images
+        </div>
+        <div class="navbar-text pull-right">
+            <a href="" ng-click="vm.saveSelected()">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="input-group">
+        <input ng-model="searchText"
+               type="text"
+               placeholder="Search"
+               class="form-control">
+        <span class="input-group-btn">
+        <a ng-click="vm.searchPhotos(searchText)" class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+        </a>
+    </span>
+    </div>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-xs-2" ng-repeat="photo in vm.photos.photo">
+            <img ng-click="vm.selectPhoto(photo)"
+                 ng-src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_s.jpg"/>
+        </div>
+    </div>
+    </div>
+
+</div>

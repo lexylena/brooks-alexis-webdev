@@ -12,6 +12,7 @@ app.get('/api/assignment/page/:pid/widget', findWidgetsByPageId);
 app.get('/api/assignment/widget/:wgid', findWidgetById);
 app.put('/api/assignment/widget/:wgid', updateWidget);
 app.delete('/api/assignment/widget/:wgid', deleteWidget);
+app.put('/api/assignment/widget/:wgid/flickr', updateWidgetUrl);
 
 var widgets = [
     { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -120,6 +121,11 @@ function updateWidget(req, res) {
     var widget = req.body;
     var wgid = req.params['wgid'];
 
+    if (widget.flickrUrl) { // a flickr image has been selected, so save that url
+        widget.url = widget.flickrUrl;
+        widget.flickrUrl = null;
+    }
+
     for(var w in widgets) {
         if(wgid === widgets[w]._id) {
             widgets[w] = widget;
@@ -136,11 +142,20 @@ function updateWidget(req, res) {
 }
 
 function deleteWidget(req, res) {
-    var wgid = req.params['pid'];
+    var wgid = req.params['wgid'];
     var widget = widgets.find(function (widget) {
         return widget._id === wgid;
     });
     var index = widgets.indexOf(widget);
     widgets.splice(index, 1);
+    res.sendStatus(200);
+}
+
+function updateWidgetUrl(req, res) {
+    var wgid = req.params['wgid'];
+    var widget = widgets.find(function (widget) {
+        return widget._id === wgid;
+    });
+    widget.flickrUrl = req.body['url'];
     res.sendStatus(200);
 }

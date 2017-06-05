@@ -9,9 +9,14 @@
        ng-model="vm.cur.text"
        class="form-control"/>
 <label for="url">URL</label>
-<input type="url"
+<input ng-show="!vm.cur.flickrUrl"
+       type="url"
        id="url"
        ng-model="vm.cur.url"
+       class="form-control"/>
+<input ng-show="vm.cur.flickrUrl"
+       type="url"
+       ng-model="vm.cur.flickrUrl"
        class="form-control"/>
 
 <a class="btn btn-info btn-block" href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget/{{vm.wgid}}/search">
