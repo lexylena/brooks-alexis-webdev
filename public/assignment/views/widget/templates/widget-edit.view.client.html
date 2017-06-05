@@ -19,7 +19,7 @@
 
 <!-- editor content -->
 <div class="container-fluid wd-centered">
-    <form class="wd-form">
+    <div class="wd-form">
 
         <div ng-show="vm.error" class="alert alert-danger">
             {{vm.error}}
@@ -41,8 +41,7 @@
 
         <a ng-click="vm.saveWidget()" class="btn btn-block btn-success">{{vm.btnSave}}</a>
         <a ng-hide="vm.isNew" ng-click="vm.deleteWidget()" class="btn btn-block btn-danger">Delete</a>
-        </div>
-    </form>
+    </div>
 </div>
 
 

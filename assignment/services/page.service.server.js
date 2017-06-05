@@ -68,7 +68,7 @@ function updatePage(req, res) {
 function deletePage(req, res) {
     var pid = req.params['pid'];
     var page = pages.find(function (page) {
-        return page._id === id;
+        return page._id === pid;
     });
     var index = pages.indexOf(page);
     pages.splice(index, 1);
