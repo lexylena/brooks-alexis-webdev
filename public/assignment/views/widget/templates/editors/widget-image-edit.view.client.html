@@ -13,10 +13,22 @@
        id="url"
        ng-model="vm.cur.url"
        class="form-control"/>
-<label for="file">File Upload</label>
-<input type="file"
-       id="file"
-       class="form-control"/>
+
+<a class="btn btn-info btn-block" href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget/{{vm.wgid}}/search">
+    Search Flickr
+</a>
+
+<label>File Upload</label>
+<form action="/api/assignment/upload"   method="post" enctype="multipart/form-data">
+    <input  name="myFile" type="file" class="form-control"/>
+    <input  name="width" value="{{vm.cur.width}}" style="display: none"/>
+    <input  name="uid"   value="{{vm.uid}}"       style="display: none"/>
+    <input  name="wid"   value="{{vm.wid}}"       style="display: none"/>
+    <input  name="pid"   value="{{vm.pid}}"       style="display: none"/>
+    <input  name="wgid"  value="{{vm.wgid}}"      style="display: none"/>
+    <button type="submit"    class="btn btn-block btn-primary">Upload Image</button>
+</form>
+
 <label for="width">Width</label>
 <div class="input-group">
     <input type="text"

@@ -15,21 +15,25 @@
         vm.wgid = $routeParams['wgid'];
 
         function init() {
-            vm.cur = widgetService.findWidgetById(vm.wgid);
-            if (vm.wgid === '0000') {
-                vm.isNew = true;
-                vm.btnSave = 'Create Widget';
-            } else {
-                vm.btnSave = 'Save Changes';
-            }
+            widgetService.findWidgetById(vm.wgid)
+                .then(function (widget) {
+                    vm.cur = widget;
 
-            vm.title = vm.cur.widgetType.toLowerCase() + ' Widget';
-            vm.title = vm.cur.widgetType.charAt(0).toUpperCase() + vm.title.slice(1);
-            if (vm.isNew) {
-                vm.title = 'New ' + vm.title;
-            } else {
-                vm.title += ' Editor';
-            }
+                    if (vm.wgid === '0000') {
+                        vm.isNew = true;
+                        vm.btnSave = 'Create Widget';
+                    } else {
+                        vm.btnSave = 'Save Changes';
+                    }
+
+                    vm.title = vm.cur.widgetType.toLowerCase() + ' Widget';
+                    vm.title = vm.cur.widgetType.charAt(0).toUpperCase() + vm.title.slice(1);
+                    if (vm.isNew) {
+                        vm.title = 'New ' + vm.title;
+                    } else {
+                        vm.title += ' Editor';
+                    }
+                });
         }
 
         init();
@@ -39,8 +43,10 @@
         vm.navBack = navBack;
 
         function deleteWidget() {
-            widgetService.deleteWidget(vm.wgid);
-            $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+            widgetService.deleteWidget(vm.wgid)
+                .then(function () {
+                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+                })
         }
 
         function saveWidget() {
@@ -68,15 +74,19 @@
                 }
             }
 
-            widgetService.updateWidget(vm.wgid, vm.cur);
-            $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+            widgetService.updateWidget(vm.wgid, vm.cur)
+                .then(function () {
+                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+                })
         }
 
         function navBack() {
             if (vm.isNew) {
                 // navigate back to widget chooser without creating new widget
-                widgetService.deleteWidget(vm.wgid);
-                $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/new');
+                widgetService.deleteWidget(vm.wgid)
+                    .then(function () {
+                        $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/new');
+                    })
             } else {
                 // navigate back to widget list
                 $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');

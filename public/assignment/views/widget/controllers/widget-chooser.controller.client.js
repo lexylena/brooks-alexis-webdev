@@ -33,9 +33,14 @@
                 return null;
             }
 
-            widgetService.createWidget(vm.pid, widget);
-            console.log(widgetService.findWidgetsByPageId(vm.pid));
-            $location.url(editUrl);
+            widgetService.createWidget(vm.pid, widget)
+                .then(function () {
+                    widgetService.findWidgetsByPageId(vm.pid)
+                        .then(function (widgets) {
+                            console.log(widgets);
+                            $location.url(editUrl);
+                        })
+                })
         }
     }
 
