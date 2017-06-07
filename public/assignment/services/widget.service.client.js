@@ -15,7 +15,8 @@
             findWidgetsByPageId: findWidgetsByPageId,
             findWidgetById: findWidgetById,
             updateWidget: updateWidget,
-            deleteWidget: deleteWidget
+            deleteWidget: deleteWidget,
+            updateOrder: updateOrder
         };
 
         function createWidget(pid, widget) {
@@ -54,6 +55,15 @@
         function deleteWidget(wgid) {
             var url = rootUrl + 'widget/' + wgid;
             return $http.delete(url)
+                .then(function (response) {
+                    return response;
+                })
+        }
+
+        function updateOrder(pid, initialIdx, finalIdx) {
+            var url = rootUrl + 'page/' + pid + '/widget?initial=index'
+                + initialIdx + '&final=index' + finalIdx;
+            return $http.put(url, {}) // don't technically need any "put" info for request body
                 .then(function (response) {
                     return response;
                 })

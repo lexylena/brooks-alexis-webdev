@@ -13,6 +13,7 @@ app.get('/api/assignment/widget/:wgid', findWidgetById);
 app.put('/api/assignment/widget/:wgid', updateWidget);
 app.delete('/api/assignment/widget/:wgid', deleteWidget);
 app.put('/api/assignment/widget/:wgid/flickr', updateWidgetUrl);
+app.put('/api/assignment/page/:pid/widget', updateOrder);
 
 var widgets = [
     { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -157,5 +158,30 @@ function updateWidgetUrl(req, res) {
         return widget._id === wgid;
     });
     widget.flickrUrl = req.body['url'];
+    res.sendStatus(200);
+}
+
+function updateOrder(req, res) {
+    var initialIdx = req.query['initial'].replace('index', '');
+    var finalIdx = req.query['final'].replace('index', '');
+    var pid = req.params['pid'];
+    var pwidgets = [];
+
+    for (ii = 0; ii < widgets.length;) {
+        if (widgets[ii].pageId === pid) {
+            pwidgets.push(widgets[ii]);
+            widgets.splice(ii, 1);
+        } else {
+            ++ii;
+        }
+    }
+    var moved = pwidgets[initialIdx];
+
+    pwidgets.splice(initialIdx, 1);
+    pwidgets.splice(finalIdx, 0, moved);
+
+    for (var ii in pwidgets) {
+        widgets.push(pwidgets[ii]);
+    }
     res.sendStatus(200);
 }

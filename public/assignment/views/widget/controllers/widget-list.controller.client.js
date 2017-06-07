@@ -24,6 +24,7 @@
 
         vm.trustThisContent = trustThisContent;
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
+        vm.updateSortableOrder = updateSortableOrder;
 
         function trustThisContent(html) {
             // diligence to scrub any unsafe content; some libraries to pass it through to do that...
@@ -37,6 +38,19 @@
             embedUrl += arr[arr.length - 1];
             console.log(embedUrl);
             return $sce.trustAsResourceUrl(embedUrl);
+        }
+
+        function updateSortableOrder(initialIdx, finalIdx) {
+            if (initialIdx === finalIdx) {
+                return;
+            }
+
+            return widgetService.updateOrder(vm.pid, initialIdx, finalIdx)
+                .then(function (response) {
+                    if (response.statusCode !== 200) {
+                        console.log('widget order err');
+                    }
+                })
         }
     }
 })();
