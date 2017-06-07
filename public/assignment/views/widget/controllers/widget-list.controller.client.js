@@ -47,8 +47,8 @@
 
             return widgetService.updateOrder(vm.pid, initialIdx, finalIdx)
                 .then(function (response) {
-                    if (response.statusCode !== 200) {
-                        console.log('widget order err');
+                    if (response.status !== 200) {
+                        console.log('widget order err' + response.status);
                     }
                 })
         }

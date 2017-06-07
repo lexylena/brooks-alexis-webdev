@@ -16,6 +16,7 @@
             $(element).sortable({
                 axis: 'y',
                 cursor: 'move',
+                handle: '.glyphicon.glyphicon-align-justify',
                 start: function(event, ui) {
                     initialIdx = $('li').index(ui.item);
                 },
