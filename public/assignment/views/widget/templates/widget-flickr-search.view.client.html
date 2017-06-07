@@ -30,10 +30,10 @@
     </span>
     </div>
 
-    <div class="container">
+    <div ng-show="vm.photos" class="container-fluid results-container">
     <div class="row">
-        <div class="col-xs-2" ng-repeat="photo in vm.photos.photo">
-            <img ng-click="vm.selectPhoto(photo)"
+        <div class="col-xs-6 col-sm-2" ng-repeat="photo in vm.photos.photo">
+            <img ng-click="vm.selectPhoto(photo)" class="image-search-result"
                  ng-src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_s.jpg"/>
         </div>
     </div>

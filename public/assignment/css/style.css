@@ -94,3 +94,17 @@ body {
 .wd-widget-list {
     background-color: whitesmoke;
 }
+
+.results-container {
+    margin: 15px;
+    border: solid;
+    border-width: 6px;
+    border-radius: 12px;
+    border-color: #07889b;
+    background-color: whitesmoke;
+}
+
+img.image-search-result {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
