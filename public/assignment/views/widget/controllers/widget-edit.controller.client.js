@@ -6,7 +6,7 @@
         .module('WAM')
         .controller('widgetEditController', widgetEditController);
 
-    function widgetEditController($routeParams, $location, $sce, widgetService) { // strict contextual escaping
+    function widgetEditController($routeParams, $location, widgetService, flickrService) { // strict contextual escaping
 
         var vm = this;
         vm.uid = $routeParams['uid'];
@@ -89,6 +89,12 @@
                         $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/new');
                     })
             } else {
+                if (vm.cur.flickrUrl) {
+                    flickrService.updateWidgetUrl(vm.wgid, {url: null})
+                        .then(function (response) {
+
+                        })
+                }
                 // navigate back to widget list
                 $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
             }
