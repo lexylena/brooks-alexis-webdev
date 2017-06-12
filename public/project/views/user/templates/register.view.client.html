@@ -1,0 +1,66 @@
+<div class="container-fluid wd-centered">
+    <form class="wd-form">
+        <h1>Register</h1>
+
+        <div ng-show="vm.error" class="alert alert-danger">
+            {{vm.error}}
+        </div>
+
+        <label for="email">Email</label>
+        <input type="email"
+               ng-model="user.email"
+               id="email"
+               placeholder="abc@example.com"
+               class="form-control"/>
+
+        <label for="username">Username</label>
+        <input type="text"
+               ng-model="user.username"
+               id="username"
+               placeholder="username"
+               class="form-control"/>
+
+        <label for="pw">Password</label>
+        <input type="password"
+               ng-model="user.password"
+               id="pw"
+               class="form-control"/>
+
+        <label for="verify-pw">Verify Password</label>
+        <input type="password"
+               ng-model="password2"
+               id="verify-pw"
+               class="form-control"/>
+
+        <label for="first">First Name</label>
+        <input type="text"
+               ng-model="user.firstName"
+               id="first"
+               placeholder="John"
+               class="form-control"/>
+
+        <label for="last">Last Name</label>
+        <input type="text"
+               ng-model="user.lastName"
+               id="last"
+               placeholder="Doe"
+               class="form-control"/>
+
+        <div><label>
+            Account Type <a data-toggle="tooltip" title="help"><span class="glyphicon glyphicon-info-sign"></span></a>
+        </label></div>
+        <input type="radio"
+               id="artistType"
+               value="ARTIST"
+               ng-model="user.type"> <label for="artistType">Artist</label>
+        <input type="radio"
+               id="curatorType"
+               value="CURATOR"
+               ng-model="user.type"> <label for="curatorType">Curator</label>
+
+        <a ng-click="vm.register(user, password2)" class="btn btn-primary btn-block">
+            Register</a>
+        <a class="btn btn-danger  btn-block"
+           href="#!/login">Cancel</a>
+    </form>
+</div>

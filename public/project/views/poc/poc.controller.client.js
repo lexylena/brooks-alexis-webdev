@@ -4,9 +4,9 @@
 (function() {
     angular
         .module('project')
-        .controller('homeController', homeController);
+        .controller('pocController', pocController);
 
-    function homeController($location, hamApiService) {
+    function pocController($location, hamApiService) {
         var vm = this;
 
         vm.search = search;
