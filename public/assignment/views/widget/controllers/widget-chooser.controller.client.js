@@ -13,7 +13,7 @@
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
 
-        var editUrl = '/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/0000';
+        var editUrl = '/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/';
         
         vm.newWidget = newWidget;
 
@@ -21,26 +21,19 @@
             var widget;
 
             if (type === 'heading') {
-                widget = { "_id": "0000", "widgetType": "HEADING", "pageId": vm.pid, "size": "1",
-                    "name": null, "text": null};
+                widget = { "widgetType": "HEADING", "size": "1"};
             } else if (type === 'image') {
-                widget = { "_id": "0000", "widgetType": "IMAGE", "pageId": vm.pid, "width": "100",
-                    "name": null, "text": null, "url": null};
+                widget = { "widgetType": "IMAGE", "width": "100"};
             } else if (type === 'youtube') {
-                widget = { "_id": "0000", "widgetType": "YOUTUBE", "pageId": vm.pid, "width": "100",
-                    "name": null, "text": null, "url": null};
+                widget = { "widgetType": "YOUTUBE", "width": "100"}
             } else {
                 return null;
             }
 
             widgetService.createWidget(vm.pid, widget)
-                .then(function () {
-                    widgetService.findWidgetsByPageId(vm.pid)
-                        .then(function (widgets) {
-                            console.log(widgets);
-                            $location.url(editUrl);
+                .then(function (widget) {
+                            $location.url(editUrl+widget._id);
                         })
-                })
         }
     }
 
