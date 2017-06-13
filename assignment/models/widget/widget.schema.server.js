@@ -3,13 +3,14 @@
  */
 var mongoose = require('mongoose');
 var widgetSchema = mongoose.Schema({
-    _page: {type: mongoose.Schema.ObjectId, ref: "PageModel"},
-    type: {type: String, enum: ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'INPUT']},
+    _page: {type: mongoose.Schema.Types.ObjectId, ref: "PageModel"},
+    widgetType: {type: String, enum: ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'INPUT'], required: true},
     name: String,
     text: String,
     placeholder: String,
     description: String,
     url: String,
+    flickrUrl: String,
     width: String,
     height: String,
     rows: Number,
@@ -18,7 +19,8 @@ var widgetSchema = mongoose.Schema({
     icon: String,
     deletable: Boolean,
     formatted: Boolean,
-    dateCreated: {type: Date, default: Date.now}
+    dateCreated: {type: Date, default: Date.now},
+    order: {type: Number, required: true}
 }, {collection: "widget"});
 
-module.exports(widgetSchema);
+module.exports = widgetSchema;

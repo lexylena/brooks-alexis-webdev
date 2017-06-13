@@ -3,11 +3,12 @@
  */
 var mongoose = require('mongoose');
 var websiteSchema = mongoose.Schema({
-    _user: {type: mongoose.Schema.ObjectId, ref: "UserModel"}, // acts like foreign key, refers to user model
-    name: {type: string, require: true},
+    _user: {type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}, // acts like foreign key, refers to user model
+    name: {type: String, require: true},
     description: {type: String},
-    pages: [{type: mongoose.Schema.ObjectId, ref: "PageModel"}],
-    dateCreated: {type: Date, default: Date.now}
+    pages: [{type: mongoose.Schema.Types.ObjectId, ref: "PageModel"}],
+    dateCreated: {type: Date, default: Date.now},
+    lastUpdated: {type: Date, default: Date.now}
 }, {collection: "website"});
 
-module.exports(websiteSchema);
+module.exports = websiteSchema;
