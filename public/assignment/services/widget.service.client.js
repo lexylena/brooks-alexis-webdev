@@ -23,7 +23,7 @@
             var url = rootUrl + 'page/' + pid + '/widget';
             return $http.post(url, widget)
                 .then(function (response) {
-                    return response;
+                    return response.data;
                 })
         }
 
