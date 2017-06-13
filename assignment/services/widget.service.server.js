@@ -2,9 +2,10 @@
  * Created by alexisbrooks on 6/4/17.
  */
 var app = require('../../express');
-var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer({ dest: __dirname+'/../../public/assignment/uploads' });
+var widgetModel = require('../models/widget/widget.model.server');
+var pageModel = require('../models/page/page.model.server');
 
 app.post('/api/assignment/upload', upload.single('myFile'), uploadImage);
 app.post('/api/assignment/page/:pid/widget', createWidget);
@@ -12,7 +13,7 @@ app.get('/api/assignment/page/:pid/widget', findWidgetsByPageId);
 app.get('/api/assignment/widget/:wgid', findWidgetById);
 app.put('/api/assignment/widget/:wgid', updateWidget);
 app.delete('/api/assignment/widget/:wgid', deleteWidget);
-app.put('/api/assignment/widget/:wgid/flickr', updateWidgetUrl);
+app.put('/api/assignment/widget/:wgid/flickr', updateWidgetFlickrUrl);
 app.put('/api/assignment/page/:pid/widget', updateOrder);
 
 var widgets = [
@@ -59,16 +60,7 @@ var widgets = [
                          plus science, business, global issues, the arts and more.</p>'}
 ];
 
-// helper function
-function getWidgetById(wgid) {
-    return widgets.find(function (widget) {
-        return widget._id === wgid;
-    });
-}
-
 function uploadImage(req, res) {
-    console.log('uploading image?');
-
     var wgid   = req.body.wgid;
     var width  = req.body.width;
     var myFile = req.file;
@@ -84,38 +76,51 @@ function uploadImage(req, res) {
     var size          = myFile.size;
     var mimetype      = myFile.mimetype;
 
-    widget = getWidgetById(wgid);
-    widget.url = '/assignment/uploads/'+filename;
+    // widget = getWidgetById(wgid);
+    // widget.url = '/assignment/uploads/'+filename;
+    widgetModel.findWidgetById(wgid)
+        .then(function (widget) {
+            widget.url = '/assignment/uploads/' + filename;
+            widgetModel.updateWidget(wgid, widget)
+                .then(function (status) {
+                    var callbackUrl   = "/assignment/index.html#!/user/" + uid + "/website/" +
+                        wid + "/page/" + pid + "/widget/" + wgid;
 
-    var callbackUrl   = "/assignment/index.html#!/user/" + uid + "/website/" +
-        wid + "/page/" + pid + "/widget/" + wgid;
-
-    res.redirect(callbackUrl);
+                    res.redirect(callbackUrl);
+                })
+        })
 }
 
 function createWidget(req, res) {
+    var pid = req.params['pid'];
     var widget = req.body;
-    widgets.push(widget);
-    res.sendStatus(200);
+    widgetModel.findAllWidgetsForPage(pid)
+        .then(function (widgets) {
+            widget.order = widgets.length;
+            widgetModel.createWidget(pid, widget)
+                .then(function (widget) {
+                    pageModel.addWidget(pid, widget._id)
+                        .then(function () {
+                            res.json(widget);
+                        })
+                })
+        })
 }
 
 function findWidgetsByPageId(req, res) {
     var pid = req.params['pid'];
-    var resultSet = [];
-
-    for (var w in widgets) {
-        if (widgets[w].pageId === pid) {
-            resultSet.push(widgets[w]);
-        }
-    }
-
-    res.json(resultSet);
+    widgetModel.findAllWidgetsForPage(pid)
+        .then(function (widgets) {
+            res.json(widgets);
+        })
 }
 
 function findWidgetById(req, res) {
     var wgid = req.params['wgid'];
-    var widget = getWidgetById(wgid);
-    res.json(widget);
+    widgetModel.findWidgetById(wgid)
+        .then(function (widget) {
+            res.json(widget);
+        })
 }
 
 function updateWidget(req, res) {
@@ -127,61 +132,49 @@ function updateWidget(req, res) {
         widget.flickrUrl = null;
     }
 
-    for(var w in widgets) {
-        if(wgid === widgets[w]._id) {
-            widgets[w] = widget;
-
-            if (wgid === "0000") {
-                widget._id = (new Date()).getTime() + "";
-            }
-            console.log(widget);
+    widgetModel.updateWidget(wgid, widget)
+        .then(function (status) {
             res.sendStatus(200);
-            return;
-        }
-    }
-    res.sendStatus(404);
+        }, function (err) {
+            res.sendStatus(404);
+        })
 }
 
 function deleteWidget(req, res) {
     var wgid = req.params['wgid'];
-    var widget = widgets.find(function (widget) {
-        return widget._id === wgid;
-    });
-    var index = widgets.indexOf(widget);
-    widgets.splice(index, 1);
-    res.sendStatus(200);
+    widgetModel.findWidgetById(wgid)
+        .then(function (widget) {
+            var pid = widget._page;
+            widgetModel.deleteWidgets([wgid])
+                .then(function(status) {
+                    pageModel.removeWidget(pid, wgid)
+                        .then(function () {
+                            res.sendStatus(200);
+                        })
+                }, function (err) {
+                    res.sendStatus(404);
+                })
+        })
 }
 
-function updateWidgetUrl(req, res) {
+function updateWidgetFlickrUrl(req, res) {
     var wgid = req.params['wgid'];
-    var widget = widgets.find(function (widget) {
-        return widget._id === wgid;
-    });
-    widget.flickrUrl = req.body['url'];
-    res.sendStatus(200);
+    var flickrUrl = req.body['url'];
+    widgetModel.updateWidgetFlickrUrl(wgid, flickrUrl)
+        .then(function (status) {
+            res.sendStatus(200);
+        })
 }
 
 function updateOrder(req, res) {
     var initialIdx = req.query['initial'].replace('index', '');
     var finalIdx = req.query['final'].replace('index', '');
     var pid = req.params['pid'];
-    var pwidgets = [];
-
-    for (ii = 0; ii < widgets.length;) {
-        if (widgets[ii].pageId === pid) {
-            pwidgets.push(widgets[ii]);
-            widgets.splice(ii, 1);
-        } else {
-            ++ii;
-        }
-    }
-    var moved = pwidgets[initialIdx];
-
-    pwidgets.splice(initialIdx, 1);
-    pwidgets.splice(finalIdx, 0, moved);
-
-    for (var ii in pwidgets) {
-        widgets.push(pwidgets[ii]);
-    }
-    res.sendStatus(200);
+    console.log('widget.service.server reorder widget: '+initialIdx+' -> '+finalIdx);
+    widgetModel.reorderWidget(pid, initialIdx, finalIdx)
+        .then(function (status) {
+            res.sendStatus(200);
+        }, function (err) {
+            res.sendStatus(404);
+        })
 }

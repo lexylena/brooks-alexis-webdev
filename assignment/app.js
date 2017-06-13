@@ -10,4 +10,3 @@ require('./services/widget.service.server');
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
-mongoose.connect('mongodb://localhost/webdev');
