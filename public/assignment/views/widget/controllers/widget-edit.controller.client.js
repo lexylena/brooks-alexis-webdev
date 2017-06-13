@@ -70,9 +70,14 @@
                 if (!vm.cur.text) {
 
                     vm.error = 'Heading Text is required';
-                    console.log('heading text req');
                     return;
                 }
+            }
+
+            if (vm.cur.widgetType === 'HTML' && !vm.cur.text) {
+                console.log('html widget');
+                vm.error = 'HTML is required';
+                return;
             }
 
             widgetService.updateWidget(vm.wgid, vm.cur)

@@ -25,7 +25,9 @@
             } else if (type === 'image') {
                 widget = { "widgetType": "IMAGE", "width": "100"};
             } else if (type === 'youtube') {
-                widget = { "widgetType": "YOUTUBE", "width": "100"}
+                widget = {"widgetType": "YOUTUBE", "width": "100"}
+            } else if (type === 'html') {
+                widget = {"widgetType": "HTML"}
             } else {
                 return null;
             }
