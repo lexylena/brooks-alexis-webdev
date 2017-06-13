@@ -75,9 +75,7 @@ function uploadImage(req, res) {
     var destination   = myFile.destination;  // folder where file is saved to
     var size          = myFile.size;
     var mimetype      = myFile.mimetype;
-
-    // widget = getWidgetById(wgid);
-    // widget.url = '/assignment/uploads/'+filename;
+    
     widgetModel.findWidgetById(wgid)
         .then(function (widget) {
             widget.url = '/assignment/uploads/' + filename;
@@ -167,10 +165,9 @@ function updateWidgetFlickrUrl(req, res) {
 }
 
 function updateOrder(req, res) {
-    var initialIdx = req.query['initial'].replace('index', '');
-    var finalIdx = req.query['final'].replace('index', '');
+    var initialIdx = parseInt(req.query['initial'].replace('index', ''));
+    var finalIdx = parseInt(req.query['final'].replace('index', ''));
     var pid = req.params['pid'];
-    console.log('widget.service.server reorder widget: '+initialIdx+' -> '+finalIdx);
     widgetModel.reorderWidget(pid, initialIdx, finalIdx)
         .then(function (status) {
             res.sendStatus(200);

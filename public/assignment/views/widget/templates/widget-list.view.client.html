@@ -21,7 +21,7 @@
 <div class="container-fluid">
 
     <ul class="list-group ui-sortable" wbdv-sortable>
-        <li ng-repeat="widget in vm.widgets" class="list-group-item">
+        <li ng-repeat="widget in vm.widgets | orderBy:'order'" class="list-group-item">
             <div class="wd-widget">
                 <div class="wd-toolbar">
                     <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget/{{widget._id}}">

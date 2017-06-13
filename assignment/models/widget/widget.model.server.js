@@ -24,7 +24,6 @@ function findAllWidgetsForPage(pid) {
     return widgetModel
         .find({_page: pid})
         .populate('_page', 'pid')
-        .sort({order: 1})
         .exec();
 }
 
@@ -44,39 +43,24 @@ function deleteWidgets(widgetIds) {
     return widgetModel.remove({_id: { $in: widgetIds }});
 }
 
-function reorderWidget(pid, start, end) {
-    return widgetModel.find({_page: pid})
-        .sort({order: 1})
-        .then(function (widgets) {
-            console.log('initial widget ordering before moving '+start+' to '+end);
-            console.log(widgets);
-            var movedWgid = widgets[start]._id;
-            if (start < end) { // moving up the list
-                return widgetModel.update({_page: pid, order: { $gt: end - 1, $lt: start + 1 }},
-                    {$inc: { order: 1 }})
-                    .then(function (status) {
-                        return widgetModel.update({_id: movedWgid}, {order: end})
-                            .then(function () {
-                                widgetModel.find({_page: pid}).sort({order: 1})
-                                    .then(function (widgets) {
-                                        console.log('widgets after reordering');
-                                        console.log(widgets);
-                                    })
-                            })
-                    })
-            } else { // moving down the list
-                return widgetModel.update({_page: pid, order: { $gt: start - 1, $lt: end + 1 }},
-                    {$inc: {order: -1}})
-                    .then(function (status) {
-                        return widgetModel.update({_id: movedWgid}, {order: end})
-                            .then(function () {
-                                widgetModel.find({_page: pid}).sort({order: 1})
-                                    .then(function (widgets) {
-                                        console.log('widgets after reordering');
-                                        console.log(widgets);
-                                    })
-                            })
-                    })
+function reorderWidget(pid, initialIdx, finalIdx) {
+    return widgetModel.findOne({_page: pid, order: initialIdx})
+        .then(function (movingWidget) {
+            var increment, lowerBound, upperBound;
+            if (initialIdx > finalIdx) {
+                increment = 1;
+                lowerBound = finalIdx - 1;
+                upperBound = initialIdx + 1;
+            } else {
+                increment = -1;
+                lowerBound = initialIdx - 1;
+                upperBound = finalIdx + 1;
             }
+            return widgetModel.updateMany({_page: pid, order: {$gt: lowerBound, $lt: upperBound}},
+                {$inc: {order: increment}
+            })
+                .then(function (status) {
+                    return widgetModel.update({_id: movingWidget._id}, {$set: {order: finalIdx}});
+                })
         })
 }
