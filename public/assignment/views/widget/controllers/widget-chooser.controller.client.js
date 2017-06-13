@@ -28,6 +28,8 @@
                 widget = {"widgetType": "YOUTUBE", "width": "100"}
             } else if (type === 'html') {
                 widget = {"widgetType": "HTML"}
+            } else if (type === 'text') {
+                widget = {"widgetType": "TEXT"}
             } else {
                 return null;
             }
