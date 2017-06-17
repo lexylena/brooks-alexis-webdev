@@ -28,7 +28,7 @@ function findUserById(uid) {
 }
 
 function findUserByUsername(username) {
-    return userModel.find({username: username});
+    return userModel.findOne({username: username});
 }
 
 function findUserByCredentials(username, password) {
@@ -52,17 +52,17 @@ function deleteUser(uid) {
         })
 }
 
-function updateUser(uid, newUser) {
-    return userModel.update({_id: uid}, {
-        // only allow client to update these fields
-        $set : {
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            password: newUser.password,
-            email: newUser.email,
-            phone: newUser.phone
+function updateUser(uid, user) {
+    // only update non-null fields
+    var update = {};
+    var fields = ['firstName', 'lastName', 'password', 'email', 'phone'];
+    for (var ii in fields) {
+        if (user[fields[ii]]) {
+            update[fields[ii]] = user[fields[ii]];
         }
-    })
+    }
+
+    return userModel.update({_id: uid}, { $set : update });
 }
 
 function addWebsite(uid, wid) {
