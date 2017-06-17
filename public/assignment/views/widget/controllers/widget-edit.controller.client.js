@@ -9,7 +9,6 @@
     function widgetEditController($routeParams, $location, widgetService, flickrService) { // strict contextual escaping
 
         var vm = this;
-        vm.uid = $routeParams['uid'];
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
         vm.wgid = $routeParams['wgid'];
@@ -19,7 +18,7 @@
                 .then(function (widget) {
                     vm.cur = widget;
 
-                    if (vm.wgid === '0000') {
+                    if (!widget.name) {
                         vm.isNew = true;
                         vm.btnSave = 'Create Widget';
                     } else {
@@ -45,13 +44,12 @@
         function deleteWidget() {
             widgetService.deleteWidget(vm.wgid)
                 .then(function () {
-                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+                    $location.url('/website/' + vm.wid + '/page/' + vm.pid + '/widget');
                 })
         }
 
         function saveWidget() {
             if (vm.cur.url !== undefined) { // either image or youtube
-                console.log('image or youtube');
                 if ((!vm.cur.url && vm.cur.widgetType === 'YOUTUBE') ||
                     (!vm.cur.url && !vm.cur.flickrUrl && vm.cur.widgetType === 'IMAGE')) {
                     vm.error = 'URL is required';
@@ -65,8 +63,6 @@
                 }
             }
             if (vm.cur.size !== undefined) { // heading widget
-                console.log('heading widget');
-                console.log(vm.cur.text);
                 if (!vm.cur.text) {
 
                     vm.error = 'Heading Text is required';
@@ -75,14 +71,13 @@
             }
 
             if (vm.cur.widgetType === 'HTML' && !vm.cur.text) {
-                console.log('html widget');
                 vm.error = 'HTML is required';
                 return;
             }
 
             widgetService.updateWidget(vm.wgid, vm.cur)
                 .then(function () {
-                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+                    $location.url('/website/' + vm.wid + '/page/' + vm.pid + '/widget');
                 })
         }
 
@@ -91,7 +86,7 @@
                 // navigate back to widget chooser without creating new widget
                 widgetService.deleteWidget(vm.wgid)
                     .then(function () {
-                        $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/new');
+                        $location.url('/website/' + vm.wid + '/page/' + vm.pid + '/widget/new');
                     })
             } else {
                 if (vm.cur.flickrUrl) {
@@ -101,7 +96,7 @@
                         })
                 }
                 // navigate back to widget list
-                $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget');
+                $location.url('/website/' + vm.wid + '/page/' + vm.pid + '/widget');
             }
         }
     }

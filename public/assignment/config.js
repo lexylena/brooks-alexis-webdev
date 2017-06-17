@@ -170,4 +170,34 @@
             });
         return deferred.promise;
     }
+
+    function checkPageDeveloper($q, $location, $route, pageService) {
+        var deferred = $q.defer();
+        var pid = $route.current.params['pid'];
+        pageService.checkPageDeveloper(pid)
+            .then(function (currentUser) {
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/');
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function checkWidgetDeveloper($q, $location, $route, widgetService) {
+        var deferred = $q.defer();
+        var wgid = $route.current.params['wgid'];
+        widgetService.checkWidgetDeveloper(wgid)
+            .then(function (currentUser) {
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/');
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
 })();

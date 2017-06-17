@@ -6,6 +6,8 @@ var multer = require('multer');
 var upload = multer({ dest: __dirname+'/../../public/assignment/uploads' });
 var widgetModel = require('../models/widget/widget.model.server');
 var pageModel = require('../models/page/page.model.server');
+var websiteModel = require('../models/website/website.model.server');
+var userModel = require('../models/user/user.model.server');
 
 app.post('/api/assignment/upload', upload.single('myFile'), uploadImage);
 app.post('/api/assignment/page/:pid/widget', createWidget);
@@ -15,6 +17,7 @@ app.put('/api/assignment/widget/:wgid', updateWidget);
 app.delete('/api/assignment/widget/:wgid', deleteWidget);
 app.put('/api/assignment/widget/:wgid/flickr', updateWidgetFlickrUrl);
 app.put('/api/assignment/page/:pid/widget', updateOrder);
+app.get('/api/assignment/checkWidgetDeveloper', checkWidgetDeveloper);
 
 var widgets = [
     { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -173,5 +176,24 @@ function updateOrder(req, res) {
             res.sendStatus(200);
         }, function (err) {
             res.sendStatus(404);
+        })
+}
+
+function checkWidgetDeveloper(req, res) {
+    var wgid = req.query['wgid'];
+    widgetModel.findWidgetById(wgid)
+        .then(function (widget) {
+            pageModel.findPageById(widget._page)
+                .then(function (page) {
+                    websiteModel.findWebsiteById(page._website)
+                        .then(function (website) {
+                            if (!req.isAuthenticated() ||
+                                website._user.toString() !== req.user._id.toString()) {
+                                res.send('0');
+                            } else {
+                                res.json(req.user);
+                            }
+                        })
+                })
         })
 }

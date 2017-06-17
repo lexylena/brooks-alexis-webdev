@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-left">
-            <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page">
+            <a href="#!/website/{{vm.wid}}/page">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
@@ -10,7 +10,7 @@
             Widgets
         </div>
         <div class="navbar-text pull-right">
-            <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget/new">
+            <a href="#!/website/{{vm.wid}}/page/{{vm.pid}}/widget/new">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
@@ -24,7 +24,7 @@
         <li ng-repeat="widget in vm.widgets | orderBy:'order'" class="list-group-item">
             <div class="wd-widget">
                 <div class="wd-toolbar">
-                    <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{vm.pid}}/widget/{{widget._id}}">
+                    <a href="#!/website/{{vm.wid}}/page/{{vm.pid}}/widget/{{widget._id}}">
                         <span class="glyphicon glyphicon-cog"></span>
                     </a>
                     <a href="">
@@ -61,7 +61,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-text pull-right">
-            <a href="#!/user/{{vm.uid}}">
+            <a href="#!/profile">
                 <span class="glyphicon glyphicon-user pull-right"></span>
             </a>
         </div>

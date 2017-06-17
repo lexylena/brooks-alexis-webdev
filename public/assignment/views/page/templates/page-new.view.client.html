@@ -4,7 +4,7 @@
         <!-- navbar part only shows on small+ screens-->
         <div class="col-sm-4 hidden-xs">
             <div class="navbar-text pull-left">
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page">
+                <a href="#!/website/{{vm.wid}}/page">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </div>
@@ -12,7 +12,7 @@
                 Pages
             </div>
             <div class="navbar-text pull-right">
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/new">
+                <a href="#!/website/{{vm.wid}}/page/new">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </div>
@@ -21,7 +21,7 @@
         <!-- navbar part shows on all screen sizes-->
         <div class="col-sm-8">
             <div class="navbar-text pull-left hidden-sm hidden-md hidden-lg">
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page">
+                <a href="#!/website/{{vm.wid}}/page">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </div>
@@ -43,10 +43,10 @@
     <div class="col-sm-4 hidden-xs wd-scrollable-left-split">
         <ul class="list-group">
             <li ng-repeat="page in vm.pages" class="list-group-item">
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{page._id}}/widget">
+                <a href="#!/website/{{vm.wid}}/page/{{page._id}}/widget">
                     {{page.name}}
                 </a>
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page/{{page._id}}">
+                <a href="#!/website/{{vm.wid}}/page/{{page._id}}">
                     <span class="glyphicon glyphicon-cog pull-right"></span>
                 </a>
             </li>
@@ -82,7 +82,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-text pull-right">
-            <a href="#!/user/{{vm.uid}}">
+            <a href="#!/profile">
                 <span class="glyphicon glyphicon-user pull-right"></span>
             </a>
         </div>

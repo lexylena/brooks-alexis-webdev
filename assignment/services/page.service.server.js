@@ -10,6 +10,7 @@ app.get('/api/assignment/website/:wid/page', findPageByWebsiteId);
 app.get('/api/assignment/page/:pid', findPageById);
 app.put('/api/assignment/page/:pid', updatePage);
 app.delete('/api/assignment/page/:pid', deletePage);
+app.get('/api/assignment/checkPageDeveloper', checkPageDeveloper);
 
 // var pages = [
 //     { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
@@ -78,6 +79,21 @@ function deletePage(req, res) {
                         })
                 }, function (err) {
                     res.sendStatus(404);
+                })
+        })
+}
+
+function checkPageDeveloper(req, res) {
+    var pid = req.query['pid'];
+    pageModel.findPageById(pid)
+        .then(function (page) {
+            websiteModel.findWebsiteById(page._website)
+                .then(function (website) {
+                    if (!req.isAuthenticated() || website._user.toString() !== req.user._id.toString()) {
+                        res.send('0');
+                    } else {
+                        res.json(req.user);
+                    }
                 })
         })
 }

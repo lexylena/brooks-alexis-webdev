@@ -9,19 +9,20 @@
 
     function pageService($http) {
 
-        var rootUrl1 = '/api/assignment/website/';
-        var rootUrl2 = '/api/assignment/page/';
+        var baseUrl1 = '/api/assignment/website/';
+        var baseUrl2 = '/api/assignment/page/';
 
         return {
             createPage: createPage,
             findPageByWebsiteId: findPageByWebsiteId,
             findPageById: findPageById,
             updatePage: updatePage,
-            deletePage: deletePage
+            deletePage: deletePage,
+            checkPageDeveloper: checkPageDeveloper
         };
 
         function createPage(wid, page) {
-            var url = rootUrl1 + wid + '/page';
+            var url = baseUrl1 + wid + '/page';
             return $http.post(url, page)
                 .then(function (response) {
                     return response.data;
@@ -29,7 +30,7 @@
         }
 
         function findPageByWebsiteId(wid) {
-            var url = rootUrl1 + wid + '/page';
+            var url = baseUrl1 + wid + '/page';
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -37,7 +38,7 @@
         }
 
         function findPageById(pid) {
-            var url = rootUrl2 + pid;
+            var url = baseUrl2 + pid;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -45,7 +46,7 @@
         }
 
         function updatePage(pid, page) {
-            var url = rootUrl2 + pid;
+            var url = baseUrl2 + pid;
             return $http.put(url, page)
                 .then(function (response) {
                     return response;
@@ -53,10 +54,18 @@
         }
 
         function deletePage(pid) {
-            var url = rootUrl2 + pid;
+            var url = baseUrl2 + pid;
             return $http.delete(url)
                 .then(function (response) {
                     return response;
+                })
+        }
+
+        function checkPageDeveloper(pid) {
+            var url = '/api/assignment/checkPageDeveloper?pid=' + pid;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
                 })
         }
     }

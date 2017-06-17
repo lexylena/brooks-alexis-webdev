@@ -10,7 +10,6 @@
 
         var vm = this;
 
-        vm.uid = $routeParams['uid'];
         vm.wid = $routeParams['wid'];
 
         function init() {
@@ -31,7 +30,7 @@
             }
             pageService.createPage(vm.wid, page)
                 .then(function () {
-                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+                    $location.url('/website/' + vm.wid + '/page');
                 })
         }
     }

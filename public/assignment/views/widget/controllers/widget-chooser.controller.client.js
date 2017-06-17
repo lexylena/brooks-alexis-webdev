@@ -9,11 +9,10 @@
     function widgetChooserController($routeParams, $location, widgetService) { // strict contextual escaping
 
         var vm = this;
-        vm.uid = $routeParams['uid'];
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
 
-        var editUrl = '/user/' + vm.uid + '/website/' + vm.wid + '/page/' + vm.pid + '/widget/';
+        var editUrl = '/website/' + vm.wid + '/page/' + vm.pid + '/widget/';
         
         vm.newWidget = newWidget;
 

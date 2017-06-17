@@ -8,7 +8,7 @@
 
     function widgetService($http) {
 
-        var rootUrl = '/api/assignment/';
+        var baseUrl = '/api/assignment/';
 
         return {
             createWidget: createWidget,
@@ -16,11 +16,12 @@
             findWidgetById: findWidgetById,
             updateWidget: updateWidget,
             deleteWidget: deleteWidget,
-            updateOrder: updateOrder
+            updateOrder: updateOrder,
+            checkWidgetDeveloper: checkWidgetDeveloper
         };
 
         function createWidget(pid, widget) {
-            var url = rootUrl + 'page/' + pid + '/widget';
+            var url = baseUrl + 'page/' + pid + '/widget';
             return $http.post(url, widget)
                 .then(function (response) {
                     return response.data;
@@ -28,8 +29,7 @@
         }
 
         function findWidgetsByPageId(pid) {
-            var url = rootUrl + 'page/' + pid + '/widget';
-            console.log(url);
+            var url = baseUrl + 'page/' + pid + '/widget';
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -37,7 +37,7 @@
         }
 
         function findWidgetById(wgid) {
-            var url = rootUrl + 'widget/' + wgid;
+            var url = baseUrl + 'widget/' + wgid;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -45,7 +45,7 @@
         }
 
         function updateWidget(wgid, widget) {
-            var url = rootUrl + 'widget/' + wgid;
+            var url = baseUrl + 'widget/' + wgid;
             return $http.put(url, widget)
                 .then(function (response) {
                     return response;
@@ -53,7 +53,7 @@
         }
 
         function deleteWidget(wgid) {
-            var url = rootUrl + 'widget/' + wgid;
+            var url = baseUrl + 'widget/' + wgid;
             return $http.delete(url)
                 .then(function (response) {
                     return response;
@@ -61,11 +61,19 @@
         }
 
         function updateOrder(pid, initialIdx, finalIdx) {
-            var url = rootUrl + 'page/' + pid + '/widget?initial=index'
+            var url = baseUrl + 'page/' + pid + '/widget?initial=index'
                 + initialIdx + '&final=index' + finalIdx;
             return $http.put(url, {}) // don't technically need any "put" info for request body
                 .then(function (response) {
                     return response;
+                })
+        }
+
+        function checkWidgetDeveloper(wgid) {
+            var url = baseUrl + 'checkWidgetDeveloper?wgid=' + wgid;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
                 })
         }
     }

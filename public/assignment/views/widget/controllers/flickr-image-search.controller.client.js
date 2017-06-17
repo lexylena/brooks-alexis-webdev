@@ -8,7 +8,6 @@
 
     function flickrImageSearchController(flickrService, $location, $routeParams) {
         var vm = this;
-        vm.uid = $routeParams['uid'];
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
         vm.wgid = $routeParams['wgid'];
@@ -34,7 +33,7 @@
             };
             flickrService.updateWidgetUrl(vm.wgid, selected)
                 .then(function () {
-                    $location.url('/user/'+vm.uid+'/website/'+vm.wid+'/page/'+vm.pid+'/widget/'+vm.wgid);
+                    $location.url('/website/'+vm.wid+'/page/'+vm.pid+'/widget/'+vm.wgid);
                 })
         }
 

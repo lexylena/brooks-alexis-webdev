@@ -10,7 +10,6 @@
 
         var vm = this;
 
-        vm.uid = $routeParams['uid'];
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
 
@@ -39,16 +38,14 @@
 
             pageService.updatePage(vm.pid, vm.cur)
                 .then(function (res) {
-                    console.log(res.status);
-                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+                    $location.url('/website/' + vm.wid + '/page');
                 })
         }
 
         function deletePage() {
             pageService.deletePage(vm.pid)
                 .then(function (res) {
-                    console.log(res.statusCode);
-                    $location.url('/user/' + vm.uid + '/website/' + vm.wid + '/page');
+                    $location.url('/website/' + vm.wid + '/page');
                 })
         }
     }

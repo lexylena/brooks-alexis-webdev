@@ -9,7 +9,6 @@
     function widgetListController($routeParams, $location, $sce, widgetService) { // strict contextual escaping
 
         var vm = this;
-        vm.uid = $routeParams['uid'];
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
 
