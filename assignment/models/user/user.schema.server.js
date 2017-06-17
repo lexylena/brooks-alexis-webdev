@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema( {
     username: {type: String, require: true},
     password: {type: String, require: true},
+    roles: [{type: String, default: 'USER', enum: ['USER', 'ADMIN']}],
     firstName: String,
     lastName: String,
     email: {type: String, require: true},

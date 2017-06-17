@@ -1,7 +1,7 @@
 /**
  * Created by alexisbrooks on 6/6/17.
  */
-
+var bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var userSchema = require('./user.schema.server');
 var websiteModel = require('../website/website.model.server');
@@ -19,7 +19,8 @@ userModel.removeWebsite = removeWebsite;
 module.exports = userModel;
 
 function createUser(user) {
-    return userModel.create(user); // returns promise
+    user.password = bcrypt.hashSync(user.password);
+    return userModel.create(user);
 }
 
 function findUserById(uid) {
@@ -31,7 +32,14 @@ function findUserByUsername(username) {
 }
 
 function findUserByCredentials(username, password) {
-    return userModel.findOne({username: username, password: password}); // returns null if not found
+    return userModel.findOne({username: username})
+        .then(function (user) {
+            if(user && bcrypt.compareSync(password, user.password)) {
+                return user;
+            } else {
+                return null;
+            }
+        })
 }
 
 function deleteUser(uid) {
