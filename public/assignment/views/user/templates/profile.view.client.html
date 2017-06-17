@@ -5,7 +5,7 @@
             Profile
         </div>
         <div class="navbar-text pull-right">
-            <a class="btn btn-xs btn-danger" href="#!/">
+            <a class="btn btn-xs btn-danger" ng-click="vm.logout()">
                 Logout
             </a>
         </div>
@@ -14,7 +14,7 @@
 
 <!-- profile content -->
 <div class="container-fluid wd-centered">
-    <form class="wd-form">
+    <form novalidate class="wd-form">
 
         <div ng-show="vm.error" class="alert alert-danger">
             {{vm.error}}
@@ -52,14 +52,14 @@
             <input ng-model="vm.user.lastName" type="text" class="form-control" id="last-name">
         </div>
 
-        <a class="btn btn-primary btn-block" href="#!/user/{{vm.user._id}}/website">
+        <a class="btn btn-primary btn-block" href="#!/website">
             Websites
         </a>
         <a ng-click="vm.updateUser(password, password2)" class="btn btn-success btn-block">
             Save Profile Settings
         </a>
 
-        <a ng-click="vm.deleteUser()" class="btn btn-danger btn-block">
+        <a ng-click="vm.unregister()" class="btn btn-danger btn-block">
             Delete Account
         </a>
     </form>
@@ -70,7 +70,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-text pull-right">
-            <a href="#!/user/{{vm.user._id}}">
+            <a href="#!/profile">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
         </div>

@@ -6,25 +6,18 @@
         .module('WAM')
         .controller('profileController', profileController);
 
-    function profileController($location, userService, $routeParams) {
+    function profileController(currentUser, $location, userService) {
 
         var vm = this;
-        vm.uid = $routeParams['uid'];
+        vm.user = currentUser;
         vm.updateUser = updateUser;
-        vm.deleteUser = deleteUser;
+        vm.unregister = unregister;
+        vm.logout = logout;
 
 
-        userService
-            .findUserById(vm.uid)
-            .then(renderUser);
-
-        function renderUser (user) {
-            vm.user = user;
-        }
-
-        function deleteUser() {
+        function unregister() {
             userService
-                .deleteUser(vm.uid)
+                .unregister()
                 .then(function () {
                     $location.url('/login');
                 });
@@ -45,10 +38,15 @@
             vm.user['password'] = password;
 
             userService
-                .updateUser(vm.uid, vm.user)
+                .updateUser(vm.user._id, vm.user)
                 .then(function () {
                     vm.message = "User updated successfully";
                 });
+        }
+
+        function logout() {
+            userService.logout();
+            $location.url('/');
         }
     }
 })();

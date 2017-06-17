@@ -13,19 +13,15 @@
         vm.login = function (username, password) {
 
             userService
-                .findUserByCredentials(username, password)
+                .login(username, password)
                 .then(login, handleError);
 
-            function handleError(error) {
-                vm.message = "Username " + username + " not found, please try again";
+            function login(found) {
+                $location.url('/profile');
             }
 
-            function login(found) {
-                if (found !== null) {
-                    $location.url('/user/' + found._id);
-                } else {
-                    vm.message = "Username and password combination not found. Please try again.";
-                }
+            function handleError(error) {
+                vm.message = "Username and password combination not found. Please try again.";
             }
         };
     }

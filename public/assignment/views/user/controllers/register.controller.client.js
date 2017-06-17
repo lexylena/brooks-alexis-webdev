@@ -42,10 +42,10 @@
                     email: email
                 };
 
-                userService.createUser(user)
-                    .then(function (newUser) {
-                        $location.url('/user/' + newUser._id);
-                    });
+                userService.register(user)
+                    .then(function (user) {
+                        $location.url('/profile');
+                    })
             }
         }
     }
