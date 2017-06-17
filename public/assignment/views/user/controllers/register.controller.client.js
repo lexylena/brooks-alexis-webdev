@@ -12,18 +12,16 @@
 
         vm.register = register;
 
-        function register(username, password, password2, email) {
-            if (username === undefined) {
-                vm.error = "Please enter a username";
+        function register(form) {
+            if (form.$invalid === true) {
                 return;
             }
-
-            if (!password || password !== password2) {
+            if (!form.password || form.password !== form.password2) {
                 vm.error = "Passwords must match";
                 return;
             }
 
-            return userService.findUserByUsername(username)
+            return userService.findUserByUsername(form.username)
                 .then(usernameFound, usernameAvailable);
 
             function usernameFound(user) {
@@ -31,15 +29,10 @@
             }
 
             function usernameAvailable() {
-                if (!email) {
-                    vm.error = "Must enter valid email";
-                    return;
-                }
-
                 var user = {
-                    username: username,
-                    password: password,
-                    email: email
+                    username: form.username,
+                    password: form.password,
+                    email: form.email
                 };
 
                 userService.register(user)

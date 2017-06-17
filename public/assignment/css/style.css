@@ -108,3 +108,12 @@ img.image-search-result {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
+.ng-submitted .form-control.ng-invalid {
+    border-color: red;
+    border-width: 3px;
+}
+
+span.glyphicon.glyphicon-exclamation-sign {
+    color: red;
+}
