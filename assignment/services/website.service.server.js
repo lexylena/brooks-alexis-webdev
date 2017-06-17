@@ -5,11 +5,12 @@ var app = require('../../express');
 var websiteModel = require('../models/website/website.model.server');
 var userModel = require('../models/user/user.model.server');
 
-app.post('/api/assignment/user/:uid/website', createWebsite);
-app.get('/api/assignment/user/:uid/website', findWebsitesByUser);
+app.post('/api/assignment/website', createWebsite);
+app.get('/api/assignment/website', findWebsitesByUser);
 app.get('/api/assignment/website/:wid', findWebsiteById);
-app.put('/api/assignment/website/:wid', updateWebsite);
-app.delete('/api/assignment/website/:wid', deleteWebsite);
+app.put('/api/assignment/website/:wid', isDeveloper, updateWebsite);
+app.delete('/api/assignment/website/:wid', isDeveloper, deleteWebsite);
+app.get('/api/assignment/checkWebsiteDeveloper', checkWebsiteDeveloper);
 
 // var websites = [
 //     { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem" },
@@ -24,7 +25,7 @@ app.delete('/api/assignment/website/:wid', deleteWebsite);
 
 function createWebsite(req, res) {
     var website = req.body;
-    var uid = req.params['uid'];
+    var uid = req.user._id;
     websiteModel.createWebsite(uid, website)
         .then(function (website) {
             userModel.addWebsite(uid, website._id)
@@ -35,10 +36,10 @@ function createWebsite(req, res) {
 }
 
 function findWebsitesByUser(req, res) {
-    var uid = req.params['uid'];
+    var uid = req.user._id;
     websiteModel.findAllWebsitesForUser(uid)
         .then(function (websites) {
-            res.send(websites);
+            res.json(websites);
         })
 }
 
@@ -81,5 +82,29 @@ function deleteWebsite(req, res) {
                 }, function (err) {
                     res.sendStatus(404);
                 })
+        })
+}
+
+function isDeveloper(req, res, next) {
+    var wid = req.params['wid'];
+    websiteModel.findWebsiteById(wid)
+        .then(function (website) {
+            if (website._user.toString() !== req.user._id.toString()) {
+                res.sendStatus(401);
+            } else {
+                next();
+            }
+        });
+}
+
+function checkWebsiteDeveloper(req, res) {
+    var wid = req.query['wid'];
+    websiteModel.findWebsiteById(wid)
+        .then(function (website) {
+            if (!req.isAuthenticated() || website._user.toString() !== req.user._id.toString()) {
+                res.send('0');
+            } else {
+                res.json(req.user);
+            }
         })
 }

@@ -8,36 +8,34 @@
 
     function websiteService($http) {
 
-        var rootUrl1 = '/api/assignment/user/';
-        var rootUrl2 = '/api/assignment/website/';
+        var baseUrl ='/api/assignment/website';
 
         return {
             createWebsite: createWebsite,
             findWebsitesByUser: findWebsitesByUser,
             findWebsiteById: findWebsiteById,
             updateWebsite: updateWebsite,
-            deleteWebsite: deleteWebsite
+            deleteWebsite: deleteWebsite,
+            checkWebsiteDeveloper: checkWebsiteDeveloper
         };
 
 
-        function createWebsite(uid, website) {
-            var url = rootUrl1 + uid + '/website';
-            return $http.post(url, website)
+        function createWebsite(website) {
+            return $http.post(baseUrl, website)
                 .then(function (response) {
                     return response.data;
                 })
         }
 
-        function findWebsitesByUser(uid) {
-            var url = rootUrl1 + uid + '/website';
-            return $http.get(url)
+        function findWebsitesByUser() {
+            return $http.get(baseUrl)
                 .then(function (response) {
                     return response.data;
                 })
         }
 
         function findWebsiteById(websiteId) {
-            var url = rootUrl2 + websiteId;
+            var url = baseUrl + '/' +  websiteId;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -45,7 +43,7 @@
         }
 
         function updateWebsite(websiteId, website) {
-            var url = rootUrl2 + websiteId;
+            var url = baseUrl + websiteId;
             return $http.put(url, website)
                 .then(function (response) {
                     return response;
@@ -53,10 +51,18 @@
         }
 
         function deleteWebsite(websiteId) {
-            var url = rootUrl2 + websiteId;
+            var url = baseUrl + websiteId;
             return $http.delete(url)
                 .then(function (response) {
                     return response;
+                })
+        }
+
+        function checkWebsiteDeveloper(websiteId) {
+            var url = '/api/assignment/checkWebsiteDeveloper?wid=' + websiteId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
                 })
         }
     }

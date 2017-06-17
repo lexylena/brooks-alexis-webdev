@@ -6,11 +6,11 @@
         .module('WAM')
         .controller('websiteListController', websiteListController);
 
-    function websiteListController($routeParams, websiteService) {
+    function websiteListController(currentUser, websiteService) {
 
         var vm = this;
 
-        vm.uid = $routeParams['uid'];
+        vm.uid = currentUser._id;
 
         websiteService.findWebsitesByUser(vm.uid)
             .then(function (websites) {

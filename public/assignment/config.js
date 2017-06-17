@@ -44,17 +44,26 @@
             .when('/website', {
                 templateUrl: 'views/website/templates/website-list.view.client.html',
                 controller: 'websiteListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkLoggedIn
+                }
             })
             .when('/website/new', {
                 templateUrl: 'views/website/templates/website-new.view.client.html',
                 controller: 'websiteNewController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkLoggedIn
+                }
             })
             .when('/website/:wid', {
                 templateUrl: 'views/website/templates/website-edit.view.client.html',
                 controller: 'websiteEditController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkWebsiteDeveloper
+                }
             })
 
 
@@ -62,17 +71,26 @@
             .when('/website/:wid/page', {
                 templateUrl: 'views/page/templates/page-list.view.client.html',
                 controller: 'pageListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkWebsiteDeveloper
+                }
             })
             .when('/website/:wid/page/new', {
                 templateUrl: 'views/page/templates/page-new.view.client.html',
                 controller: 'pageNewController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkWebsiteDeveloper
+                }
             })
             .when('/website/:wid/page/:pid', {
                 templateUrl: 'views/page/templates/page-edit.view.client.html',
                 controller: 'pageEditController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkPageDeveloper
+                }
             })
 
 
@@ -80,22 +98,34 @@
             .when('/website/:wid/page/:pid/widget', {
                 templateUrl: 'views/widget/templates/widget-list.view.client.html',
                 controller: 'widgetListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkPageDeveloper
+                }
             })
             .when('/website/:wid/page/:pid/widget/new', {
                 templateUrl: 'views/widget/templates/widget-chooser.view.client.html',
                 controller: 'widgetChooserController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkPageDeveloper
+                }
             })
             .when('/website/:wid/page/:pid/widget/:wgid', {
                 templateUrl: 'views/widget/templates/widget-edit.view.client.html',
                 controller: 'widgetEditController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkWidgetDeveloper
+                }
             })
             .when('/website/:wid/page/:pid/widget/:wgid/search', {
                 templateUrl: 'views/widget/templates/widget-flickr-search.view.client.html',
                 controller: 'flickrImageSearchController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkWidgetDeveloper
+                }
             })
     }
 
@@ -119,6 +149,21 @@
             .then(function (currentUser) {
                 if (currentUser === '0') {
                     deferred.resolve({});
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function checkWebsiteDeveloper($q, $location, $route, websiteService) {
+        var deferred = $q.defer();
+        var wid = $route.current.params['wid'];
+        websiteService.checkWebsiteDeveloper(wid)
+            .then(function (currentUser) {
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/');
                 } else {
                     deferred.resolve(currentUser);
                 }

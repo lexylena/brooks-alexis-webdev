@@ -4,7 +4,7 @@
         <!-- nav part only shown on small+ screens -->
         <div class="col-sm-4 hidden-xs">
             <div class="navbar-text pull-left">
-                <a href="#!/user/{{vm.uid}}/website">
+                <a href="#!/website">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </div>
@@ -12,7 +12,7 @@
                 Websites
             </div>
             <div class="navbar-text pull-right">
-                <a href="#!/user/{{vm.uid}}/website/new">
+                <a href="#!/website/new">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </div>
@@ -21,7 +21,7 @@
         <!-- navbar shown on all size screens -->
         <div class="col-sm-8">
             <div class="navbar-text pull-left hidden-sm hidden-md hidden-lg">
-                <a href="#!/user/{{vm.uid}}/website">
+                <a href="#!/website">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </div>
@@ -43,10 +43,10 @@
     <div class="col-sm-4 hidden-xs wd-scrollable-left-split">
         <ul class="list-group">
             <li ng-repeat="website in vm.websites" class="list-group-item">
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}/page">
+                <a href="#!/website/{{vm.wid}}/page">
                     {{website.name}}
                 </a>
-                <a href="#!/user/{{vm.uid}}/website/{{vm.wid}}">
+                <a href="#!/website/{{vm.wid}}">
                     <span class="glyphicon glyphicon-cog pull-right"></span>
                 </a>
             </li>
@@ -82,7 +82,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-text pull-right">
-            <a href="#!/user/{{vm.uid}}">
+            <a href="#!/profile">
                 <span class="glyphicon glyphicon-user pull-right"></span>
             </a>
         </div>

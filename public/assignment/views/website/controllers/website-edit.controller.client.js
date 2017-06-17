@@ -6,11 +6,11 @@
         .module('WAM')
         .controller('websiteEditController', websiteEditController);
 
-    function websiteEditController($location, $routeParams, websiteService) {
+    function websiteEditController($location, $routeParams, currentUser, websiteService) {
 
         var vm = this;
 
-        vm.uid = $routeParams['uid'];
+        vm.uid = currentUser._id;
         vm.wid = $routeParams['wid'];
 
         function init() {
@@ -37,20 +37,14 @@
             }
             websiteService.updateWebsite(vm.wid, vm.cur)
                 .then(function () {
-                    // websiteService.findWebsiteById(vm.wid)
-                    //     .then(function (website) {
-                    //         console.log(website);
-                    //     });
-
-                    $location.url('/user/' + vm.uid + '/website');
+                    $location.url('/website');
                 });
         }
 
         function deleteWebsite() {
             websiteService.deleteWebsite(vm.wid)
                 .then(function (res) {
-                    console.log(res.status);
-                    $location.url('/user/' + vm.uid + '/website');
+                    $location.url('/website');
                 })
         }
     }

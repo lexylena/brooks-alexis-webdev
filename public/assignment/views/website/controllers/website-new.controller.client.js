@@ -6,11 +6,11 @@
         .module('WAM')
         .controller('websiteNewController', websiteNewController);
 
-    function websiteNewController($location, $routeParams, websiteService) {
+    function websiteNewController($location, currentUser, websiteService) {
 
         var vm = this;
 
-        vm.uid = $routeParams['uid'];
+        vm.uid = currentUser._id;
 
         function init() {
             websiteService.findWebsitesByUser(vm.uid)
@@ -28,9 +28,9 @@
                 vm.error = 'Website name is required';
                 return;
             }
-            websiteService.createWebsite(vm.uid, website)
+            websiteService.createWebsite(website)
                 .then(function () {
-                    $location.url('/user/' + vm.uid + '/website');
+                    $location.url('/website');
                 });
         }
     }
