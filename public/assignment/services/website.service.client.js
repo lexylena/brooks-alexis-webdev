@@ -43,7 +43,7 @@
         }
 
         function updateWebsite(websiteId, website) {
-            var url = baseUrl + websiteId;
+            var url = baseUrl + '/' + websiteId;
             return $http.put(url, website)
                 .then(function (response) {
                     return response;
@@ -51,7 +51,7 @@
         }
 
         function deleteWebsite(websiteId) {
-            var url = baseUrl + websiteId;
+            var url = baseUrl + '/' + websiteId;
             return $http.delete(url)
                 .then(function (response) {
                     return response;
