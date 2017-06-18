@@ -23,11 +23,16 @@
 
         vm.createWebsite = createWebsite;
 
-        function createWebsite(website) {
-            if (website === undefined || website.name === undefined || website.name === "") {
-                vm.error = 'Website name is required';
+        function createWebsite(form) {
+            if (form.$invalid) {
                 return;
             }
+
+            var website = {
+                name: form.name,
+                description: form.description
+            };
+
             websiteService.createWebsite(website)
                 .then(function () {
                     $location.url('/website');

@@ -55,24 +55,29 @@
 
 <!-- website editor shown on all size screens -->
     <div class="col-sm-8 col-sm-offset-4">
-        <form>
+        <form novalidate name="form">
 
-            <div ng-show="vm.error" class="alert alert-danger">
-                {{vm.error}}
+            <div ng-show="form.$invalid === true && form.$submitted === true" class="alert alert-danger">
+                Website name is required
             </div>
 
-            <label for="edit-website-name">Website Name</label>
+            <label for="edit-website-name">
+                Website Name
+                <span ng-show="form.$invalid === true && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
             <input type="text"
                    ng-model="vm.cur.name"
                    id="edit-website-name"
                    class="form-control"
-                   value="Address Book App"
+                   required="required"
                    placeholder="Website Name"/>
+
             <label for="edit-website-description">Website Description</label>
             <textarea ng-model="vm.cur.description"
                       id="edit-website-description"
                       class="form-control"></textarea>
-            <a ng-click="vm.updateWebsite()" class="btn btn-block btn-success">Save Changes</a>
+            <button type="submit" ng-click="vm.updateWebsite(form)" class="btn btn-block btn-success">Save Changes</button>
             <a ng-click="vm.deleteWebsite()" class="btn btn-block btn-danger">Delete</a>
         </form>
     </div>

@@ -30,9 +30,8 @@
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 
-        function updateWebsite() {
-            if (vm.cur.name === "") {
-                vm.error = 'Website Name is required';
+        function updateWebsite(form) {
+            if (form.$invalid) {
                 return;
             }
             websiteService.updateWebsite(vm.wid, vm.cur)

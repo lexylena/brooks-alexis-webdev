@@ -55,23 +55,28 @@
 
     <!-- shown on all screens -->
     <div class="col-sm-8 col-sm-offset-4">
-        <form>
+        <form novalidate name="form">
 
-            <div ng-show="vm.error" class="alert alert-danger">
-                {{vm.error}}
+            <div ng-show="form.$invalid === true && form.$submitted === true" class="alert alert-danger">
+                Website name is required
             </div>
 
-            <label for="new-website-name">Name</label>
+            <label for="new-website-name">
+                Name
+                <span ng-show="form.$invalid === true && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
             <input type="text"
-                   ng-model="website.name"
+                   ng-model="form.name"
                    id="new-website-name"
                    class="form-control"
+                   required="required"
                    placeholder="Website Name"/>
             <label for="new-website-description">Description</label>
             <textarea id="new-website-description"
-                      ng-model="website.description"
+                      ng-model="form.description"
                       class="form-control description"></textarea>
-            <a ng-click="vm.createWebsite(website)" class="btn btn-block btn-success">Create Website</a>
+            <button type="submit" ng-click="vm.createWebsite(form)" class="btn btn-block btn-success">Create Website</button>
         </form>
     </div>
 </div>
