@@ -9,6 +9,7 @@ var websiteModel = require('../website/website.model.server');
 var userModel = mongoose.model('UserModel', userSchema);
 userModel.createUser = createUser;
 userModel.findUserById = findUserById;
+userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserByUsername = findUserByUsername;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.deleteUser = deleteUser;
@@ -25,6 +26,10 @@ function createUser(user) {
 
 function findUserById(uid) {
     return userModel.findOne({_id: uid});
+}
+
+function findUserByGoogleId(googleId) {
+    return userModel.findOne({"google.id": googleId});
 }
 
 function findUserByUsername(username) {
