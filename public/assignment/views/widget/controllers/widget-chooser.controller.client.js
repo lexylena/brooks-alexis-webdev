@@ -22,9 +22,9 @@
             if (type === 'heading') {
                 widget = { "widgetType": "HEADING", "size": "1"};
             } else if (type === 'image') {
-                widget = { "widgetType": "IMAGE", "width": "100"};
+                widget = { "widgetType": "IMAGE", "width": 100};
             } else if (type === 'youtube') {
-                widget = {"widgetType": "YOUTUBE", "width": "100"}
+                widget = {"widgetType": "YOUTUBE", "width": 100}
             } else if (type === 'html') {
                 widget = {"widgetType": "HTML"}
             } else if (type === 'text') {
