@@ -10,10 +10,14 @@
 
         var vm = this;
 
-        vm.login = function (username, password) {
+        vm.login = function (form) {
+            if (form.$invalid) {
+                vm.message = null;
+                return;
+            }
 
             userService
-                .login(username, password)
+                .login(form.username, form.password)
                 .then(login, handleError);
 
             function login(found) {

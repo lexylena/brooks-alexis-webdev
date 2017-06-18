@@ -14,7 +14,7 @@
 
 <!-- profile content -->
 <div class="container-fluid wd-centered">
-    <form novalidate class="wd-form">
+    <form novalidate name="form" class="wd-form">
 
         <div ng-show="vm.error" class="alert alert-danger">
             {{vm.error}}
@@ -24,40 +24,38 @@
             {{vm.message}}
         </div>
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input readonly ng-model="vm.user.username" class="form-control" id="username">
+        <div ng-show="!vm.message && form.$invalid === true && form.$submitted === true" class="alert alert-danger">
+            Must enter valid email
         </div>
 
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input ng-model="vm.user.email" type="email" class="form-control" id="email">
-        </div>
+        <label for="username">Username</label>
+        <input readonly ng-model="vm.user.username" class="form-control" id="username">
 
-        <div class="form-group">
-            <label for="pw">Password</label>
-            <input ng-model="password" type="password" class="form-control" id="pw">
-        </div>
-        <div class="form-group">
-            <label for="verify-pw">Verify Password</label>
-            <input ng-model="password2" type="password" class="form-control" id="verify-pw">
-        </div>
+        <label for="email">
+            Email address
+            <span ng-show="form.$invalid && form.$submitted === true"
+                  class="glyphicon glyphicon-exclamation-sign"></span>
+        </label>
+        <input ng-model="vm.user.email" type="email" class="form-control" id="email" required="required">
 
-        <div class="form-group">
-            <label for="first-name">First Name</label>
-            <input ng-model="vm.user.firstName" type="text" class="form-control" id="first-name">
-        </div>
-        <div class="form-group">
-            <label for="last-name">Last Name</label>
-            <input ng-model="vm.user.lastName" type="text" class="form-control" id="last-name">
-        </div>
+        <label for="pw">Password</label>
+        <input ng-model="form.password" type="password" class="form-control" id="pw">
+
+        <label for="verify-pw">Verify Password</label>
+        <input ng-model="form.password2" type="password" class="form-control" id="verify-pw">
+
+        <label for="first-name">First Name</label>
+        <input ng-model="vm.user.firstName" type="text" class="form-control" id="first-name">
+
+        <label for="last-name">Last Name</label>
+        <input ng-model="vm.user.lastName" type="text" class="form-control" id="last-name">
 
         <a class="btn btn-primary btn-block" href="#!/website">
             Websites
         </a>
-        <a ng-click="vm.updateUser(password, password2)" class="btn btn-success btn-block">
+        <button type="submit" ng-click="vm.updateUser(form)" class="btn btn-success btn-block">
             Save Profile Settings
-        </a>
+        </button>
 
         <a ng-click="vm.unregister()" class="btn btn-danger btn-block">
             Delete Account

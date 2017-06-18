@@ -23,22 +23,28 @@
                 });
         }
 
-        function updateUser(password, password2) {
-            if (password !== password2) {
+        function updateUser(form) {
+            if (form.$invalid) {
+                vm.message = null;
+                return;
+            }
+
+            if (form.password !== form.password2) {
+                console.log(form.password);
+                console.log(form.password2);
                 vm.error = "Passwords must match";
                 return;
             }
 
-            var email = vm.user['email'];
-            if (email === null || email === undefined || email === "") {
-                vm.error = "Must enter valid email";
-                return;
-            }
-
-            vm.user['password'] = password;
+            var user = {
+                email: vm.user.email,
+                password: form.password,
+                firstName: vm.user.firstName,
+                lastName: vm.user.lastName
+            };
 
             userService
-                .updateUser(vm.user._id, vm.user)
+                .updateUser(vm.user._id, user)
                 .then(function () {
                     vm.message = "User updated successfully";
                 });
