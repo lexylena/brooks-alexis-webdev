@@ -1,23 +1,49 @@
-<label for="name">Name</label>
+<label for="name">
+    Name
+    <span ng-show="form.name.$invalid === true && form.$submitted === true"
+          class="glyphicon glyphicon-exclamation-sign"></span>
+</label>
 <input type="text"
        id="name"
        ng-model="vm.cur.name"
+       name="name"
+       required="required"
        class="form-control"/>
+
 <label for="text">Text</label>
 <input type="text"
        id="text"
        ng-model="vm.cur.text"
        class="form-control"/>
-<label for="url">URL</label>
+
+<label for="url">
+    URL
+    <span ng-show="form.url.$invalid === true && form.$submitted === true"
+          class="glyphicon glyphicon-exclamation-sign"></span>
+</label>
 <input type="url"
        id="url"
        ng-model="vm.cur.url"
+       name="url"
+       required="required"
        class="form-control"/>
-<label for="width">Width</label>
+
+<label for="width">
+    Width
+    <span ng-show="form.width.$invalid === true && form.$submitted === true"
+          class="glyphicon glyphicon-exclamation-sign">
+        <br><b>Width must be between 0 and 100</b>
+    </span>
+</label>
 <div class="input-group">
-    <input type="text"
+    <input type="number"
+           min="0"
+           max="100"
            id="width"
            ng-model="vm.cur.width"
+           value="vm.cur.width"
+           name="width"
+           required="required"
            class="form-control">
     <span class="input-group-addon">%</span>
 </div>

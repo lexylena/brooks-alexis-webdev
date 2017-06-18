@@ -1,19 +1,33 @@
-<label for="heading-name">Name</label>
+<label for="heading-name">
+    Name
+    <span ng-show="form.name.$error.required && form.$submitted === true"
+          class="glyphicon glyphicon-exclamation-sign"></span>
+</label>
 <input type="text"
        id="heading-name"
        ng-model="vm.cur.name"
+       name="name"
+       required="required"
        class="form-control"/>
-<label for="heading-text">Text</label>
+
+<label for="heading-text">
+    Text
+    <span ng-show="form.text.$error.required && form.$submitted === true"
+          class="glyphicon glyphicon-exclamation-sign"></span>
+</label>
 <input type="text"
        id="heading-text"
        ng-model="vm.cur.text"
+       name="text"
+       required="required"
        class="form-control"/>
+
 <label for="heading-size">Size</label>
-<select id="heading-size" ng-model="vm.cur.size" class="form-control">
-    <option value="1">1 (largest)</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6 (smallest)</option>
+<select id="heading-size" ng-model="vm.cur.size"
+        name="size" required="required" class="form-control">
+    <option ng-repeat="option in vm.options"
+            ng-selected="vm.cur.size === option.value"
+            value="{{option.value}}">
+        {{option.text}}
+    </option>
 </select>

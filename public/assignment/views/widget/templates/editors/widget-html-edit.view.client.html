@@ -1,11 +1,21 @@
 
 <div class="container-fluid">
+    <label>
+        Name
+        <span ng-show="form.name.$error.required && form.$submitted === true"
+              class="glyphicon glyphicon-exclamation-sign"></span>
+    </label>
+    <input type="text" class="form-control" required="required"
+           name="name" ng-model="vm.cur.name"/>
 
-<label>HTML</label>
-<div ng-model="vm.cur.text"
-     text-angular
-     ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
-        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
-        ['indent','outdent'],['html']]">
-</div>
+    <label>
+        HTML
+        <span ng-show="form.$submitted && (!vm.cur.text || vm.cur.text === '')" class="glyphicon glyphicon-exclamation-sign"></span>
+    </label>
+    <div ng-model="vm.cur.text"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+            ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+            ['indent','outdent'],['html']]">
+    </div>
 </div>

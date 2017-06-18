@@ -19,10 +19,14 @@
 
 <!-- editor content -->
 <div class="container-fluid wd-centered">
-    <div class="wd-form">
+    <form novalidate name="form" class="wd-form">
 
         <div ng-show="vm.error" class="alert alert-danger">
             {{vm.error}}
+        </div>
+
+        <div ng-show="form.$invalid === true && form.$submitted === true && !vm.error" class="alert alert-danger">
+            Missing required fields
         </div>
 
         <div ng-switch="vm.cur.widgetType">
@@ -48,9 +52,9 @@
 
         </div>
 
-        <a ng-click="vm.saveWidget()" class="btn btn-block btn-success">{{vm.btnSave}}</a>
+        <button type="submit" ng-click="vm.saveWidget(form)" class="btn btn-block btn-success">{{vm.btnSave}}</button>
         <a ng-hide="vm.isNew" ng-click="vm.deleteWidget()" class="btn btn-block btn-danger">Delete</a>
-    </div>
+    </form>
 </div>
 
 

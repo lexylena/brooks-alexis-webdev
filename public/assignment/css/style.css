@@ -109,7 +109,8 @@ img.image-search-result {
     margin-bottom: 15px;
 }
 
-.ng-submitted .form-control.ng-invalid {
+.ng-submitted .form-control.ng-invalid,
+.ng-submitted .form-control.ng-empty.ng-valid-url {
     border-color: red;
     border-width: 3px;
 }

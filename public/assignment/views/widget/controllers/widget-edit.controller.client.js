@@ -12,6 +12,9 @@
         vm.wid = $routeParams['wid'];
         vm.pid = $routeParams['pid'];
         vm.wgid = $routeParams['wgid'];
+        vm.options = [{value: 1, text: '1 (largest)'}, {value: 2, text: '2'},
+            {value: 3, text: '3'}, {value: 4, text: '4'}, {value: 5, text: '5'},
+            {value: 6, text: '6 (smallest)'}];
 
         function init() {
             widgetService.findWidgetById(vm.wgid)
@@ -34,7 +37,6 @@
                     }
                 });
         }
-
         init();
 
         vm.deleteWidget = deleteWidget;
@@ -48,26 +50,14 @@
                 })
         }
 
-        function saveWidget() {
-            if (vm.cur.url !== undefined) { // either image or youtube
-                if ((!vm.cur.url && vm.cur.widgetType === 'YOUTUBE') ||
-                    (!vm.cur.url && !vm.cur.flickrUrl && vm.cur.widgetType === 'IMAGE')) {
-                    vm.error = 'URL is required';
-                    return;
-                }
-
-                var width = parseInt(vm.cur.width);
-                if (width < 0 || width > 100) {
-                    vm.error = 'Please enter a width percentage between 0 and 100';
-                    return;
-                }
+        function saveWidget(form) {
+            if (form.$invalid) {
+                return;
             }
-            if (vm.cur.size !== undefined) { // heading widget
-                if (!vm.cur.text) {
 
-                    vm.error = 'Heading Text is required';
-                    return;
-                }
+            if (!vm.cur.url && !vm.cur.flickrUrl && vm.cur.widgetType === 'IMAGE') {
+                vm.error = 'URL is required';
+                return;
             }
 
             if (vm.cur.widgetType === 'HTML' && !vm.cur.text) {
