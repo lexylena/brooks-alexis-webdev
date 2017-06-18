@@ -61,6 +61,9 @@ function updateUser(uid, user) {
             update[fields[ii]] = user[fields[ii]];
         }
     }
+    if (update.password) {
+        update.password = bcrypt.hashSync(update.password);
+    }
 
     return userModel.update({_id: uid}, { $set : update });
 }
