@@ -30,9 +30,8 @@
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
 
-        function updatePage() {
-            if (vm.cur.name === "") {
-                vm.error = 'Page name is required';
+        function updatePage(form) {
+            if (form.$invalid) {
                 return;
             }
 

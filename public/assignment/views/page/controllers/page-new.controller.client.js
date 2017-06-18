@@ -23,11 +23,16 @@
 
         vm.createPage = createPage;
 
-        function createPage(page) {
-            if (page === undefined || page.name === undefined || page.name === "") {
-                vm.error = 'Page name is required';
+        function createPage(form) {
+            if (form.$invalid) {
                 return;
             }
+
+            var page = {
+                name: form.name,
+                title: form.title
+            };
+
             pageService.createPage(vm.wid, page)
                 .then(function () {
                     $location.url('/website/' + vm.wid + '/page');
