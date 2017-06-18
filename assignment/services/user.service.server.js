@@ -20,7 +20,6 @@ passport.deserializeUser(deserializeUser);
 
 
 app.get('/api/assignment/checkLoggedIn', checkLoggedIn);
-app.get('/api/assignment/checkAdmin', checkAdmin);
 app.post('/api/assignment/login', passport.authenticate('local'), login);
 app.post('/api/assignment/logout', logout);
 app.post('/api/assignment/register', register);
@@ -29,8 +28,8 @@ app.put('/api/assignment/user/:uid', updateUser);
 app.get('/api/assignment/user/:uid', findUserById);
 app.get('/api/assignment/user', findUser);
 
-app.post('/api/assignment/user', isAdmin, createUser);
-app.delete('/api/assignment/user/:uid', isAdmin, deleteUser);
+app.post('/api/assignment/user', checkAdmin, createUser);
+app.delete('/api/assignment/user/:uid', checkAdmin, deleteUser);
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
@@ -49,7 +48,7 @@ app.get('/auth/google/callback',
 
 function localStrategy(username, password, done) {
     userModel
-        .findUserByCredentials({username: username, password: password})
+        .findUserByCredentials(username, password)
         .then(
             function(user) {
                 if (!user) { return done(null, false); }
@@ -142,6 +141,11 @@ function updateUser(req, res) {
     var user = req.body;
     var uid = req.params['uid'];
 
+    if (uid !== req.user._id && req.user.roles.indexOf('ADMIN') > -1) {
+        res.sendStatus(401); // non-admin can only update self
+        return;
+    }
+
     userModel.updateUser(uid, user)
         .then(function (status) {
             res.sendStatus(200);
@@ -161,14 +165,14 @@ function findUser(req, res) {
     if (username) {
         userModel.findUserByUsername(username)
             .then(function (found) {
-                if (!found) {
+                if (found === null) {
                     res.sendStatus(404);
                     return;
                 }
                 res.json(found);
             })
     } else {
-        isAdmin(req, res, function() {
+        checkAdmin(req, res, function() {
             userModel.findAllUsers()
                 .then(function (users) {
                     res.json(users);
@@ -177,7 +181,7 @@ function findUser(req, res) {
     }
 }
 
-function isAdmin(req, res, next) {
+function checkAdmin(req, res, next) {
     if (req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
         next();
     } else {
