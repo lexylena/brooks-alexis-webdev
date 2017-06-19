@@ -23,7 +23,7 @@ var artworkSchema = mongoose.Schema({
         type: String
     },
     relatedWorks: [{type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkModel'}],
-    images: [{type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkImageModel'}],
+    images: [{type: String, required: true}],
     primaryImageUrl: {type: String, required: true},
     createdDate: {type: Date, default: Date.now},
     lastUpdated: {type: Date, default: Date.now},
