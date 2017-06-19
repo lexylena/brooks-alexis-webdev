@@ -30,6 +30,6 @@ var todo = require('./lectures/todo/app.js');
 todo(app);
 
 require('./assignment/app.js');
-require('./project/app.js');
+// require('./project/app.js');
 
 app.listen(port);
