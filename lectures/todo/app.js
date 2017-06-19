@@ -41,4 +41,10 @@ module.exports = function(app) {
         todos.splice(index, 1);
         res.json(todos);
     });
+
+    app.post('/api/todo/', function(req, res, next) {
+        console.log(req.body);
+        todos.push(req.body);
+        res.json(todos);
+    });
 };

@@ -15,8 +15,8 @@
         // controller being called on returned module; known by name in the app
         // declaring that controller as available by that name
 
-    // $scope instantiated by underlying framework; object-oriented way for view to talk to controller and vice-versa
-    // anything declared with $scope in either controller or view is available in other
+    // $scope instantiated by underlying framework; object-oriented way for views to talk to controller and vice-versa
+    // anything declared with $scope in either controller or views is available in other
     function TodoListController($scope, $http) { // http allows interact with any http source
         $scope.todo = {title: "initial title", details: "initial details"};
         $scope.addTodo = addTodo; // mapping function declared in scope to local function
@@ -45,8 +45,10 @@
             newTodo._id = (new Date()).getTime();
             newTodo.date = new Date();
 
-            $scope.todos.push(newTodo);
+            // $scope.todos.push(newTodo);
             // console.log(newTodo);
+
+            $http.post('api/todo/', newTodo).then(findAllTodos());
         }
 
         function removeTodo(todo) {
@@ -68,9 +70,9 @@
 
     /*
     MVC
-     - view: html, css, 'immediately consumed by human actor'
-     - controller: respond to events generated from view (handle event stream from view)
-                    and manipulates model accordingly then returns data from model back to view
+     - views: html, css, 'immediately consumed by human actor'
+     - controller: respond to events generated from views (handle event stream from views)
+                    and manipulates model accordingly then returns data from model back to views
      - model: representations/structure of data and their relationships
     */
 }) ();
