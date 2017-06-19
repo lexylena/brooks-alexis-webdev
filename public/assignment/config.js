@@ -9,12 +9,12 @@
     function configuration($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'home.html'
-                // controller: 'homeController',
-                // controllerAs: 'vm',
-                // resolve: {
-                //     currentUser: checkCurrentUser
-                // }
+                templateUrl: 'views/home/home.view.client.html',
+                controller: 'homeController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
             })
 
 
