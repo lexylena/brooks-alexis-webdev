@@ -12,18 +12,16 @@
 
         vm.register = register;
 
-        function register(user, password2) {
-            if (user.username === undefined) {
-                vm.error = "Please enter a username";
+        function register(form) {
+            if (form.$invalid === true) {
                 return;
             }
-
-            if (!user.password || user.password !== password2) {
+            if (!form.password || form.password !== form.password2) {
                 vm.error = "Passwords must match";
                 return;
             }
 
-            return userService.findUserByUsername(user.username)
+            return userService.findUserByUsername(form.username)
                 .then(usernameFound, usernameAvailable);
 
             function usernameFound(user) {
@@ -31,21 +29,19 @@
             }
 
             function usernameAvailable() {
-                if (!user.email) {
-                    vm.error = "Must enter valid email";
-                    return;
-                }
+                var user = {
+                    accountType: form.accountType,
+                    email: form.email,
+                    username: form.username,
+                    password: form.password,
+                    firstName: form.firstName,
+                    lastName: form.lastName
+                };
 
-                // var user = {
-                //     username: username,
-                //     password: password,
-                //     email: email
-                // };
-
-                userService.createUser(user)
-                    .then(function (newUser) {
-                        $location.url('/user/' + newUser._id + '/settings');
-                    });
+                userService.register(user)
+                    .then(function (user) {
+                        $location.url('/profile/' + user._id);
+                    })
             }
         }
     }

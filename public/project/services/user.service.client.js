@@ -11,8 +11,8 @@
         var baseUrl = '/api/project/user';
 
         return {
-            checkLoggedIn: checkLoggedIn,
-            checkAdmin: checkAdmin,
+            isLoggedIn: isLoggedIn,
+            isAdmin: isAdmin,
             
             login: login,
             logout: logout,
@@ -34,15 +34,15 @@
         };
 
 
-        function checkLoggedIn() {
-            return $http.get('/api/project/checkLoggedIn')
+        function isLoggedIn() {
+            return $http.get('/api/project/isLoggedIn')
                 .then(function (response) {
                     return response.data; // either user object or 0
                 })
         }
 
-        function checkAdmin() {
-            return $http.get('/api/project/checkAdmin')
+        function isAdmin() {
+            return $http.get('/api/project/isAdmin')
                 .then(function (response) {
                     return response.data;
                 })

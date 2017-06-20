@@ -1,66 +1,149 @@
-<div class="container-fluid wd-centered">
-    <form class="wd-form">
+<div class="container-fluid col-sm-8 col-sm-offset-2">
+    <form novalidate name="form" class="form-horizontal">
         <h1>Register</h1>
+
+        <div ng-show="form.$invalid === true && form.$submitted === true" class="alert alert-danger">
+            Missing required fields
+        </div>
 
         <div ng-show="vm.error" class="alert alert-danger">
             {{vm.error}}
         </div>
 
-        <label for="email">Email</label>
-        <input type="email"
-               ng-model="user.email"
-               id="email"
-               placeholder="abc@example.com"
-               class="form-control"/>
 
-        <label for="username">Username</label>
-        <input type="text"
-               ng-model="user.username"
-               id="username"
-               placeholder="username"
-               class="form-control"/>
 
-        <label for="pw">Password</label>
-        <input type="password"
-               ng-model="user.password"
-               id="pw"
-               class="form-control"/>
+        <!--<div class="form-group">-->
+            <label>
+                Account Type
+                <a wbdv-popover href="" data-container="body" tabindex="0"
+                   data-toggle="popover" data-placement="right"
+                   data-trigger="focus"
+                   data-content="Curators can create collections of artwork with other curators, while artists can add their own artwork to PROJECT_NAME's database to be discovered by all our users!">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+                <span ng-show="!form.accountType && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="accountType"
+                           value="CURATOR"> Curator
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="radio"
+                           name="accountType"
+                           value="ARTIST"> Artist
+                </label>
+            </div>
+        <!--</div>-->
 
-        <label for="verify-pw">Verify Password</label>
-        <input type="password"
-               ng-model="password2"
-               id="verify-pw"
-               class="form-control"/>
 
-        <label for="first">First Name</label>
-        <input type="text"
-               ng-model="user.firstName"
-               id="first"
-               placeholder="John"
-               class="form-control"/>
+        <div class="form-group">
+            <label class="col-sm-2" for="email">
+                Email
+                <span ng-show="(form.$error.email || !form.email) && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-10">
+                <input type="email"
+                       ng-model="form.email"
+                       id="email"
+                       required="required"
+                       placeholder="abc@example.com"
+                       class="form-control"/>
+            </div>
+        </div>
 
-        <label for="last">Last Name</label>
-        <input type="text"
-               ng-model="user.lastName"
-               id="last"
-               placeholder="Doe"
-               class="form-control"/>
 
-        <div><label>
-            Account Type <a data-toggle="tooltip" title="help"><span class="glyphicon glyphicon-info-sign"></span></a>
-        </label></div>
-        <input type="radio"
-               id="artistType"
-               value="ARTIST"
-               ng-model="user.type"> <label for="artistType">Artist</label>
-        <input type="radio"
-               id="curatorType"
-               value="CURATOR"
-               ng-model="user.type"> <label for="curatorType">Curator</label>
+        <div class="form-group">
+            <label class="col-sm-2" for="username">
+                Username
+                <span ng-show="!form.username && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-10">
+                <input type="text"
+                       ng-model="form.username"
+                       id="username"
+                       required="required"
+                       placeholder="username"
+                       class="form-control"/>
+            </div>
+        </div>
 
-        <a ng-click="vm.register(user, password2)" class="btn btn-primary btn-block">
-            Register</a>
-        <a class="btn btn-danger  btn-block"
-           href="#!/login">Cancel</a>
+
+        <div class="form-group">
+            <label class="col-sm-2" for="pw">
+                Password
+                <span ng-show="!form.password && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-10">
+                <input type="password"
+                       ng-model="form.password"
+                       id="pw"
+                       required="required"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="verify-pw">
+                Verify Password
+                <span ng-show="!form.password2 && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-10">
+                <input type="password"
+                       ng-model="form.password2"
+                       id="verify-pw"
+                       required="required"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="firstName">
+                First Name
+                <span ng-show="!form.firstName && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-10">
+                <input type="text"
+                       ng-model="form.firstName"
+                       id="firstName"
+                       required="required"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="lastName">
+                Last Name
+            </label>
+            <div class="col-sm-10">
+                <input type="text"
+                       ng-model="form.lastName"
+                       id="lastName"
+                       class="form-control"/>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <button type="submit" ng-click="vm.register(form)" class="btn btn-primary btn-block">
+                Register</button>
+
+            <a class="btn btn-danger  btn-block"
+               href="#!/login">Cancel</a>
+        </div>
+
     </form>
 </div>

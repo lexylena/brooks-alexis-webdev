@@ -15,18 +15,14 @@
             })
 
 
-            // .when('/home', {
-            //     templateUrl: 'views/search/home.html',
-            //     controller: 'homeController',
-            //     controllerAs: 'vm'
-            // })
-            // .when('/user/:uid/home', {
-            //     templateUrl: 'views/search/home.html',
-            //     controller: 'homeController',
-            //     controllerAs: 'vm'
-            // })
-
-
+            .when('/home', {
+                templateUrl: 'views/search/home.html',
+                controller: 'homeController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
             .when('/login', {
                 templateUrl: 'views/user/templates/login.view.client.html',
                 controller: 'loginController',
@@ -37,17 +33,40 @@
                 controller: 'registerController',
                 controllerAs: 'vm'
             })
-            // // a logged in user is viewing a profile
-            // .when('/user/:uid/profile/:uid', {
-            //     templateUrl: 'views/user/profile.view.client.html',
-            //     controller: 'profileController',
-            //     controllerAs: 'vm'
-            // })
-            // // an anonymous user is viewing a profile
-            // .when('/profile/:uid', {
-            //     templateUrl: 'views/user/profile.view.client.html',
-            //     controller: 'profileController',
-            //     controllerAs: 'vm'
-            // })
+            .when('/profile/:uid', {
+                templateUrl: 'views/user/profile.view.client.html',
+                controller: 'profileController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
+            })
+    }
+
+    function checkLoggedIn($q, $location, userService) {
+        var deferred = $q.defer();
+        userService.isLoggedIn()
+            .then(function (currentUser) { // either user object or 0
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/login');
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function checkCurrentUser($q, userService) {
+        var deferred = $q.defer();
+        userService.isLoggedIn()
+            .then(function (currentUser) {
+                if (currentUser === '0') {
+                    deferred.resolve({});
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
     }
 })();

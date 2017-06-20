@@ -4,9 +4,9 @@
 (function () {
     angular
         .module('project')
-        .factory('hamApiService', hamApiService);
+        .factory('pocService', pocService);
 
-    function hamApiService($http) {
+    function pocService($http) {
 
         // var key = '3fe08c39732dab1136e68ac5999f199ae255621e13aac0f6abaabadc29f5515a';
 

@@ -7,15 +7,15 @@ var userSchema = mongoose.Schema( {
     password: {type: String, require: true},
     roles: [{type: String, default: 'CURATOR', enum: ['CURATOR', 'ARTIST', 'ADMIN']}],
     firstName: {type: String, require: true},
-    lastName: {type: String, require: true},
+    lastName: {type: String},
     displayName: {type: String, require: true},
     email: {type: String, require: true},
     bio: String,
     dateCreated: {type: Date, default: Date.now},
     portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "ArtworkModel"}],
     collections: [{type: mongoose.Schema.Types.ObjectId, ref: "CollectionModel"}],
-    friends: [{type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
-    followedArtists: [{type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}]
+    friends: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}],
+    followedArtists: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}]
 }, {collection: "project_user"});
 
 module.exports = userSchema;

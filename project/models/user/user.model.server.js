@@ -7,12 +7,13 @@ var userSchema = require('./user.schema.server');
 var collectionModel = require('../collection/collection.model.server');
 var artworkModel = require('../artwork/artwork.model.server');
 
-var userModel = mongoose.model('UserModel', userSchema);
+var userModel = mongoose.model('PUserModel', userSchema);
 userModel.createUser = createUser;
 userModel.findUserById = findUserById;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserByFacebookId = findUserByFacebookId;
 userModel.findUserByUsername = findUserByUsername;
+userModel.findUserByEmail = findUserByEmail;
 userModel.searchUsers = searchUsers;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.findAllUsers = findAllUsers;
@@ -32,6 +33,11 @@ userModel.removeArtwork = removeArtwork;
 module.exports = userModel;
 
 function createUser(user) {
+    user.displayName = user.firstName;
+    if (user.lastName) {
+        user.displayName += ' ' + user.lastName;
+    }
+
     user.password = bcrypt.hashSync(user.password);
     return userModel.create(user);
 }
@@ -52,6 +58,10 @@ function findUserByUsername(username) {
     return userModel.findOne({username: username});
 }
 
+function findUserByEmail(email) {
+    return userModel.findOne({email: email});
+}
+
 function searchUsers(keyword) {
     return userModel.find({$or: [
         {username: {$regex: keyword+'.*'}},
@@ -62,7 +72,8 @@ function searchUsers(keyword) {
 }
 
 function findUserByCredentials(username, password) {
-    return userModel.findOne({username: username})
+    return userModel.findOne(
+        {$or: [{username: username}, {email: username}]})
         .then(function (user) {
             if(user && bcrypt.compareSync(password, user.password)) {
                 return user;

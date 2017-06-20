@@ -6,37 +6,37 @@ var userModel = require('../models/user/user.model.server');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var googleConfig = {
-    clientID     : process.env.GOOGLE_CLIENT_ID,
-    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL  : process.env.GOOGLE_CALLBACK_URL
-};
-passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+// var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+// var googleConfig = {
+//     clientID     : process.env.GOOGLE_CLIENT_ID,
+//     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+//     callbackURL  : process.env.GOOGLE_CALLBACK_URL
+// };
+// passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
 passport.use(new LocalStrategy(localStrategy));
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
 
-app.get('/api/project/check-logged-in', checkLoggedIn);
-app.get('/api/project/check-admin', checkAdmin);
+app.get('/api/project/is-logged-in', isLoggedIn);
+app.get('/api/project/is-admin', isAdmin);
 
 app.post('/api/project/login', passport.authenticate('local'), login);
 app.post('/api/project/logout', logout);
 app.post('/api/project/register', register);
-app.delete('/api/project/unregister', isLoggedIn, unregister);
-app.put('/api/project/user/:uid', isLoggedIn, updateUser);
-app.put('/api/project/user/add-friend', isLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
-app.put('/api/project/user/remove-friend', isLoggedIn, removeFriend);
-app.put('/api/project/user/follow-artist', isLoggedIn, followArtist);
-app.put('/api/project/user/unfollow-artist', isLoggedIn, unfollowArtist);
+app.delete('/api/project/unregister', checkLoggedIn, unregister);
+app.put('/api/project/user/:uid', checkLoggedIn, updateUser);
+app.put('/api/project/user/add-friend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
+app.put('/api/project/user/remove-friend', checkLoggedIn, removeFriend);
+app.put('/api/project/user/follow-artist', checkLoggedIn, followArtist);
+app.put('/api/project/user/unfollow-artist', checkLoggedIn, unfollowArtist);
 app.get('/api/project/user/:uid', findUserById);
 
 app.get('/api/project/user', findUser);
 
-app.post('/api/project/user', isAdmin, createUser);
-app.delete('/api/project/user/:uid', isAdmin, deleteUser);
+app.post('/api/project/user', checkAdmin, createUser);
+app.delete('/api/project/user/:uid', checkAdmin, deleteUser);
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
@@ -96,9 +96,20 @@ function googleStrategy(token, refreshToken, profile, done) {
         );
 }
 
+function isAdminHelp(req) {
+    return req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1;
+}
 
-function checkLoggedIn(req, res) {
+function isLoggedIn(req, res) {
     if (req.isAuthenticated()) {
+        res.json(req.user);
+    } else {
+        res.send('0');
+    }
+}
+
+function isAdmin(req, res) {
+    if (isAdminHelp(req)) {
         res.json(req.user);
     } else {
         res.send('0');
@@ -117,6 +128,9 @@ function logout(req, res) {
 
 function register(req, res) {
     var user = req.body;
+    user.roles = [user.accountType];
+    delete user.accountType;
+
     userModel.createUser(user)
         .then(function (user) {
             req.login(user, function (status) {
@@ -127,7 +141,7 @@ function register(req, res) {
         })
 }
 
-function isLoggedIn(req, res, next) {
+function checkLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -147,7 +161,7 @@ function updateUser(req, res) {
     var updateUser = req.body;
     var uid = req.params['uid'];
 
-    if (req.user._id !== uid && req.user.roles.indexOf('ADMIN') === -1) {
+    if (req.user._id !== uid && !isAdminHelp(req)) {
         res.sendStatus(401);
         return;
     }
@@ -208,6 +222,7 @@ function findUserById(req, res) {
 
 function findUser(req, res) {
     var username = req.query['username'];
+    var email = req.query['email'];
     var keyword = req.query['keyword'];
     if (username) {
         // checking username availability for user registration
@@ -219,13 +234,24 @@ function findUser(req, res) {
                 }
                 res.json(found);
             })
+    } else if (email) {
+        // used to check if email already used to register for same account type
+        userModel.findUserByEmail(email)
+            .then(function (found) {
+                if (!found) {
+                    res.sendStatus(404);
+                    return;
+                }
+                res.json(found);
+            })
+
     } else if (keyword) {
         // searching for user
         userModel.searchUsers(keyword)
             .then(function (found) {
                 res.json(found); //  may be null if no users found
             })
-    } else if (req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
+    } else if (isAdminHelp(req)) {
         userModel.findAllUsers()
             .then(function (users) {
                 res.json(users);
@@ -236,8 +262,8 @@ function findUser(req, res) {
 }
 
 
-function isAdmin(req, res, next) {
-    if (req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1) {
+function checkAdmin(req, res, next) {
+    if (isAdminHelp(req)) {
         next(); // call next function in whatever chain in request
     } else {
         res.sendStatus(401);
@@ -283,3 +309,10 @@ function deserializeUser(user, done) {
             }
         );
 }
+
+
+module.exports = {
+    isAdminHelp: isAdminHelp,
+    checkLoggedIn: checkLoggedIn,
+    checkAdmin: checkAdmin
+};
