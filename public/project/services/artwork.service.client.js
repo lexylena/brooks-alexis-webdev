@@ -9,8 +9,8 @@
     function artworkService($http) {
 
         var baseUrl = '/api/project/artwork';
-        var hamApiUrl = 'http://api.harvardartmuseums.org'; //process.env.HAM_API_URL;
-        var key = '24befe50-4acc-11e7-8fe0-e55a894aeb34'; //process.env.HAM_API_KEY;
+        var hamApiUrl =  process.env.HAM_API_URL;
+        var key = process.env.HAM_API_KEY;
         var keyParam = 'apikey=' + key;
 
         return {
