@@ -20,6 +20,8 @@ require ("./test/app.js")(app);
 
 var port = process.env.PORT || 3000;
 
+app.set('view engine', 'ejs');
+
 /*
 var myApp = require('./lectures/todo/app.js');
 console.log(myApp);
@@ -30,6 +32,15 @@ var todo = require('./lectures/todo/app.js');
 todo(app);
 
 require('./assignment/app.js');
-// require('./project/app.js');
+require('./project/app.js');
+
+require('./lectures/ejs/crud');
+require('./lectures/wam/index')({
+    "name": "movieApp",
+    "entities": {
+        "movie": {},
+        "actor": {}
+    }
+});
 
 app.listen(port);

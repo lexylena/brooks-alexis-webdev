@@ -1,0 +1,28 @@
+(function(){
+    angular
+        .module("<%= name %>", ["ngRoute"])
+        .config(configuration);
+
+    function configuration($routeProvider) {
+        $routeProvider
+            .when("/", {
+                template: "Default Template"
+            })
+
+<%  for (var entityName in entities) {
+ %>
+            .when("/<%= entityName %>", {
+            templateUrl: "/wam/<%= entityName %>/templates/list/<%= entityName %>-list.view.client.html",
+            controller: "<%= entityName %>ListController",
+            controllerAs: "vm"
+            })
+            .when("/<%= entityName %>/:<%= entityName %>Id", {
+            templateUrl: "/wam/<%= entityName %>/templates/edit/<%= entityName %>-edit.view.client.html",
+            controller: "<%= entityName %>EditController",
+            controllerAs: "vm"
+            })
+<% }
+ %>
+    }
+
+})();

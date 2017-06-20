@@ -1,0 +1,13 @@
+(function() {
+    angular
+        .module("<%= name %>")
+        .controller("<%= entityName %>ListController", <%= entityName %>ListController);
+
+    function <%= entityName %>ListController(<%= entityName %>Service) {
+        var vm = this;
+        vm.hello = "Hello from <%= entityName %> list controller";
+
+        vm.<%= entityName %>s = application.
+    }
+
+})();

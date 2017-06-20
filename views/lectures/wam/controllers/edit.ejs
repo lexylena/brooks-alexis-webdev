@@ -1,0 +1,13 @@
+(function() {
+    angular
+        .module("<%= name %>")
+        .controller("<%= entityName %>EditController", <%= entityName %>EditController);
+
+    function <%= entityName %>EditController() {
+    var vm = this;
+    vm.hello = "Hello from <%= entityName %> edit controller";
+    }
+
+
+
+})();

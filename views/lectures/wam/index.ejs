@@ -1,0 +1,22 @@
+<html ng-app="<%= name %>">
+    <head>
+        <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+        <script src="/lib/angular/angular.min.js"></script>
+        <script src="/lib/angular/angular-route.min.js"></script>
+        <script src="/wam/app.js"></script>
+
+<% for (var entityName in entities) {
+ %>
+        <script src="/wam/<%= entityName %>/controllers/list/<%= entityName %>-list.controller.client.js"></script>
+        <script src="/wam/<%= entityName %>/controllers/edit/<%= entityName %>-list.controller.client.js"></script>
+
+<% }
+ %>
+
+    </head>
+
+    <body>
+        <h1>Hello from index</h1>
+        <div ng-view></div>
+    </body>
+</html>

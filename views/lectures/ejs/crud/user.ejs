@@ -1,0 +1,9 @@
+<link href="../../../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<h1>List of Users</h1>
+
+<ul class="list-group">
+<%  for (var uu in users) {
+%>      <li class="list-group-item"><%= users[uu].username %></li>
+<%  }
+%>
+</ul>
