@@ -13,8 +13,9 @@ userModel.findUserById = findUserById;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserByFacebookId = findUserByFacebookId;
 userModel.findUserByUsername = findUserByUsername;
-userModel.findUserByName = findUserByName;
+userModel.searchUsers = searchUsers;
 userModel.findUserByCredentials = findUserByCredentials;
+userModel.findAllUsers = findAllUsers;
 userModel.deleteUser = deleteUser;
 userModel.updateUser = updateUser;
 userModel.addCollection = addCollection;
@@ -51,8 +52,13 @@ function findUserByUsername(username) {
     return userModel.findOne({username: username});
 }
 
-function findUserByName(name) {
-    return userModel.find({displayName: name});
+function searchUsers(keyword) {
+    return userModel.find({$or: [
+        {username: {$regex: keyword+'.*'}},
+        {firstName: {$regex: keyword+'.*'}},
+        {lastName: {$regex: keyword+'.*'}},
+        {displayName: {$regex: keyword+'.*'}}
+        ]});
 }
 
 function findUserByCredentials(username, password) {
@@ -66,7 +72,10 @@ function findUserByCredentials(username, password) {
         })
 }
 
-// TODO: update cascade delete
+function findAllUsers() {
+    return userModel.find();
+}
+
 function deleteUser(uid) {
     return userModel.findOne({_id: uid})
         .then(function (user) {
@@ -112,11 +121,14 @@ function addCollection(ownerId, collectionId) {
 }
 
 function addFriend(uid, friendId) {
-    return userModel.findOne({_id: uid})
-        .then(function (user) {
-            user.friends.push(friendId);
-            return user.save();
-        })
+    return userModel.update({_id: uid}, {
+        $push: {friends: friendId}
+    })
+        .then(function () {
+            return userModel.update({_id: friendId}, {
+                $push: {friends: uid}
+            });
+        });
 }
 
 function addFollowedArtist(uid, artistId) {
@@ -153,6 +165,11 @@ function removeFriend(uid, friendId) {
     return userModel.update({_id: uid}, {
         $pull: {friends: friendId}
     })
+        .then(function () {
+            return userModel.update({_id: friendId}, {
+                $pull: {friends: uid}
+                });
+        });
 }
 
 function removeFollowedArtist(uid, artistId) {
