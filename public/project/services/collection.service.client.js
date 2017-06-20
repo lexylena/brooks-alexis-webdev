@@ -13,25 +13,66 @@
         return {
             createCollection: createCollection,
             updateCollection: updateCollection,
+            addCurator: addCurator,
+            removeCurator: removeCurator,
             findCollectionById: findCollectionById,
-            // findCollectionsForUser: findCollectionsForUser,
+            findCollectionsForUser: findCollectionsForUser,
             deleteCollection: deleteCollection
         };
 
-        function createCollection(ownerUid, collection) {
-
+        function createCollection(collection) {
+            return $http.post(baseUrl, collection)
+                .then(function (response) {
+                    return response.data; // new collection
+                })
         }
 
         function updateCollection(collectionId, collection) {
+            var url = baseUrl + '/' + collectionId;
+            return $http.put(url, collection)
+                .then(function (response) {
+                    return response.data; // status
+                })
+        }
 
+        function addCurator(collectionId, userId) {
+            var url = baseUrl + '/' + collectionId + '/add-curator';
+            return $http.put(url, userId)
+                .then(function (response) {
+                    return response.data; // status
+                })
+        }
+
+        function removeCurator(collectionId, userId) {
+            var url = baseUrl + '/' + collectionId + '/remove-curator';
+            return $http.put(url, userId)
+                .then(function (response) {
+                    return response.data; // status
+                })
         }
 
         function findCollectionById(collectionId) {
+            var url = baseUrl + '/' + collectionId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data; // collection
+                })
+        }
 
+        function findCollectionsForUser(userId) {
+            var url = baseUrl + '?curator-id=' + userId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data; // list of collections
+                })
         }
 
         function deleteCollection(collectionId) {
-
+            var url = baseUrl + '/' + collectionId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data; // status code
+                })
         }
     }
 })();

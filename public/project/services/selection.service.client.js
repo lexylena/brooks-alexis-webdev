@@ -19,24 +19,43 @@
             deleteCollection: deleteSelection
         };
 
-        function createSelection(collectionId, selection) {
-
+        function createSelection(selection) {
+            return $http.post(baseUrl, selection)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
-        function updateSelection(selectionId, selection) {
-
+        function updateSelection(selectionId, description) {
+            var url = baseUrl + '/' + selectionId;
+            return $http.put(url, description)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function findSelectionById(selectionId) {
-
+            var url = baseUrl + '/' + selectionId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function findSelectionsForCollection(collectionId) {
-
+            var url = baseUrl + '?collection-id=' + collectionId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function deleteSelection(selectionId) {
-
+            var url = baseUrl + '/' + selectionId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
     }
 })();

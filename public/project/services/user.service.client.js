@@ -11,28 +11,50 @@
         var baseUrl = '/api/project/user';
 
         return {
-            login: login,
             checkLoggedIn: checkLoggedIn,
+            checkAdmin: checkAdmin,
+            
+            login: login,
             logout: logout,
-            registerUser: registerUser,
-            updateUserSettings: updateUserSettings,
+            register: register,
             unregister: unregister,
+            updateUser: updateUser,
+            addFriend: addFriend,
+            removeFriend: removeFriend,
+            followArtist: followArtist,
+            unfollowArtist: unfollowArtist,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
-            searchUser: searchUser
+            searchUsers: searchUsers,
+
+            // admin stuff
+            createUser: createUser,
+            findAllUsers: findAllUsers,
+            deleteUser: deleteUser
         };
 
-        function login(username, password) {
-            return $http.post('/api/project/login', {username: username, password: password})
-                .then(function (response) {
-                    return response.data;
-                })
-        }
 
         function checkLoggedIn() {
             return $http.get('/api/project/checkLoggedIn')
                 .then(function (response) {
                     return response.data; // either user object or 0
+                })
+        }
+
+        function checkAdmin() {
+            return $http.get('/api/project/checkAdmin')
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+
+
+
+        function login(username, password) {
+            return $http.post('/api/project/login', {username: username, password: password})
+                .then(function (response) {
+                    return response.data;
                 })
         }
 
@@ -43,30 +65,62 @@
                 })
         }
 
-        function registerUser(user) {
+        function register(user) {
             return $http.post('/api/project/register', user)
                 .then(function (response) {
                     return response.data;
                 })
         }
 
-        function updateUserSettings(user) {
-            // make sure can't update everything admin can by using different url?
-            return $http.put(baseUrl, user)
-                .then(function (response) {
-                    return response.data;
-                })
-        }
-
         function unregister() {
-            return $http.delete(baseUrl)
+            return $http.delete('/api/project/unregister')
                 .then(function (response) {
                     return response.data;
                 })
         }
 
-        function findUserById(userId) {
-            var url = baseUrl + '/' +  userId;
+        function updateUser(uid, user) {
+            var url = baseUrl + '/' + uid;
+            return $http.put(url, user)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function addFriend(friendId) {
+            var url = baseUrl + '/addFriend';
+            return $http.put(url, friendId)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function removeFriend(friendId) {
+            var url = baseUrl + '/removeFriend';
+            return $http.put(url, friendId)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function followArtist(artistId) {
+            var url = baseUrl + '/followArtist';
+            return $http.put(url, artistId)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function unfollowArtist(artistId) {
+            var url = baseUrl + '/unfollowArtist';
+            return $http.put(url, artistId)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function findUserById(uid) {
+            var url = baseUrl + '/' +  uid;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -81,9 +135,35 @@
                 })
         }
 
-        function searchUser(keyword) {
+        function searchUsers(keyword) {
             var url = baseUrl + '?keyword=' + keyword;
             return $http.get(url)
+                .then(function (response) {
+                    return response.data; // list of users
+                })
+        }
+
+        
+
+        
+        // admin stuff
+        function createUser(user) {
+            return $http.post(baseUrl, user)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function findAllUsers() {
+            return $http.get(baseUrl)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function deleteUser(uid) {
+            var url = baseUrl + '/' + uid;
+            return $http.delete(url)
                 .then(function (response) {
                     return response.data;
                 })
