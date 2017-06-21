@@ -3,5 +3,5 @@
  */
 (function() {
     angular
-        .module('project', ['ngRoute']);
+        .module('project', ['ngRoute', 'wbdvDirectives']);
 })();

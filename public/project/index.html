@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="project">
 <head>
+    <script src="../lib/js/jquery/jquery.min.js"></script>
+    <script src="../lib/js/jquery/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="../lib/js/tether.min.js"></script>
+    <script src="../lib/css/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../lib/js/angular/angular.min.js"></script>
     <script src="../lib/js/angular/angular-route.min.js"></script>
+
+    <script src="../directives/wbdvDirectives.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>
 
     <!-- proof of concept (project 3) -->
     <script src="views/poc/poc.controller.client.js"></script>
-    <script src="views/poc/pocService.service.client.js"></script>
+    <script src="views/poc/poc.service.client.js"></script>
 
     <!--&lt;!&ndash; search &ndash;&gt;-->
-    <!--<script src="services/artService.service.client.js"></script>-->
+    <!--<script src="services/artwork.service.client.js"></script>-->
     <!--<script src="views/search/controllers/search.controller.client.js"></script>-->
 
 
     <!-- user -->
-    <!--<script src="services/userService.service.client.js"></script>-->
+    <script src="services/user.service.client.js"></script>
     <script src="views/user/controllers/login.controller.client.js"></script>
     <script src="views/user/controllers/register.controller.client.js"></script>
     <!--<script src="views/user/controllers/profile.controller.client.js"></script>-->
 
 
     <!--&lt;!&ndash; collection &ndash;&gt;-->
-    <!--<script src="services/collectionService.service.client.js"></script>-->
+    <!--<script src="services/collection.service.client.js"></script>-->
     <!--<script src="views/collection/controllers/collection-list.controller.client.js"></script>-->
     <!--<script src="views/collection/controllers/collection-edit.controller.client.js"></script>-->
     <!--<script src="views/collection/controllers/collection-new.controller.client.js"></script>-->
 
 
     <!--&lt;!&ndash; selection &ndash;&gt;-->
-    <!--<script src="services/selectionService.service.client.js"></script>-->
+    <!--<script src="services/selection.service.client.js"></script>-->
     <!--<script src="views/selection/controllers/selection-list.controller.client.js"></script>-->
     <!--<script src="views/selection/controllers/selection-edit.controller.client.js"></script>-->
     <!--<script src="views/selection/controllers/selection-new.controller.client.js"></script>-->
@@ -56,6 +63,14 @@
     <link href="../lib/css/bootstrap/theme/theme.css" rel="stylesheet">
     <link href="../assignment/css/style.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover({
+                trigger: 'focus'
+            })
+        })
+    </script>
 </head>
 
 <body>

@@ -4,7 +4,10 @@
 (function () {
     angular
         .module('wbdvDirectives', [])
-        .directive('wbdvSortable', wbdvSortable);
+        .directive('wbdvSortable', wbdvSortable)
+        .directive('wbdvPopover', wbdvPopover);
+
+
 
     function wbdvSortable() {
 
@@ -34,4 +37,21 @@
         }
 
     }
+
+
+    function wbdvPopover() {
+
+        function linkFunction(scope, element) {
+
+            element.popover({
+                trigger: 'focus'
+            });
+        }
+
+        return {
+            link: linkFunction
+        }
+
+    }
+
 })();

@@ -16,6 +16,7 @@
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "q": "^1.5.0",
+    "tether": "^1.4.0",
     "textangular": "^1.5.16"
   },
   "devDependencies": {},
