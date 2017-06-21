@@ -35,14 +35,14 @@
 
 
         function isLoggedIn() {
-            return $http.get('/api/project/isLoggedIn')
+            return $http.get('/api/project/is-logged-in')
                 .then(function (response) {
                     return response.data; // either user object or 0
                 })
         }
 
         function isAdmin() {
-            return $http.get('/api/project/isAdmin')
+            return $http.get('/api/project/is-admin')
                 .then(function (response) {
                     return response.data;
                 })
@@ -88,7 +88,7 @@
         }
 
         function addFriend(friendId) {
-            var url = baseUrl + '/addFriend';
+            var url = baseUrl + '/add-friend';
             return $http.put(url, friendId)
                 .then(function (response) {
                     return response.data;
@@ -96,7 +96,7 @@
         }
 
         function removeFriend(friendId) {
-            var url = baseUrl + '/removeFriend';
+            var url = baseUrl + '/remove-friend';
             return $http.put(url, friendId)
                 .then(function (response) {
                     return response.data;
@@ -104,7 +104,7 @@
         }
 
         function followArtist(artistId) {
-            var url = baseUrl + '/followArtist';
+            var url = baseUrl + '/follow-artist';
             return $http.put(url, artistId)
                 .then(function (response) {
                     return response.data;
@@ -112,7 +112,7 @@
         }
 
         function unfollowArtist(artistId) {
-            var url = baseUrl + '/unfollowArtist';
+            var url = baseUrl + '/unfollow-artist';
             return $http.put(url, artistId)
                 .then(function (response) {
                     return response.data;
