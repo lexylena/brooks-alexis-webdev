@@ -1,24 +1,42 @@
 <div class="container-fluid wd-centered">
-    <form class="wd-form">
+    <form novalidate name="form" class="wd-form">
         <h1>Login</h1>
 
         <div ng-show="vm.message" class="alert alert-danger">
             {{vm.message}}
         </div>
 
-        <label for="login-username">Username</label>
+        <div ng-show="!vm.message && form.$invalid === true && form.$submitted === true"
+             class="alert alert-danger">
+            Username and password required for login
+        </div>
+
+        <label for="login-username">
+            Username
+            <span ng-show="!form.username && form.$submitted === true"
+                  class="glyphicon glyphicon-exclamation-sign"></span>
+        </label>
         <input type="text"
                id="login-username"
-               ng-model="username"
+               ng-model="form.username"
                class="form-control"
+               required="required"
                placeholder="Username"/>
-        <label for="login-pw">Password</label>
+        <label for="login-pw">
+            Password
+            <span ng-show="!form.password && form.$submitted === true"
+                  class="glyphicon glyphicon-exclamation-sign"></span>
+        </label>
         <input type="password"
                id="login-pw"
-               ng-model="password"
+               ng-model="form.password"
                class="form-control"
+               required="required"
                placeholder="Password"/>
-        <a ng-click="vm.login(username, password)" class="btn btn-primary btn-block">Login</a>
+        <button type="submit" ng-click="vm.login(form)" class="btn btn-primary btn-block">Login</button>
+        <!--<a href="/auth/google" class="btn btn-danger btn-block">-->
+            <!--<span class="fa fa-google-plus pull-left"></span>Login with Google-->
+        <!--</a>-->
         <a class="btn btn-success btn-block"
            href="#!/register">Register</a>
     </form>

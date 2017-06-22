@@ -40,7 +40,7 @@
 
                 userService.register(user)
                     .then(function (user) {
-                        $location.url('/profile/' + user._id);
+                        $location.url('/settings');
                     })
             }
         }

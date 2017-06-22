@@ -6,26 +6,27 @@
         .module('project')
         .controller('loginController', loginController);
 
-    function loginController($location, userService) {
+    function loginController(userService) {
 
         var vm = this;
 
-        vm.login = function (username, password) {
-
-            userService
-                .findUserByCredentials(username, password)
-                .then(login, handleError);
-
-            function handleError(error) {
-                vm.message = "Username " + username + " not found, please try again";
+        vm.login = function (form) {
+            if (form.$invalid) {
+                vm.message = null;
+                return;
             }
 
+            userService
+                .login(form.username, form.password)
+                .then(login, handleError);
+
             function login(found) {
-                if (found !== null) {
-                    $location.url('/user/' + found._id + '/profile/' + found._id);
-                } else {
-                    vm.message = "Username and password combination not found. Please try again.";
-                }
+                $location.url('/settings');
+                window.location.reload();
+            }
+
+            function handleError(error) {
+                vm.message = "Username and password combination not found. Please try again.";
             }
         };
     }

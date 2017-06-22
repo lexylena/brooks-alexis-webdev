@@ -66,6 +66,8 @@
         }
 
         function register(user) {
+            console.log('registering');
+            console.log(user);
             return $http.post('/api/project/register', user)
                 .then(function (response) {
                     return response.data;
