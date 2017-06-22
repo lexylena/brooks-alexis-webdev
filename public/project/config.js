@@ -66,7 +66,7 @@
                     currentUser: checkLoggedIn
                 }
             })
-            .when('/curator/:curatorId/:usersList', {
+            .when('/curator/:curatorId/:userListType', {
                 templateUrl: 'views/user/templates/user-list.view.client.html',
                 controller: 'userListController',
                 controllerAs: 'vm'

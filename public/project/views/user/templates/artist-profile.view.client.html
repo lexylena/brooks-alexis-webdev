@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="media">
+        <div class="media-left">
+            <img ng-src="{{vm.artist.profileImageUrl}}" class="media-object wd-artist-profile-image">
+        </div>
+        <div class="media-body">
+            <h1 class="media-heading">{{vm.artist.displayName}}</h1>
+            <h4 class="media-heading">Artist</h4>
+            <p>{{vm.artist.bio}}</p>
+        </div>
+    </div>
+    {{vm.artist}}
+
+
+
+    {{vm.portfolio}}
+
+    <!-- portfolio -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Portfolio</h2>
+        </div>
+        <div class="panel-body">
+            <div class="col-xs-4">
+                <div ng-repeat="artwork in vm.portfolio | orderBy:artwork.createdDate | limitTo:8">
+                    <div class="thumbnail">
+                        <div class="wd-thumbnail-container">
+                            <a href="#!/artist/{{vm.artistId}}/artwork/{{artwork._id}}">
+                                <div class="caption">
+                                    <h4>{{artwork.title}}</h4>
+                                </div>
+                                <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#!/artist/{{vm.artistId}}/artwork">View All Artworks</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div id="user-list" class="panel panel-info">
+        <div class="panel-heading">
+            <h1 class="panel-title">{{vm.profile.displayName}} - {{vm.userListType}}</h1>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div ng-repeat="user in vm.userList">
+                    <div class=" col-xs-6 col-sm-3">
+                        <div class="thumbnail">
+                            <div class="wd-thumbnail-container">
+                                <a href="#!/{{vm.allUsersOfType}}/{{user._id}}">
+                                    <div class="caption">
+                                        <h4>{{user.displayName}}</h4>
+                                    </div>
+                                    <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrll}}"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
