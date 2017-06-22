@@ -9,18 +9,15 @@
     function artworkService($http) {
 
         var baseUrl = '/api/project/artwork';
-        var hamApiUrl =  process.env.HAM_API_URL;
-        var key = process.env.HAM_API_KEY;
-        var keyParam = 'apikey=' + key;
 
         return {
             createArtwork: createArtwork,
             findArtworkById: findArtworkById,
-            findArtworksByArtist: findArtworksByArtist,
-            findArtworksByHamArtist: findArtworksByHamArtist,
+            findArtworksByArtistId: findArtworksByArtistId,
             updateArtwork: updateArtwork,
             // addArtworkImage: addArtworkImage,
             searchArtwork: searchArtwork,
+            // filterSearch: filterSearch,
             deleteArtwork: deleteArtwork
         };
 
@@ -35,32 +32,12 @@
             var url = baseUrl + '/' + artworkId;
             return $http.get(url)
                 .then(function (response) {
-                    if (!response) { // just in case ?
-                        return findArtworkByHamId(artworkId);
-                    } else {
-                        return response.data;
-                    }
-                })
-        }
-
-        function findArtworkByHamId(artworkId) {
-            var url = hamApiUrl + '/object/' + artworkId + '?' + keyParam;
-            return $http.get(url)
-                .then(function (response) {
                     return response.data;
                 })
         }
 
-        function findArtworksByArtist(artistId) {
+        function findArtworksByArtistId(artistId) {
             var url = baseUrl + '?artist-id=' + artistId;
-            return $http.get(url)
-                .then(function (response) {
-                    return response.data;
-                })
-        }
-
-        function findArtworksByHamArtist(hamArtistId) { // for artist objects from HAM api, not actual artist users
-            var url = hamApiUrl + '/object?person=' + hamArtistId + '&' + keyParam;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
@@ -75,20 +52,13 @@
                 })
         }
 
-
-        //TODO: search should include project DB too
         function searchArtwork(keyword) {
-            // var url = baseUrl + '?keyword=' + keyword;
-            // return $http.get(url)
-            //     .then(function (response) {
-            //         var results = response.data;
-                    var hamUrl = hamApiUrl + '/object?keyword=' + keyword + '&' + keyParam;
-                    return $http.get(hamUrl)
-                        .then(function (hamResponse) {
-                            return hamResponse.data; // info, records
-                        })
-                // })
-        }
+            var url = baseUrl + '?keyword=' + keyword;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
+            }
 
         function deleteArtwork(artworkId) {
             var url = baseUrl + '/' + artworkId;

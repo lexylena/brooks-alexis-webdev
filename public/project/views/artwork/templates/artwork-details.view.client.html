@@ -1,0 +1,36 @@
+<!--<div ng-include="'views/navbar/navbar.view.client.html'"></div>-->
+
+<div class="container-fluid">
+    <!--<div class="navbar navbar-default">-->
+        <!--<div class="navbar-left navbar-link">-->
+            <!--<a ng-click="vm.navBack()">Back to SOMETHING</a>-->
+        <!--</div>-->
+    <!--</div>-->
+{{vm.artwork}}
+    <div class="row">
+        <div class="col-sm-6">
+            <img class="wd-artwork-lg" ng-src="{{vm.currentImage}}"/>
+
+            <div class="col-xs-4 col-sm-2">
+                <div ng-repeat="image in vm.artwork.images">
+                    <img class="wd-artwork-xs" ng-click="vm.changeCurrentImage(image)" ng-src="{{image}}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <h1 class="wd-artwork-title">{{vm.artwork.title}}</h1>
+            <p>
+                {{vm.artwork._artist}}
+                {{vm.artwork.classification}}
+                {{vm.artwork.medium}}
+                {{vm.artwork.dated}}
+                {{vm.artwork.description}}
+                {{vm.artwork.style}}
+                {{vm.artwork.technique}}
+                {{vm.artwork.relatedWorks}}
+
+            </p>
+        </div>
+    </div>
+</div>

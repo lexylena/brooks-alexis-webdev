@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div id="portfolio" class="panel panel-info">
+        <div class="panel-heading">
+            <h1 class="panel-title">{{vm.artist.displayName}} - Portfolio</h1>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div ng-repeat="artwork in vm.artworks.records">
+                    <div class="col-xs-6 col-sm-3">
+                        <a href="#!/artist/{{vm.artistId}}/artwork/{{artwork._id}}"
+                           class="thumbnail">
+                            <img ng-src="{{artwork.primaryImageUrl}}"/>
+                            <div class="caption">
+                                <h4>{{artwork.title}}</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li ng-repeat="page in vm.pages">
+                <a href="" ng-click="vm.getArtworksPage(page)">{{page}}</a>
+            </li>
+
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
