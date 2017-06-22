@@ -13,35 +13,41 @@
 
         function init() {
             vm.artistRouteId = vm.artistId;
-            vm.service = userService;
             if (vm.artistId.substring(0, 4) === 'HAM_') {
-                vm.service = harvardArtMuseumService;
                 vm.artistRouteId = vm.artistId.substring(4);
-            }
 
-            vm.service.findArtworksByArtistId(vm.artistRouteId)
-                .then(function (artworks) {
-                    if (vm.service === harvardArtMuseumService) {
+                harvardArtMuseumService.findArtworksByArtistId(vm.artistRouteId)
+                    .then(function (artworks) {
                         vm.artworks = artworks.records;
                         vm.pages = [];
                         for (var ii = 1; ii < artworks.info.pages + 1; ii++) {
                             vm.pages.push(ii);
                         }
                         vm.currentPage = 1;
-                    } else {
-                        vm.artworks = artworks;
-                    }
-                });
+                    });
 
-            vm.service.findArtistById(vm.artistRouteId)
-                .then(function (artist) {
-                    vm.artist = artist;
-                });
+                harvardArtMuseumService.findArtistById(vm.artistRouteId)
+                    .then(function (artist) {
+                        vm.artist = artist;
+
+                    });
+
+            } else {
+                artworkService.findArtworksByArtistId(vm.artistId)
+                    .then(function (artworks) {
+                        vm.artworks = artworks;
+                    });
+
+                userService.findUserById(vm.artistId)
+                    .then(function (user) {
+                        vm.artist = user;
+                    });
+            }
         }
         init();
 
         function getArtworksPage(page) {
-            vm.service.findArtworksByArtistId(vm.artistRouteId, page)
+            harvardArtMuseumService.findArtworksByArtistId(vm.artistRouteId, page)
                 .then(function (artworks) {
                     vm.artworks = artworks.records;
                     vm.currentPage = page;
