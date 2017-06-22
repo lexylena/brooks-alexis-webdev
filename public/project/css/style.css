@@ -1,7 +1,107 @@
-.search-result {
-    padding: 15px;
+input.form-control,
+textarea.form-control,
+select.form-control {
+    margin-bottom: 15px;
 }
 
-.search-result img {
-    width: 200px;
+body {
+    padding-top: 80px;
+    padding-bottom: 48px;
+    height: 100%;
+    /*background-color: #eeaa7b;*/
+}
+
+/*.navbar.navbar-default {*/
+    /*background-color: #07889b;*/
+    /*background-image: none;*/
+/*}*/
+
+/*.navbar-default .navbar-brand {*/
+    /*color: whitesmoke;*/
+/*}*/
+
+/*.navbar-default .navbar-text {*/
+    /*color: whitesmoke;*/
+/*}*/
+
+/*.glyphicon-chevron-left,*/
+/*.glyphicon-plus,*/
+/*.glyphicon-ok,*/
+/*.glyphicon-user {*/
+    /*color: whitesmoke;*/
+/*}*/
+
+.btn-block {
+    margin-bottom: 15px;
+}
+
+.btn.btn-block.btn-success {
+    margin-top: 15px;
+}
+
+.wd-centered {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wd-form {
+    width: 300px;
+    padding-bottom: 20px;
+}
+
+.wd-toolbar {
+    position: absolute;
+    background-color: white;
+    top: 0px;
+    right: 0px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 10px;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.wd-scrollable-left-split {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    overflow: scroll;
+    padding-top: 15px;
+    padding-bottom: 42px;
+}
+
+.results-container {
+    margin: 15px;
+    border: solid;
+    border-width: 6px;
+    border-radius: 12px;
+    border-color: #07889b;
+    background-color: whitesmoke;
+}
+
+.ng-submitted .form-control.ng-invalid,
+.ng-submitted .form-control.ng-empty.ng-valid-url {
+    border-color: red;
+    border-width: 3px;
+}
+
+#searchForm.ng-submitted .form-control.ng-invalid {
+    border-color: rgb(204, 204, 204);
+    border-width: 1px;
+}
+
+span.glyphicon.glyphicon-exclamation-sign {
+    color: red;
+}
+
+.wd-thumbnail-container {
+    height: 300px;
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+
+img.wd-thumbnail-list-item {
+    width: 300px;
 }

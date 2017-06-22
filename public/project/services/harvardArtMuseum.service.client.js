@@ -7,8 +7,8 @@
         .factory('harvardArtMuseumService', harvardArtMuseumService);
     
     function harvardArtMuseumService($http) {
-        var baseUrl = 'http://api.harvardartmuseums.org'; //process.env.HAM_API_URL;
-        var key = '24befe50-4acc-11e7-8fe0-e55a894aeb34'; //process.env.HAM_API_KEY;
+        var baseUrl = process.env.HAM_API_URL;
+        var key = process.env.HAM_API_KEY;
         var keyParam = 'apikey=' + key;
 
         var wikipediaBaseUrl = 'http://en.wikipedia.org/w/api.php?format=json&action=query';
@@ -26,17 +26,30 @@
         };
         
         return {
-            convertKeys: convertKeys,
             searchArtwork: searchArtwork,
             findArtworkById: findArtworkById,
             findArtistById: findArtistById,
             findArtworksByArtistId: findArtworksByArtistId,
+            getClassificationOptions: getClassificationOptions,
             getArtistBio: getArtistBio,
             getArtistWiki: getArtistWiki
             // filterSearch: filterSearch
         };
 
-        function convertKeys(data) {
+        function convertKeysArtworkList(data) {
+            for (var ii in data.records) {
+                var record = data.records[ii];
+                record._id = "HAM_" + record.id;
+                record.primaryImageUrl = record.primaryimageurl;
+                record._artist = "HAM_"  + record["people"][0]["personid"];
+                delete record.id;
+                delete record.primaryimageurl;
+                delete record.people;
+            }
+            return data;
+        }
+
+        function convertKeysArtwork(data) {
             var ret = {};
 
             for (var key in artworkKeyConversion) {
@@ -65,21 +78,24 @@
             return ret;
         }
         
-        function searchArtwork(keyword) {
+        function searchArtwork(keyword, page) {
             var url = baseUrl + '/object?keyword=' + keyword +
-                '&hasImage=1&size=20&fields=id,person,title,primaryimageurl&' + keyParam;
+                '&hasImage=1&size=20&fields=id,people,title,primaryimageurl&' + keyParam;
+            if (page) {
+                url += '&page=' + page;
+            }
+
             return $http.get(url)
                 .then(function (response) {
-                    return response.data;
-
-                })
+                    return convertKeysArtworkList(response.data);
+                });
         }
 
         function findArtworkById(artworkId) {
             var url = baseUrl + '/object/' + artworkId + '?' + keyParam;
             return $http.get(url)
                 .then(function (response) {
-                    return convertKeys(response.data);
+                    return convertKeysArtwork(response.data);
                 })
         }
         
@@ -105,16 +121,15 @@
             }
             return $http.get(url)
                 .then(function (response) {
-                    var data = response.data;
-                    for (var ii in data.records) {
-                        var record = data.records[ii];
-                        record._id = "HAM_" + record.id;
-                        record.primaryImageUrl = record.primaryimageurl;
-                        delete record.id;
-                        delete record.primaryimageurl;
-                    }
+                    return convertKeysArtworkList(response.data);
+                });
+        }
 
-                    return data;
+        function getClassificationOptions() {
+            var url = baseUrl + '/classification?size=61&sort=name&sortorder=asc&' + keyParam;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
                 })
         }
 

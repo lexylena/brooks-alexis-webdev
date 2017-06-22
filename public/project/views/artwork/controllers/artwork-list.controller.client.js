@@ -21,10 +21,15 @@
 
             vm.service.findArtworksByArtistId(vm.artistRouteId)
                 .then(function (artworks) {
-                    vm.artworks = artworks;
-                    vm.pages = [];
-                    for (var ii = 1; ii < artworks.info.pages + 1; ii++) {
-                        vm.pages.push(ii);
+                    if (vm.service === harvardArtMuseumService) {
+                        vm.artworks = artworks.records;
+                        vm.pages = [];
+                        for (var ii = 1; ii < artworks.info.pages + 1; ii++) {
+                            vm.pages.push(ii);
+                        }
+                        vm.currentPage = 1;
+                    } else {
+                        vm.artworks = artworks;
                     }
                 });
 
@@ -38,7 +43,8 @@
         function getArtworksPage(page) {
             vm.service.findArtworksByArtistId(vm.artistRouteId, page)
                 .then(function (artworks) {
-                    vm.artworks = artworks;
+                    vm.artworks = artworks.records;
+                    vm.currentPage = page;
                 });
         }
     }
