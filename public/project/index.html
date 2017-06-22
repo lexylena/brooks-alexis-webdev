@@ -13,6 +13,8 @@
     <script src="app.js"></script>
     <script src="config.js"></script>
 
+    <script src="main.controller.client.js"></script>
+
     <!-- proof of concept (project 3) -->
     <script src="views/poc/poc.controller.client.js"></script>
     <script src="views/poc/poc.service.client.js"></script>
@@ -26,8 +28,16 @@
     <script src="services/user.service.client.js"></script>
     <script src="views/user/controllers/login.controller.client.js"></script>
     <script src="views/user/controllers/register.controller.client.js"></script>
-    <!--<script src="views/user/controllers/profile.controller.client.js"></script>-->
+    <!--<script src="views/user/controllers/curator-profile.controller.client.js"></script>-->
+    <!--<script src="views/user/controllartisttist-profile.controller.client.js"></script>-->
+    <script src="views/user/controllers/settings.controller.client.js"></script>
 
+
+    <!-- artwork -->
+    <script src="services/artwork.service.client.js"></script>
+    <script src="services/harvardArtMuseum.service.client.js"></script>
+    <script src="views/artwork/controllers/artwork-details.controller.client.js"></script>
+    <script src="views/artwork/controllers/artwork-list.controller.client.js"></script>
 
     <!--&lt;!&ndash; collection &ndash;&gt;-->
     <!--<script src="services/collection.service.client.js"></script>-->
@@ -63,20 +73,99 @@
     <link href="../lib/css/bootstrap/theme/theme.css" rel="stylesheet">
     <link href="../assignment/css/style.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
-    <script>
-        $(function () {
-            $('[data-toggle="popover"]').popover({
-                trigger: 'focus'
-            })
-        })
-    </script>
 </head>
 
 <body>
 
-<div ng-view>
+<div ng-controller="mainController as vm">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">PROJECT_NAME</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form id="searchForm" novalidate name="searchForm" class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text"
+                               ng-model="searchForm.text"
+                               required="required"
+                               placeholder="Artwork Title, Artist Name, Keyword"
+                               class="form-control"/>
+
+                        <select name="searchType" class="form-control">
+                            <option value="artwork">Art</option>
+                            <option value="user">Users</option>
+                        </select>
+                        <button ng-click="vm.navbar.search(searchForm)"
+                                type="submit" class="btn btn-default">Search</button>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#!/">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </a></li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            Dropdown <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" ng-show="vm.user._id">
+                            <li><a href="#!/curator/{{vm.user._id}}">My Profile</a></li>
+
+                            <li ng-show="vm.isCurator">
+                                <a href="#!/collection">
+                                    My Collections
+                                </a>
+                            </li>
+                            <!--<li ng-show="vm.isCurator">-->
+                                <!--<a href="#!/collection/new">-->
+                                    <!--Create New Collection-->
+                                <!--</a>-->
+                            <!--</li>-->
+
+                            <li ng-hide="vm.isCurator">
+                                <a href="#!/artist/{{vm.user._id}}/artwork">
+                                    My Portfolio
+                                </a>
+                            </li>
+                            <!--<li ng-hide="vm.isCurator">-->
+                                <!--<a href="#!/artwork/new">-->
+                                    <!--Add New Artwork-->
+                                <!--</a>-->
+                            <!--</li>-->
+
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#!/settings">Account Settings</a></li>
+                            <li><a href="" ng-click="vm.logout()">Logout</a></li>
+                        </ul>
+
+                        <ul class="dropdown-menu" ng-hide="vm.user._id">
+                            <li><a href="#!/login">Sign In</a></li>
+                            <li><a href="#!/register">Register</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 </div>
+
+
+
+<ng-view>
+</ng-view>
 
 </body>
 </html>
