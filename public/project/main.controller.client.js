@@ -8,6 +8,7 @@
 
     function mainController($location, userService) {
         var vm = this;
+        vm.searchType = 'artwork';
         vm.search = search;
         vm.logout = logout;
 
@@ -28,7 +29,8 @@
             if (searchForm.$invalid) {
                 return;
             }
-            $location.url('/search?searchType=' + form.searchType + '&keyword=' + form.searchText);
+
+            $location.url('/search?searchType=' + vm.searchType + '&keyword=' + searchForm.text);
         }
 
         function logout() {

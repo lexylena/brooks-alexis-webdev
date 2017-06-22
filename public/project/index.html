@@ -21,7 +21,7 @@
 
     <!--&lt;!&ndash; search &ndash;&gt;-->
     <!--<script src="services/artwork.service.client.js"></script>-->
-    <!--<script src="views/search/controllers/search.controller.client.js"></script>-->
+    <script src="views/search/controllers/search.controller.client.js"></script>
 
 
     <!-- user -->
@@ -71,7 +71,6 @@
     <link href="../lib/css/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../lib/css/bootstrap/theme/theme.css" rel="stylesheet">
-    <link href="../assignment/css/style.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -104,11 +103,13 @@
                                placeholder="Artwork Title, Artist Name, Keyword"
                                class="form-control"/>
 
-                        <select name="searchType" class="form-control">
-                            <option value="artwork">Art</option>
-                            <option value="user">Users</option>
+                        <select name="searchType" class="form-control" ng-model="vm.searchType">
+                            <option ng-selected="vm.selected === 'artwork'"
+                                    value="artwork">Art</option>
+                            <option ng-selected="vm.selected === 'user'"
+                                    value="user">Users</option>
                         </select>
-                        <button ng-click="vm.navbar.search(searchForm)"
+                        <button ng-click="vm.search(searchForm)"
                                 type="submit" class="btn btn-default">Search</button>
                     </div>
                 </form>
