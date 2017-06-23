@@ -6,7 +6,7 @@
         .module('project')
         .controller('loginController', loginController);
 
-    function loginController(userService) {
+    function loginController($location, userService) {
 
         var vm = this;
 

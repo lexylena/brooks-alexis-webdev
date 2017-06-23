@@ -110,16 +110,19 @@ function deleteUser(uid) {
 }
 
 function updateUser(uid, user) {
-    return userModel.update({_id: uid}, {
-        $set: {
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            password: user.password,
-            profileImageUrl: user.profileImageUrl,
-            bio: user.bio
+    // only update non-null fields
+    var update = {};
+    var fields = ['firstName', 'lastName', 'password', 'email', 'phone', 'profileImageUrl'];
+    for (var ii in fields) {
+        if (user[fields[ii]]) {
+            update[fields[ii]] = user[fields[ii]];
         }
-    });
+    }
+    if (update.password) {
+        update.password = bcrypt.hashSync(update.password);
+    }
+
+    return userModel.update({_id: uid}, { $set : update });
 }
 
 function addCollection(ownerId, collectionId) {

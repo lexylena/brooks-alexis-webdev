@@ -177,7 +177,7 @@ function updateUser(req, res) {
     var updateUser = req.body;
     var uid = req.params['uid'];
 
-    if (req.user._id !== uid && !isAdminHelp(req)) {
+    if (req.user._id.toString() !== uid && !isAdminHelp(req)) {
         res.sendStatus(401);
         return;
     }
@@ -200,14 +200,11 @@ function uploadImage(req, res) {
     var size          = myFile.size;
     var mimetype      = myFile.mimetype;
 
-    userModel.findUserById(uid)
-        .then(function (user) {
-            user.profileImageUrl = '/project/uploads/user' + filename;
-            userModel.updateUser(uid, user)
-            .then(function (status) {
-                res.redirect('/project/index.html#!/settings');
-            })
-        });
+    var user = {profileImageUrl: '/project/uploads/user/' + filename};
+    userModel.updateUser(uid, user)
+        .then(function (status) {
+            res.redirect('/project/index.html#!/settings');
+        })
 }
 
 function addFriend(req, res) {
