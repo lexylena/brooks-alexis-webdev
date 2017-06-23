@@ -11,6 +11,11 @@ body {
     /*background-color: #eeaa7b;*/
 }
 
+.wd-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 /*.navbar.navbar-default {*/
     /*background-color: #07889b;*/
     /*background-image: none;*/
@@ -104,4 +109,36 @@ span.glyphicon.glyphicon-exclamation-sign {
 
 img.wd-thumbnail-list-item {
     width: 300px;
+}
+
+img.wd-artist-profile-image {
+    width: 300px;
+    padding-right: 15px;
+    float: left;
+}
+
+.wd-artist-info-container {
+    padding: 30px;
+}
+
+.wd-artist-info-container .well.well-sm {
+    margin-left: 300px;
+}
+
+img.wd-mobile-profile-image {
+    width: 325px;
+    border-style: solid;
+    border-color: #5e5e5e;
+    border-width: 8px;
+    margin: auto;
+    display: flex;
+    margin-bottom:20px;
+}
+
+.wd-profile-content {
+    padding-top: 20px;
+}
+
+.wd-profile-info-left {
+    margin-right: 50px;
 }

@@ -1,41 +1,69 @@
 <div class="container-fluid">
-    <div class="media">
-        <div class="media-left">
-            <img ng-src="{{vm.artist.profileImageUrl}}" class="media-object wd-artist-profile-image">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
+        <div ng-show="vm.error" class="alert alert-danger alert-dismissable">
+            {{vm.error}}
         </div>
-        <div class="media-body">
-            <h1 class="media-heading">{{vm.artist.displayName}}</h1>
-            <h4 class="media-heading">Artist</h4>
-            <p>{{vm.artist.bio}}</p>
+
+        <div ng-show="vm.message" class="alert alert-success alert-dismissable">
+            {{vm.message}}
         </div>
-    </div>
-    {{vm.artist}}
 
+        <div class="row">
+            <div class="hidden-xs wd-artist-info-container">
+                <img ng-src="{{vm.artist.profileImageUrl}}" class="wd-artist-profile-image"/>
 
+                <div class="well well-sm">
+                    <h1>{{vm.artist.displayName}}</h1>
+                    <h4>Artist</h4>
+                    <a ng-hide="vm.isFollowing" class="btn btn-primary"
+                       ng-click="vm.followArtist()">Follow Artist</a>
+                    <a ng-show="vm.isFollowing" class="btn btn-primary"
+                       ng-click="vm.unfollowArtist()">Unfollow Artist</a>
+                </div>
+                <p class="text-justify">{{vm.artist.bio}}</p>
+            </div>
 
-    {{vm.portfolio}}
+            <div class="hidden-sm hidden-md hidden-lg">
+                <img ng-src="{{vm.artist.profileImageUrl}}" class="wd-mobile-profile-image"/>
 
-    <!-- portfolio -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2 class="panel-title">Portfolio</h2>
+                <div class="well well-sm">
+                    <h1>{{vm.artist.displayName}}</h1>
+                    <h4>Artist</h4>
+                    <a ng-hide="vm.isFollowing" class="btn btn-primary"
+                       ng-click="vm.followArtist()">Follow Artist</a>
+                    <a ng-show="vm.isFollowing" class="btn btn-primary"
+                       ng-click="vm.unfollowArtist()">Unfollow Artist</a>
+                </div>
+                <p class="text-justify">{{vm.artist.bio}}</p>
+            </div>
         </div>
-        <div class="panel-body">
-            <div class="col-xs-4">
-                <div ng-repeat="artwork in vm.portfolio | orderBy:artwork.createdDate | limitTo:8">
-                    <div class="thumbnail">
-                        <div class="wd-thumbnail-container">
-                            <a href="#!/artist/{{vm.artistId}}/artwork/{{artwork._id}}">
-                                <div class="caption">
-                                    <h4>{{artwork.title}}</h4>
-                                </div>
-                                <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
-                            </a>
+
+        <!-- portfolio -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Portfolio</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-4">
+                    <div ng-repeat="artwork in vm.portfolio | orderBy:artwork.createdDate | limitTo:8">
+                        <div class="thumbnail">
+                            <div class="wd-thumbnail-container">
+                                <a href="#!/artist/{{vm.artistId}}/artwork/{{artwork._id}}">
+                                    <div class="caption">
+                                        <h4>{{artwork.title}}</h4>
+                                    </div>
+                                    <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="panel-footer">
+                    <a href="#!/artist/{{vm.artistId}}/artwork"> View All >> </a>
+                </div>
             </div>
-            <a href="#!/artist/{{vm.artistId}}/artwork">View All Artworks</a>
         </div>
     </div>
 </div>

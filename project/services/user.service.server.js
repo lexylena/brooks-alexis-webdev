@@ -2,7 +2,11 @@
  * Created by alexisbrooks on 5/31/17.
  */
 var app = require('../../express');
+var multer = require('multer');
+var upload = multer({ dest: __dirname+'/../../public/project/uploads/user' });
+
 var userModel = require('../models/user/user.model.server');
+var collectionModel = require('../models/collection/collection.model.server');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -14,24 +18,26 @@ var LocalStrategy = require('passport-local').Strategy;
 // };
 // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
-passport.use(new LocalStrategy(localStrategy));
+passport.use('local.project', new LocalStrategy(localStrategy));
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
 
-app.get('/api/project/is-logged-in', isLoggedIn);
-app.get('/api/project/is-admin', isAdmin);
+app.get('/api/project/isLoggedIn', isLoggedIn);
+app.get('/api/project/isAdmin', isAdmin);
 
-app.post('/api/project/login', passport.authenticate('local'), login);
+app.post('/api/project/login', passport.authenticate('local.project'), login);
 app.post('/api/project/logout', logout);
 app.post('/api/project/register', register);
 app.delete('/api/project/unregister', checkLoggedIn, unregister);
 app.put('/api/project/user/:uid', checkLoggedIn, updateUser);
-app.put('/api/project/user/add-friend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
-app.put('/api/project/user/remove-friend', checkLoggedIn, removeFriend);
-app.put('/api/project/user/follow-artist', checkLoggedIn, followArtist);
-app.put('/api/project/user/unfollow-artist', checkLoggedIn, unfollowArtist);
+app.post('/api/project/user/uploadProfileImage', upload.single('myFile'), uploadImage);
+app.put('/api/project/user/addFriend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
+app.put('/api/project/user/removeFriend', checkLoggedIn, removeFriend);
+app.put('/api/project/user/followArtist', checkLoggedIn, followArtist);
+app.put('/api/project/user/unfollowArtist', checkLoggedIn, unfollowArtist);
 app.get('/api/project/user/:uid', findUserById);
+app.get('/api/project/user/:uid/:listType', findUserList);
 
 app.get('/api/project/user', findUser);
 
@@ -47,7 +53,7 @@ app.get('/auth/google/callback',
 
 function localStrategy(username, password, done) {
     userModel
-        .findUserByCredentials({username: username, password: password})
+        .findUserByCredentials(username, password)
         .then(
             function(user) {
                 if (!user) { return done(null, false); }
@@ -98,6 +104,16 @@ function googleStrategy(token, refreshToken, profile, done) {
 
 function isAdminHelp(req) {
     return req.isAuthenticated() && req.user.roles.indexOf('ADMIN') > -1;
+}
+
+function getUserType(req) {
+    if (!req.isAuthenticated()) {
+        return null;
+    } else if (req.user.roles.indexOf('ARTIST') > -1) {
+        return 'ARTIST';
+    } else {
+        return 'CURATOR';
+    }
 }
 
 function isLoggedIn(req, res) {
@@ -172,6 +188,28 @@ function updateUser(req, res) {
         })
 }
 
+function uploadImage(req, res) {
+    var myFile = req.file;
+
+    var uid = req.user._id;
+
+    var originalname  = myFile.originalname; // file name on user's computer
+    var filename      = myFile.filename;     // new file name in upload folder
+    var path          = myFile.path;         // full path of uploaded file
+    var destination   = myFile.destination;  // folder where file is saved to
+    var size          = myFile.size;
+    var mimetype      = myFile.mimetype;
+
+    userModel.findUserById(uid)
+        .then(function (user) {
+            user.profileImageUrl = '/project/uploads/user' + filename;
+            userModel.updateUser(uid, user)
+            .then(function (status) {
+                res.redirect('/project/index.html#!/settings');
+            })
+        });
+}
+
 function addFriend(req, res) {
     friendId = req.body;
     userModel.addFriend(req.user._id, friendId)
@@ -218,6 +256,25 @@ function findUserById(req, res) {
         .then(function (user) {
             res.json(user);
         })
+}
+
+function findUserList(req, res) {
+    var uid = req.params['uid'];
+    var listType = req.params['listType'];
+    var filter = {listType: uid};
+
+    userModel.findUserById(uid)
+        .then(function (user) {
+            if ((user.roles.indexOf('ARTIST') > -1 && listType !== 'followers') ||
+                (user.roles.indexOf('CURATOR') > -1 && listType === 'followers')) {
+                res.sendStatus(404);
+            } else {
+                userModel.filterUsers(filter)
+                    .then(function (users) {
+                        res.json(users);
+                    });
+            }
+        });
 }
 
 function findUser(req, res) {
@@ -287,6 +344,16 @@ function createUser(req, res) {
 function deleteUser(req, res) {
     var uid = req.params['uid'];
     userModel.deleteUser(uid)
+        .then(function () {
+            if (req.user.roles.indexof('ARTIST') === -1) {
+                collectionModel.findCollectionsForOwner(uid)
+                    .then(function (collections) {
+                        for (var ii in collections) {
+                            userModel.removeCollectionFromAllUsers(collections[ii]._id);
+                        }
+                    })
+            }
+        })
         .then(function (status) {
             res.sendStatus(200);
         })

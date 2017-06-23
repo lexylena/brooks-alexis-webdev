@@ -25,6 +25,7 @@
             unfollowArtist: unfollowArtist,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
+            findUserList: findUserList,
             searchUsers: searchUsers,
 
             // admin stuff
@@ -35,14 +36,14 @@
 
 
         function isLoggedIn() {
-            return $http.get('/api/project/is-logged-in')
+            return $http.get('/api/project/isLoggedIn')
                 .then(function (response) {
                     return response.data; // either user object or 0
                 })
         }
 
         function isAdmin() {
-            return $http.get('/api/project/is-admin')
+            return $http.get('/api/project/isAdmin')
                 .then(function (response) {
                     return response.data;
                 })
@@ -90,32 +91,32 @@
         }
 
         function addFriend(friendId) {
-            var url = baseUrl + '/add-friend';
-            return $http.put(url, friendId)
+            var url = baseUrl + '/addFriend';
+            return $http.put(url, {friend: friendId})
                 .then(function (response) {
                     return response.data;
                 })
         }
 
         function removeFriend(friendId) {
-            var url = baseUrl + '/remove-friend';
-            return $http.put(url, friendId)
+            var url = baseUrl + '/removeFriend';
+            return $http.put(url, {friend: friendId})
                 .then(function (response) {
                     return response.data;
                 })
         }
 
         function followArtist(artistId) {
-            var url = baseUrl + '/follow-artist';
-            return $http.put(url, artistId)
+            var url = baseUrl + '/followArtist';
+            return $http.put(url, {artist: artistId})
                 .then(function (response) {
                     return response.data;
                 })
         }
 
         function unfollowArtist(artistId) {
-            var url = baseUrl + '/unfollow-artist';
-            return $http.put(url, artistId)
+            var url = baseUrl + '/unfollowArtist';
+            return $http.put(url, {artist: artistId})
                 .then(function (response) {
                     return response.data;
                 })
@@ -131,6 +132,14 @@
 
         function findUserByUsername(username) {
             var url = baseUrl + '?username=' + username;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function findUserList(uid, listType) {
+            var url = baseUrl + '/' + uid + '/' + listType;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;

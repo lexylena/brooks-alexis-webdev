@@ -1,0 +1,114 @@
+<div class="container-fluid wd-padding">
+    <div class="row">
+        <div ng-show="vm.error" class="alert alert-danger alert-dismissable">
+            {{vm.error}}
+        </div>
+
+        <div ng-show="vm.message" class="alert alert-success alert-dismissable">
+            {{vm.message}}
+        </div>
+
+        <div class="col-sm-4 hidden-xs">
+            <div class="wd-profile-info-left">
+            <h1>{{vm.curator.displayName}}</h1>
+            <h4>Curator</h4>
+            <div class="wd-profile-image">
+                <img ng-src="{{vm.curator.profileImageUrl}}"/>
+            </div>
+            <div>
+                <h4>About Me</h4>
+                <p>{{vm.curator.bio}}</p>
+            </div>
+            </div>
+        </div>
+
+        <!-- mobile display of profile image and bio -->
+        <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+            <img ng-src="{{vm.curator.profileImageUrl}}" class="wd-mobile-profile-image"/>
+
+            <div class="well well-sm">
+                <h1>{{vm.curator.displayName}}</h1>
+                <h4>Curator</h4>
+                <a ng-hide="vm.isFriend" class="btn btn-primary"
+                   ng-click="vm.addFriend()">Add Friend</a>
+                <a ng-show="vm.isFriend" class="btn btn-primary"
+                   ng-click="vm.unfriend()">Unfriend</a>
+            </div>
+            <p class="text-justify">{{vm.curator.bio}}</p>
+        </div>
+
+        <!-- profile content -->
+        <div class="col-xs-12 col-sm-8 wd-profile-content">
+
+            <!-- collections -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Collections</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-4">
+                        <div ng-repeat="collection in vm.collections | orderBy:collection.createdDate | limitTo:6">
+                            <div class="thumbnail">
+                                <div class="wd-thumbnail-container">
+                                    <a href="#!/curator/{{vm.curatorId}}/collection/{{collection._id}}">
+                                        <div class="caption">
+                                            <h4>{{collection.name}}</h4>
+                                        </div>
+                                        <img class="wd-thumbnail-list-item" ng-src="{{collection.cover}}"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- friends (other curators) -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Friends</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-4">
+                        <div ng-repeat="user in vm.friends | limitTo:6">
+                            <div class="thumbnail">
+                                <div class="wd-thumbnail-container">
+                                    <a href="#!/curator/{{user._id}}">
+                                        <div class="caption">
+                                            <h4>{{user.displayName}}</h4>
+                                        </div>
+                                        <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- followed artists -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Followed Artists</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-4">
+                        <div ng-repeat="user in vm.followedArtists | limitTo:6">
+                            <div class="thumbnail">
+                                <div class="wd-thumbnail-container">
+                                    <a href="#!/artist/{{user._id}}">
+                                        <div class="caption">
+                                            <h4>{{user.displayName}}</h4>
+                                        </div>
+                                        <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

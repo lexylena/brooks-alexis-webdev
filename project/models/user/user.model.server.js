@@ -17,6 +17,7 @@ userModel.findUserByEmail = findUserByEmail;
 userModel.searchUsers = searchUsers;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.findAllUsers = findAllUsers;
+userModel.filterUsers = filterUsers; // called for finding friends and followed artists lists
 userModel.deleteUser = deleteUser;
 userModel.updateUser = updateUser;
 userModel.addCollection = addCollection;
@@ -87,6 +88,10 @@ function findAllUsers() {
     return userModel.find();
 }
 
+function filterUsers(filter) {
+    return userModel.find(filter);
+}
+
 function deleteUser(uid) {
     return userModel.findOne({_id: uid})
         .then(function (user) {
@@ -96,7 +101,7 @@ function deleteUser(uid) {
                         return userModel.remove({_id: uid});
                     });
             } else {
-                return collectionModel.deleteCollectionsByOwner(uid) // delete all collections where user is the only curator
+                return collectionModel.deleteCollectionsByOwner(uid) // delete all collections where user is owner
                     .then(function () {
                         return userModel.remove({_id: uid});
                     });
@@ -105,19 +110,16 @@ function deleteUser(uid) {
 }
 
 function updateUser(uid, user) {
-    // only update non-null fields
-    var update = {};
-    var fields = ['firstName', 'lastName', 'password', 'email', 'phone'];
-    for (var ii in fields) {
-        if (user[fields[ii]]) {
-            update[fields[ii]] = user[fields[ii]];
+    return userModel.update({_id: uid}, {
+        $set: {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            password: user.password,
+            profileImageUrl: user.profileImageUrl,
+            bio: user.bio
         }
-    }
-    if (update.password) {
-        update.password = bcrypt.hashSync(update.password);
-    }
-
-    return userModel.update({_id: uid}, { $set : update });
+    });
 }
 
 function addCollection(ownerId, collectionId) {
@@ -143,11 +145,14 @@ function addFriend(uid, friendId) {
 }
 
 function addFollowedArtist(uid, artistId) {
-    return userModel.findOne({_id: uid})
-        .then(function (user) {
-            user.followedArtists.push(artistId);
-            return user.save();
-        })
+    return userModel.update({_id: uid}, {
+        $push: {followedArtists: artistId}
+    })
+        .then(function () {
+            return userModel.update({_id: artistId}, {
+                $push: {followers: uid}
+            });
+        });
 }
 
 function addArtwork(uid, artworkId) {
@@ -187,6 +192,11 @@ function removeFollowedArtist(uid, artistId) {
     return userModel.update({_id: uid}, {
         $pull: {followedArtists: artistId}
     })
+        .then(function () {
+            return userModel.update({_id: artistId}, {
+                $pull: {followers: uid}
+            });
+        });
 }
 
 function removeArtwork(uid, artworkId) {
