@@ -7,8 +7,8 @@
         .factory('harvardArtMuseumService', harvardArtMuseumService);
     
     function harvardArtMuseumService($http) {
-        var baseUrl = process.env.HAM_API_URL;
-        var key = process.env.HAM_API_KEY;
+        var baseUrl = 'http://api.harvardartmuseums.org'; //process.env.HAM_API_URL;
+        var key = '24befe50-4acc-11e7-8fe0-e55a894aeb34'; //process.env.HAM_API_KEY;
         var keyParam = 'apikey=' + key;
 
         var wikipediaBaseUrl = 'http://en.wikipedia.org/w/api.php?format=json&action=query';
@@ -41,10 +41,15 @@
                 var record = data.records[ii];
                 record._id = "HAM_" + record.id;
                 record.primaryImageUrl = record.primaryimageurl;
-                record._artist = "HAM_"  + record["people"][0]["personid"];
+                if (record["people"]) {
+                    record._artist = "HAM_"  + record["people"][0]["personid"];
+                    delete record.people;
+                } else {
+                    record._artist = 'HAM_unknown';
+                }
+
                 delete record.id;
                 delete record.primaryimageurl;
-                delete record.people;
             }
             return data;
         }
@@ -129,7 +134,12 @@
             var url = baseUrl + '/classification?size=61&sort=name&sortorder=asc&' + keyParam;
             return $http.get(url)
                 .then(function (response) {
-                    return response.data;
+                    var data = response.data.records;
+                    var options = [];
+                    for (var ii in data) {
+                        options.push(data[ii]["name"]);
+                    }
+                    return options;
                 })
         }
 

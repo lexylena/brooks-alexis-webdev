@@ -5,42 +5,35 @@
                 <h1 class="panel-title">{{vm.localCount}} Artworks Found in PROJECT_NAME's Database</h1>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div ng-repeat="artwork in vm.artworks">
-                        <div class="col-sm-3">
-                            <div class="thumbnail">
-                                <div class="wd-thumbnail-container">
-                                    <a href="#!/artist/{{artwork._artist}}/artwork/{{artwork._id}}">
-                                        <div class="caption">
-                                            <h4>{{artwork.title}}</h4>
-                                        </div>
-                                        <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
-                                    </a>
+                <div class="row display-flex">
+                    <div ng-repeat="artwork in vm.artworks" class="col-xs-4 col-sm-3">
+                        <div class="thumbnail">
+                            <a href="#!/artist/{{artwork._artist}}/artwork/{{artwork._id}}">
+                                <div class="caption">
+                                    <h4>{{artwork.title}}</h4>
                                 </div>
-                            </div>
+                                <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+                            </a>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="search-results-ham" class="panel panel-info">
-            <div class="panel-heading">
-                <h1 class="panel-title">{{vm.hamCount}} Artworks Found From 3rd Party Sources</h1>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div ng-repeat="artwork in vm.hamArtworks">
-                        <div class="col-sm-3">
+            <div id="search-results-ham" class="panel panel-info">
+                <div class="panel-heading">
+                    <h1 class="panel-title">{{vm.hamCount}} Artworks Found From 3rd Party Sources</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="row display-flex">
+                        <div ng-repeat="artwork in vm.hamArtworks" class="col-xs-4 col-sm-3">
                             <div class="thumbnail">
-                                <div class="wd-thumbnail-container">
-                                    <a href="#!/artist/{{artwork._artist}}/artwork/{{artwork._id}}">
-                                        <div class="caption">
-                                            <h4>{{artwork.title}}</h4>
-                                        </div>
-                                        <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
-                                    </a>
-                                </div>
+                                <a href="#!/artist/{{artwork._artist}}/artwork/{{artwork._id}}">
+                                    <div class="caption">
+                                        <h4>{{artwork.title}}</h4>
+                                    </div>
+                                    <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -66,8 +59,6 @@
                     </li>
                 </ul>
             </nav>
-
-        </div>
     </div>
 
     <div ng-show="vm.searchType && vm.searchType === 'user'">
@@ -76,20 +67,16 @@
                 <h1 class="panel-title">{{vm.localCount}} Users Found</h1>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div ng-repeat="user in vm.userResults">
-                        <div class="col-sm-4">
-                            <div class="thumbnail">
-                                <div class="wd-thumbnail-container">
-                                    <a href="#!/{{user.roles[0] | lowercase}}/{{user._id}}">
-                                        <div class="caption">
-                                            <h4>{{user.displayName}}</h4>
-                                            <h6>{{user.roles[0]}}</h6>
-                                        </div>
-                                        <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
-                                    </a>
+                <div class="row display-flex">
+                    <div ng-repeat="user in vm.userResults" class="col-xs-4 col-sm-3">
+                        <div class="thumbnail">
+                            <a href="#!/{{user.roles[0] | lowercase}}/{{user._id}}">
+                                <div class="caption">
+                                    <h4>{{user.displayName}}</h4>
+                                    <h6>{{user.roles[0]}}</h6>
                                 </div>
-                            </div>
+                                <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+                            </a>
                         </div>
                     </div>
                 </div>
