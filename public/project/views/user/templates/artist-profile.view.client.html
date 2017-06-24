@@ -1,5 +1,12 @@
 <div class="container-fluid">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <div ng-show="vm.hamArtist">
+        <div class="page-header">
+            <h1>Oops! This artist isn't a user, but you can still view their portfolio <a
+            href="#!/artist/{{vm.artistId}}/artwork">here</a>.</h1>
+        </div>
+    </div>
+
+    <div ng-hide="vm.hamArtist" class="col-xs-12 col-sm-10 col-sm-offset-1">
 
         <div ng-show="vm.error" class="alert alert-danger alert-dismissable">
             {{vm.error}}

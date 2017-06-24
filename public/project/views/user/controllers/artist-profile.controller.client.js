@@ -16,23 +16,27 @@
 
 
         function init() {
-            userService.findUserById(vm.artistId)
-                .then(function (user) {
-                    vm.artist = user;
-                });
+            if (vm.artistId.substring(0, 4) === 'HAM_') {
+                vm.hamArtist = true;
+            } else {
+                userService.findUserById(vm.artistId)
+                    .then(function (user) {
+                        vm.artist = user;
+                    });
 
-            userService.findUserList(vm.artistId, 'followers')
-                .then(function (followers) {
-                    vm.followers = followers;
-                });
+                userService.findUserList(vm.artistId, 'followers')
+                    .then(function (followers) {
+                        vm.followers = followers;
+                    });
 
-            artworkService.findArtworksByArtistId(vm.artistId)
-                .then(function (artworks) {
-                    vm.portfolio = artworks;
-                });
+                artworkService.findArtworksByArtistId(vm.artistId)
+                    .then(function (artworks) {
+                        vm.portfolio = artworks;
+                    });
 
-            if (currentUser._id && currentUser.followedArtists.indexOf(vm.artistId) > -1) {
-                vm.isFollowing = true;
+                if (currentUser._id && currentUser.followedArtists.indexOf(vm.artistId) > -1) {
+                    vm.isFollowing = true;
+                }
             }
         }
         init();

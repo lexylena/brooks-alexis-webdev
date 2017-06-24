@@ -11,8 +11,6 @@
         var key = process.env.HAM_API_KEY;
         var keyParam = 'apikey=' + key;
 
-        var wikipediaBaseUrl = 'http://en.wikipedia.org/w/api.php?format=json&action=query';
-
         var artworkKeyConversion = {
             "title": "title",
             "description": "description",
@@ -32,8 +30,6 @@
             findRelatedWorks: findRelatedWorks,
             findArtworksByArtistId: findArtworksByArtistId,
             getClassificationOptions: getClassificationOptions,
-            getArtistBio: getArtistBio,
-            getArtistWiki: getArtistWiki
             // filterSearch: filterSearch
         };
 
@@ -153,22 +149,6 @@
                     }
                     return options;
                 })
-        }
-
-        function getArtistBio(wikiId) {
-            var url = wikipediaBaseUrl + '&prop=extracts&exintro=&explaintext=&pageids=' + wikiId;
-            return $http.get(url)
-                .then(function (response) {
-                    return response.data.query.pages.wikiId.extract; // wiki summary
-                });
-        }
-
-        function getArtistWiki(wikiId) {
-            var url = wikipediaBaseUrl + '&prop=info&inprop=url&pageids=' + wikiId;
-            return $http.get(url)
-                .then(function (response) {
-                    return response.data.query.pages.wikiId.canonicalurl;
-                });
         }
     }
 
