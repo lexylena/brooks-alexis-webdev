@@ -14,10 +14,18 @@
         function init() {
             userService.findUserById(vm.profileId)
                 .then(function (user) {
-                    vm.userList = user[vm.userListType];
+                    vm.profile = user;
+                });
+
+            userService.findUserList(vm.profileId, vm.userListType)
+                .then(function (users) {
+                    vm.userList = users;
+
                     vm.allUsersOfType = 'curator';
-                    if (vm.userListType === 'followed-artists') {
+                    vm.typeTitle = 'Friends';
+                    if (vm.userListType === 'followedArtists') {
                         vm.allUsersOfType = 'artist';
+                        vm.typeTitle = 'Followed Artists';
                     }
                 });
         }
