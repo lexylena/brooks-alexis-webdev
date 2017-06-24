@@ -1,36 +1,71 @@
-<!--<div ng-include="'views/navbar/navbar.view.client.html'"></div>-->
-
 <div class="container-fluid">
-    <!--<div class="navbar navbar-default">-->
-        <!--<div class="navbar-left navbar-link">-->
-            <!--<a ng-click="vm.navBack()">Back to SOMETHING</a>-->
-        <!--</div>-->
-    <!--</div>-->
-{{vm.artwork}}
-    <div class="row">
-        <div class="col-sm-6">
-            <img class="wd-artwork-lg" ng-src="{{vm.currentImage}}"/>
-
-            <div class="col-xs-4 col-sm-2">
-                <div ng-repeat="image in vm.artwork.images">
-                    <img class="wd-artwork-xs" ng-click="vm.changeCurrentImage(image)" ng-src="{{image}}"/>
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="row">
+            <div class="col-sm-8 hidden-xs">
+                <div class="row">
+                    <img class="wd-artwork" ng-src="{{vm.currentImage}}" width="100%"/>
                 </div>
+                <div class="row display-flex">
+                    <div class="col-xs-3" ng-repeat="image in vm.artwork.images">
+                        <img ng-click="vm.changeCurrentImage(image)" ng-src="{{image}}" width="100%"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden-sm hidden-md hidden-lg">
+                <img class="wd-artwork" ng-src="{{vm.currentImage}}" width="100%"/>
+                <div class="row display-flex">
+                    <div class="col-xs-3" ng-repeat="image in vm.artwork.images">
+                        <img ng-click="vm.changeCurrentImage(image)" ng-src="{{image}}" width="100%"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4">
+                <div class="page-header">
+                    <h1>{{vm.artwork.title}}</h1>
+                </div>
+
+                <h3>Date: {{vm.artwork.date | date}}</h3>
+
+                <h3><a href="#!/artist/{{vm.artistId}}">
+                    {{vm.artwork.meta.artistName}}</a>
+                </h3>
+
+                <h4>Classification: {{vm.artwork.classification}}</h4>
+                <h4>Medium: {{vm.artwork.medium}}</h4>
+                <h4 ng-show="vm.artwork.style">
+                    Style: {{vm.artwork.style}}
+                </h4>
+                <h4 ng-show="vm.artwork.technique">
+                    Technique: {{vm.artwork.technique}}
+                </h4>
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <h1 class="wd-artwork-title">{{vm.artwork.title}}</h1>
-            <p>
-                {{vm.artwork._artist}}
-                {{vm.artwork.classification}}
-                {{vm.artwork.medium}}
-                {{vm.artwork.dated}}
-                {{vm.artwork.description}}
-                {{vm.artwork.style}}
-                {{vm.artwork.technique}}
-                {{vm.artwork.relatedWorks}}
+        <div class="row">
+            <div ng-show="vm.artwork.description">
+                <h2>Description</h2>
+                <p class="text-justify">{{vm.artwork.description}}</p>
+            </div>
 
-            </p>
+            <div ng-show="vm.relatedWorks">
+                <h2>Related Works</h2>
+                <div class="row display-flex">
+                    <div class="col-xs-4 col-sm-3" ng-repeat="related in vm.relatedWorks">
+                        <div class="thumbnail">
+                            <a href="#!/artist/{{vm.artistId}}/artwork/{{related._id}}">
+                                <div class="caption">
+                                    <h6>{{related.title}}</h6>
+                                </div>
+                                <img class="wd-thumbnail-list-item" ng-src="{{related.primaryImageUrl}}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>

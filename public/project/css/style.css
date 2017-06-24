@@ -165,3 +165,8 @@ img.wd-mobile-profile-image {
     display: flex;
     flex-direction: column;
 }
+
+img.wd-artwork {
+    padding-bottom: 20px;
+    margin-top: 35px;
+}

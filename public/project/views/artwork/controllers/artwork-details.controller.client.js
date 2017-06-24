@@ -19,6 +19,7 @@
             var artworkId = vm.artworkId;
             var artistId = vm.artistId;
             if (vm.artistId.substring(0, 4) === 'HAM_') {
+                vm.hamArt = true;
                 service = harvardArtMuseumService;
                 artistId = vm.artistId.substring(4);
                 artworkId = vm.artworkId.substring(4);
@@ -28,7 +29,14 @@
                 .then(function (artwork) {
                     vm.artwork = artwork;
                     vm.currentImage = artwork.primaryImageUrl;
-                })
+                });
+
+            service.findRelatedWorks(artworkId)
+                .then(function (related) {
+                    if (related.records.length > 0) {
+                        vm.relatedWorks = related.records;
+                    }
+                });
         }
         init();
 

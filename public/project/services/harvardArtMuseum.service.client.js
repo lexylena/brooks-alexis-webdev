@@ -7,8 +7,8 @@
         .factory('harvardArtMuseumService', harvardArtMuseumService);
     
     function harvardArtMuseumService($http) {
-        var baseUrl = 'http://api.harvardartmuseums.org'; //process.env.HAM_API_URL;
-        var key = '24befe50-4acc-11e7-8fe0-e55a894aeb34'; //process.env.HAM_API_KEY;
+        var baseUrl = process.env.HAM_API_URL;
+        var key = process.env.HAM_API_KEY;
         var keyParam = 'apikey=' + key;
 
         var wikipediaBaseUrl = 'http://en.wikipedia.org/w/api.php?format=json&action=query';
@@ -16,7 +16,7 @@
         var artworkKeyConversion = {
             "title": "title",
             "description": "description",
-            "dated": "dated",
+            "dated": "date",
             "medium": "medium",
             "technique": "technique",
             "style": "style",
@@ -29,6 +29,7 @@
             searchArtwork: searchArtwork,
             findArtworkById: findArtworkById,
             findArtistById: findArtistById,
+            findRelatedWorks: findRelatedWorks,
             findArtworksByArtistId: findArtworksByArtistId,
             getClassificationOptions: getClassificationOptions,
             getArtistBio: getArtistBio,
@@ -62,24 +63,26 @@
             }
 
             // special handling
-            ret["_id"] = "HAM_" + data["id"];
-            ret["_artist"] = "HAM_" + data["people"][0]["personid"];
-            ret["meta.artistName"] = data["people"][0]["displayname"];
+            ret._id = "HAM_" + data["id"];
+            ret._artist = "HAM_" + data["people"][0]["personid"];
+            ret.meta = {};
+            ret.meta.artistName = data["people"][0]["displayname"];
+            ret.meta.relatedCount = data["relatedcount"];
+            ret.meta.imageCount = data["imagecount"];
             var classification = data["worktypes"][0]["worktype"];
-            ret["classification"] = classification.charAt(0).toUpperCase() + classification.slice(1);
-            ret["relatedWorks"] = [];
+            ret.classification = classification.charAt(0).toUpperCase() + classification.slice(1);
+            ret.relatedWorks = [];
 
             for (var ii in data["related"]) {
                 var work = data["related"][ii]["objectid"];
                 work = "HAM_" + work;
-                ret["relatedWorks"].push(work);
+                ret.relatedWorks.push(work);
             }
 
-            ret["images"] = [];
+            ret.images = [];
             for (var ii in data["images"]) {
-                ret["images"].push(data["images"][ii]["baseimageurl"]);
+                ret.images.push(data["images"][ii]["baseimageurl"]);
             }
-
             return ret;
         }
         
@@ -116,6 +119,15 @@
 
                     return data;
                 });
+        }
+
+        function findRelatedWorks(artworkId) {
+            var url = baseUrl + '/object?hasImage=1&fields=id,title,primaryimageurl&relatedto='
+                + artworkId + '&' + keyParam;
+            return $http.get(url)
+                .then(function (response) {
+                    return convertKeysArtworkList(response.data);
+                })
         }
 
         function findArtworksByArtistId(artistId, page) { // for artist objects from HAM api, not actual artist users
