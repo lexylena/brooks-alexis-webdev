@@ -6,21 +6,21 @@
         .module('project')
         .controller('pocController', pocController);
 
-    function pocController($location, hamApiService) {
+    function pocController($location, pocService) {
         var vm = this;
 
         vm.search = search;
         vm.getArtworkDetails = getArtworkDetails;
 
         function getBio(artist) {
-            return hamApiService.getBio(artist)
+            return pocService.getBio(artist)
                 .then(function (response) {
                     artist.wikiUrl = response.data['query']['pages'][artist.wikipedia_id]['canonicalurl'];
                 })
         }
 
         function search(searchText) {
-            return hamApiService.searchWorks(searchText)
+            return pocService.searchWorks(searchText)
                 .then(function (response) {
                     vm.results = response.data.records;
                     console.log(response.data);
@@ -28,7 +28,7 @@
         }
 
         function getArtworkDetails(artwork) {
-            return hamApiService.getArtwork(artwork.id)
+            return pocService.getArtwork(artwork.id)
                 .then(function (response) {
                     vm.details = response.data;
                 })
