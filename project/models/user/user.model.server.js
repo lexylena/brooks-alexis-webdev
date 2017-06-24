@@ -29,6 +29,7 @@ userModel.removeCollectionFromAllUsers = removeCollectionFromAllUsers;
 userModel.removeFriend = removeFriend;
 userModel.removeFollowedArtist = removeFollowedArtist;
 userModel.removeArtwork = removeArtwork;
+userModel.updateTmp = updateTmp;
 
 
 module.exports = userModel;
@@ -112,7 +113,7 @@ function deleteUser(uid) {
 function updateUser(uid, user) {
     // only update non-null fields
     var update = {};
-    var fields = ['firstName', 'lastName', 'password', 'email', 'phone', 'profileImageUrl'];
+    var fields = ['firstName', 'lastName', 'password', 'email', 'phone', 'profileImageUrl', 'bio'];
     for (var ii in fields) {
         if (user[fields[ii]]) {
             update[fields[ii]] = user[fields[ii]];
@@ -121,8 +122,18 @@ function updateUser(uid, user) {
     if (update.password) {
         update.password = bcrypt.hashSync(update.password);
     }
+    var displayName;
 
-    return userModel.update({_id: uid}, { $set : update });
+    return userModel.update({_id: uid}, { $set : update })
+        .then(function () {
+            return userModel.findOne({_id: uid})
+                .then(function (user) {
+                    displayName = user.firstName + ' ' + user.lastName;
+                });
+        })
+        .then(function () {
+            return userModel.update({_id: uid}, {$set: { displayName: displayName }});
+        });
 }
 
 function addCollection(ownerId, collectionId) {
@@ -206,4 +217,10 @@ function removeArtwork(uid, artworkId) {
     return userModel.update({_id: uid}, {
         $pull: {portfolio: artworkId}
     })
+}
+
+function updateTmp(uid, images) {
+    return userModel.update({_id: uid}, {
+        $set: {tmp: images}
+    });
 }

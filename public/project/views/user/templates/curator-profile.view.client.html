@@ -10,11 +10,25 @@
 
         <div class="col-sm-4 hidden-xs">
             <div class="wd-profile-info-left">
-            <h1>{{vm.curator.displayName}}</h1>
-            <h4>Curator</h4>
-            <div class="wd-profile-image">
-                <img ng-src="{{vm.curator.profileImageUrl}}"/>
-            </div>
+                <h1>{{vm.curator.displayName}}</h1>
+                <h4>Username: {{vm.curator.username}}</h4>
+                <h4>Curator</h4>
+                <a ng-hide="vm.isFriend || vm.user._id === vm.curatorId"
+                   class="btn btn-primary" ng-click="vm.addFriend()">
+                    Add Friend
+                </a>
+                <a ng-show="vm.isFriend && vm.user._id !== vm.curatorId"
+                   class="btn btn-primary" ng-click="vm.unfriend()">
+                    Unfriend
+                </a>
+                <a ng-show="vm.user._id === vm.curatorId"
+                   class="btn btn-success" href="#!/settings">
+                    Edit Settings
+                </a>
+
+                <div class="wd-profile-image">
+                    <img ng-src="{{vm.curator.profileImageUrl}}"/>
+                </div>
             <div>
                 <h4>About Me</h4>
                 <p>{{vm.curator.bio}}</p>
@@ -28,12 +42,22 @@
 
             <div class="well well-sm">
                 <h1>{{vm.curator.displayName}}</h1>
+                <h4>Username: {{vm.curator.username}}</h4>
                 <h4>Curator</h4>
-                <a ng-hide="vm.isFriend" class="btn btn-primary"
-                   ng-click="vm.addFriend()">Add Friend</a>
-                <a ng-show="vm.isFriend" class="btn btn-primary"
-                   ng-click="vm.unfriend()">Unfriend</a>
+                <a ng-hide="vm.isFriend || vm.user._id === vm.curatorId"
+                   class="btn btn-primary" ng-click="vm.addFriend()">
+                    Add Friend
+                </a>
+                <a ng-show="vm.isFriend && vm.user._id !== vm.curatorId"
+                   class="btn btn-primary" ng-click="vm.unfriend()">
+                    Unfriend
+                </a>
+                <a ng-show="vm.user._id === vm.curatorId"
+                   class="btn btn-success" href="#!/settings">
+                    Edit Settings
+                </a>
             </div>
+            <h4>About Me</h4>
             <p class="text-justify">{{vm.curator.bio}}</p>
         </div>
 
@@ -46,17 +70,16 @@
                     <h2 class="panel-title">Collections</h2>
                 </div>
                 <div class="panel-body">
-                    <div class="col-xs-4">
-                        <div ng-repeat="collection in vm.collections | orderBy:collection.createdDate | limitTo:6">
+                    <div class="row display-flex">
+                        <div class="col-xs-4 col-sm-3"
+                             ng-repeat="collection in vm.collections | orderBy:collection.createdDate | limitTo:6">
                             <div class="thumbnail">
-                                <div class="wd-thumbnail-container">
-                                    <a href="#!/curator/{{vm.curatorId}}/collection/{{collection._id}}">
-                                        <div class="caption">
-                                            <h4>{{collection.name}}</h4>
-                                        </div>
-                                        <img class="wd-thumbnail-list-item" ng-src="{{collection.cover}}"/>
-                                    </a>
-                                </div>
+                                <a href="#!/curator/{{vm.curatorId}}/collection/{{collection._id}}">
+                                    <div class="caption">
+                                        <h4>{{collection.name}}</h4>
+                                    </div>
+                                    <img class="wd-thumbnail-list-item" ng-src="{{collection.cover}}"/>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -69,17 +92,15 @@
                     <h2 class="panel-title">Friends</h2>
                 </div>
                 <div class="panel-body">
-                    <div class="col-xs-4">
-                        <div ng-repeat="user in vm.friends | limitTo:6">
+                    <div class="row display-flex">
+                        <div class="col-xs-3 col-sm-6" ng-repeat="user in vm.friends | limitTo:12">
                             <div class="thumbnail">
-                                <div class="wd-thumbnail-container">
-                                    <a href="#!/curator/{{user._id}}">
-                                        <div class="caption">
-                                            <h4>{{user.displayName}}</h4>
-                                        </div>
-                                        <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
-                                    </a>
-                                </div>
+                                <a href="#!/curator/{{user._id}}">
+                                    <div class="caption">
+                                        <h6>{{user.displayName}}</h6>
+                                    </div>
+                                    <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -92,17 +113,15 @@
                     <h2 class="panel-title">Followed Artists</h2>
                 </div>
                 <div class="panel-body">
-                    <div class="col-xs-4">
-                        <div ng-repeat="user in vm.followedArtists | limitTo:6">
+                    <div class="row display-flex">
+                        <div class="col-xs-3 col-sm-6" ng-repeat="user in vm.followedArtists | limitTo:12">
                             <div class="thumbnail">
-                                <div class="wd-thumbnail-container">
-                                    <a href="#!/artist/{{user._id}}">
-                                        <div class="caption">
-                                            <h4>{{user.displayName}}</h4>
-                                        </div>
-                                        <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
-                                    </a>
-                                </div>
+                                <a href="#!/artist/{{user._id}}">
+                                    <div class="caption">
+                                        <h6>{{user.displayName}}</h6>
+                                    </div>
+                                    <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -31,11 +31,12 @@ app.post('/api/project/logout', logout);
 app.post('/api/project/register', register);
 app.delete('/api/project/unregister', checkLoggedIn, unregister);
 app.put('/api/project/user/:uid', checkLoggedIn, updateUser);
+app.put('/api/project/user/resetTmp', resetTmp);
 app.post('/api/project/user/uploadProfileImage', upload.single('myFile'), uploadImage);
-app.put('/api/project/user/addFriend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
-app.put('/api/project/user/removeFriend', checkLoggedIn, removeFriend);
-app.put('/api/project/user/followArtist', checkLoggedIn, followArtist);
-app.put('/api/project/user/unfollowArtist', checkLoggedIn, unfollowArtist);
+app.post('/api/project/user/addFriend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
+app.delete('/api/project/user/removeFriend', checkLoggedIn, removeFriend);
+app.post('/api/project/user/followArtist', checkLoggedIn, followArtist);
+app.delete('/api/project/user/unfollowArtist', checkLoggedIn, unfollowArtist);
 app.get('/api/project/user/:uid', findUserById);
 app.get('/api/project/user/:uid/:listType', findUserList);
 
@@ -188,6 +189,14 @@ function updateUser(req, res) {
         })
 }
 
+function resetTmp(req, res) {
+    var uid = req.user._id;
+    userModel.updateTmp(uid, [])
+        .then(function (status) {
+            res.sendStatus(200);
+        });
+}
+
 function uploadImage(req, res) {
     var myFile = req.file;
 
@@ -208,7 +217,7 @@ function uploadImage(req, res) {
 }
 
 function addFriend(req, res) {
-    friendId = req.body;
+    friendId = req.body.friend;
     userModel.addFriend(req.user._id, friendId)
         .then(function () {
             res.sendStatus(200);
@@ -218,7 +227,7 @@ function addFriend(req, res) {
 }
 
 function removeFriend(req, res) {
-    friendId = req.body;
+    friendId = req.query['friendId'];
     userModel.removeFriend(req.user._id, friendId)
         .then(function () {
             res.sendStatus(200);
@@ -228,7 +237,7 @@ function removeFriend(req, res) {
 }
 
 function followArtist(req, res) {
-    artistId = req.body;
+    artistId = req.body.artist;
     userModel.addFollowedArtist(req.user._id, artistId)
         .then(function () {
             res.sendStatus(200);
@@ -238,7 +247,7 @@ function followArtist(req, res) {
 }
 
 function unfollowArtist(req, res) {
-    artistId = req.body;
+    artistId = req.query['artistId'];
     userModel.removeFollowedArtist(req.user._id, artistId)
         .then(function () {
             res.sendStatus(200);
@@ -258,8 +267,8 @@ function findUserById(req, res) {
 function findUserList(req, res) {
     var uid = req.params['uid'];
     var listType = req.params['listType'];
-    var filter = {listType: uid};
-
+    var filter = {};
+    filter[listType] = uid;
     userModel.findUserById(uid)
         .then(function (user) {
             if ((user.roles.indexOf('ARTIST') > -1 && listType !== 'followers') ||

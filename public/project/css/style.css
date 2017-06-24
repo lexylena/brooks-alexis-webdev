@@ -125,6 +125,14 @@ img.wd-artist-profile-image {
     margin-left: 300px;
 }
 
+.wd-profile-image {
+    overflow: hidden;
+}
+
+.wd-profile-image img {
+    width: 100%;
+}
+
 img.wd-mobile-profile-image {
     width: 325px;
     border-style: solid;
@@ -140,5 +148,20 @@ img.wd-mobile-profile-image {
 }
 
 .wd-profile-info-left {
-    margin-right: 50px;
+    padding-right: 50px;
+}
+
+.chosen-container {
+    width: inherit;
+    min-width: 250px;
+    margin-bottom: 15px;
+}
+
+.row.display-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
 }

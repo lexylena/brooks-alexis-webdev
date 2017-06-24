@@ -19,6 +19,7 @@
             register: register,
             unregister: unregister,
             updateUser: updateUser,
+            resetTmp: resetTmp,
             addFriend: addFriend,
             removeFriend: removeFriend,
             followArtist: followArtist,
@@ -90,17 +91,25 @@
                 })
         }
 
+        function resetTmp() {
+            var url = baseUrl + '/resetTmp';
+            return $http.put(url, {})
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
         function addFriend(friendId) {
             var url = baseUrl + '/addFriend';
-            return $http.put(url, {friend: friendId})
+            return $http.post(url, {friend: friendId})
                 .then(function (response) {
                     return response.data;
                 })
         }
 
         function removeFriend(friendId) {
-            var url = baseUrl + '/removeFriend';
-            return $http.put(url, {friend: friendId})
+            var url = baseUrl + '/removeFriend?friendId=' + friendId;
+            return $http.delete(url)
                 .then(function (response) {
                     return response.data;
                 })
@@ -108,15 +117,15 @@
 
         function followArtist(artistId) {
             var url = baseUrl + '/followArtist';
-            return $http.put(url, {artist: artistId})
+            return $http.post(url, {artist: artistId})
                 .then(function (response) {
                     return response.data;
                 })
         }
 
         function unfollowArtist(artistId) {
-            var url = baseUrl + '/unfollowArtist';
-            return $http.put(url, {artist: artistId})
+            var url = baseUrl + '/unfollowArtist?artistId=' + artistId;
+            return $http.delete(url)
                 .then(function (response) {
                     return response.data;
                 })

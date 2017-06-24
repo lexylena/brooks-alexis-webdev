@@ -28,7 +28,8 @@
                 email: vm.user.email,
                 password: form.password,
                 firstName: vm.user.firstName,
-                lastName: vm.user.lastName
+                lastName: vm.user.lastName,
+                bio: vm.user.bio
             };
 
             userService

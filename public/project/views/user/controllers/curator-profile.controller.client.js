@@ -19,18 +19,14 @@
             userService.findUserById(vm.curatorId)
                 .then(function (user) {
                     vm.curator = user;
-                })
-                .then(function () {
-                    userService.findUserList(vm.curatorId, 'friends')
-                        .then(function (friends) {
-                            vm.friends = friends;
-                        });
-                })
-                .then(function () {
-                    userService.findUserList(vm.curatorId, 'followedArtists')
-                        .then(function (artists) {
-                            vm.followedArtists = artists;
-                        });
+                });
+            userService.findUserList(vm.curatorId, 'friends')
+                .then(function (friends) {
+                    vm.friends = friends;
+                });
+            userService.findUserList(vm.curatorId, 'followedArtists')
+                .then(function (artists) {
+                    vm.followedArtists = artists;
                 });
 
             collectionService.findCollectionsForUser(vm.curatorId)
@@ -50,16 +46,25 @@
                 .then(function (response) {
                     vm.message = "Now friends with " + vm.curator.displayName;
                     vm.isFriend = true;
+
+                    userService.findUserList(vm.curatorId, 'friends')
+                        .then(function (friends) {
+                            vm.friends = friends;
+                        });
                 }, function (err) {
                     vm.error = "Oops! You must be signed in to add users as friends.";
                 });
         }
 
         function unfriend() {
-            userService.unfriend(vm.curatorId)
+            userService.removeFriend(vm.curatorId)
                 .then(function (response) {
                     vm.message = "Unfriended " + vm.curator.displayName;
                     vm.isFriend = false;
+                    userService.findUserList(vm.curatorId, 'friends')
+                        .then(function (friends) {
+                            vm.friends = friends;
+                        });
                 });
         }
     }
