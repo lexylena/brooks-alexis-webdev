@@ -31,7 +31,7 @@ app.post('/api/project/logout', logout);
 app.post('/api/project/register', register);
 app.delete('/api/project/unregister', checkLoggedIn, unregister);
 app.put('/api/project/user/:uid', checkLoggedIn, updateUser);
-app.put('/api/project/user/resetTmp', resetTmp);
+app.post('/api/project/user/resetTmp', checkLoggedIn, resetTmp);
 app.post('/api/project/user/uploadProfileImage', upload.single('myFile'), uploadImage);
 app.post('/api/project/user/addFriend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
 app.delete('/api/project/user/removeFriend', checkLoggedIn, removeFriend);

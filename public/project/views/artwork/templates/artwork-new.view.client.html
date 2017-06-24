@@ -1,0 +1,174 @@
+<div class="container-fluid col-sm-8 col-sm-offset-2">
+    <h1>New Artwork</h1>
+
+    <div ng-show="form.$invalid === true && form.$submitted === true" class="alert alert-danger">
+        Missing required fields
+    </div>
+
+    <div ng-show="vm.error" class="alert alert-danger">
+        {{vm.error}}
+    </div>
+
+    <label class="col-sm-2">Artwork Images</label>
+    <div class="col-sm-9 col-sm-push-1">
+        <form action="/api/project/artwork/upload"
+              method="post"
+              enctype="multipart/form-data">
+            <input  name="artworkFiles" type="file" class="form-control" multiple/>
+            <input name="uid" value="{{vm.currentUser._id}}" style="display: none"/>
+            <button type="submit" ng-click="vm.updateTmp()" class="btn btn-block btn-primary">Upload</button>
+        </form>
+
+        <div ng-show="vm.tmp !== []" class="wd-uploaded-images">
+            <div ng-repeat="image in vm.tmp">
+                <div class="col-xs-4 col-sm-3">
+                    <img ng-src="{{image}}" style="height:100px; padding: 8px;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form novalidate name="form" class="horizontal-form">
+        <div class="form-group">
+            <label class="col-sm-2" for="title">
+                Title
+                <span ng-show="!form.title && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <input type="text"
+                       ng-model="form.title"
+                       id="title"
+                       required="required"
+                       placeholder="Title"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="description">
+                Description
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <textarea id="description" ng-model="form.description" class="form-control"></textarea>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="date">
+                Date Completed
+                <span ng-show="!form.date && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <input type="date"
+                       ng-model="form.date"
+                       id="date"
+                       required="required"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="classifications">
+                Classification
+                <span ng-show="!form.classification && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <select chosen
+                        id="classifications"
+                        ng-model="form.classification"
+                        ng-options="option for option in vm.classificationOptions">
+                    <option value=""></option>
+                </select>
+
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="medium">
+                Medium
+                <span ng-show="!form.medium && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <input type="text"
+                       ng-model="form.medium"
+                       id="medium"
+                       required="required"
+                       placeholder="ex: Oil on Canvas"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="technique">
+                Technique
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <input type="text"
+                       ng-model="form.technique"
+                       id="technique"
+                       placeholder="ex: Chiaroscuro, Etching"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="style">
+                Style
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <input type="text"
+                       ng-model="form.style"
+                       id="style"
+                       placeholder="ex: Surrealism, Deconstructivism"
+                       class="form-control"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2" for="relatedWorks">
+                Related Works
+                <a wbdv-popover href="" data-container="body" tabindex="0"
+                   data-toggle="popover" data-placement="right"
+                   data-trigger="focus"
+                   data-content="Related works will be included in this artwork's details. Select artworks that are similar to or associated with this one.">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <select chosen multiple
+                        id="relatedWorks"
+                        ng-options="work.title for work in vm.artworks"
+                        ng-model="form.relatedWorks">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <button type="submit" ng-click="vm.createArtwork(form)" class="btn btn-primary btn-block">
+                Create Artwork</button>
+
+            <a class="btn btn-danger  btn-block"
+               ng-click="vm.cancelCreate()">Cancel</a>
+        </div>
+
+    </form>
+</div>

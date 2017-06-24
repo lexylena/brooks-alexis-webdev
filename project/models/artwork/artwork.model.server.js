@@ -9,14 +9,18 @@ var artworkModel = mongoose.model('ArtworkModel', artworkSchema);
 artworkModel.createArtwork = createArtwork;
 artworkModel.findArtworkById = findArtworkById;
 artworkModel.findAllArtworksByArtist = findAllArtworksByArtist;
+artworkModel.searchArtwork = searchArtwork;
+// artworkModel.filterSearch = filterSearch;
 artworkModel.updateArtwork = updateArtwork;
 artworkModel.incrementSelectedCount = incrementSelectedCount;
 artworkModel.deleteArtwork = deleteArtwork;
 artworkModel.deleteAllArtworksByArtist = deleteAllArtworksByArtist;
 // artworkModel.addRelatedWorks = addRelatedWorks;
 // artworkModel.removeRelatedWork = removeRelatedWork;
-artworkModel.addImage = addImage;
+artworkModel.addImages = addImages;
 artworkModel.removeImage = removeImage;
+
+module.exports = artworkModel;
 
 function createArtwork(artistId, artwork) {
     artwork._artist = artistId;
@@ -29,6 +33,13 @@ function findArtworkById(artworkId) {
 
 function findAllArtworksByArtist(artistId) {
     return artworkModel.find({_artist: artistId});
+}
+
+function searchArtwork(keyword) {
+    return artworkModel.find({$or: [
+        {"title": {$regex: keyword+'.*'}},
+        {"meta.artistName": {$regex: keyword+'.*'}}
+    ]});
 }
 
 function updateArtwork(artworkId, artwork) {
@@ -60,12 +71,10 @@ function deleteAllArtworksByArtist(artistId) {
     return artworkModel.remove({_artist: artistId});
 }
 
-function addImage(artworkId, imageUrl) {
-    return artworkModel.findOne({_id: artworkId})
-        .then(function (artwork) {
-            artwork.images.push(imageUrl);
-            return artwork.save();
-        })
+function addImages(artworkId, images) {
+    return artworkModel.update({_id: artworkId}, {
+        $push: {images: images}
+    });
 }
 
 function removeImage(artworkId, imageUrl) {
@@ -73,5 +82,3 @@ function removeImage(artworkId, imageUrl) {
         $pull: {images: imageUrl}
     })
 }
-
-module.exports = artworkModel;

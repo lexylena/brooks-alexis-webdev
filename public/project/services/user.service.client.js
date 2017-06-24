@@ -93,7 +93,7 @@
 
         function resetTmp() {
             var url = baseUrl + '/resetTmp';
-            return $http.put(url, {})
+            return $http.post(url, {})
                 .then(function (response) {
                     return response.data;
                 })
