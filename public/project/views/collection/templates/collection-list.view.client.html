@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="page-header">
+        <h2><a href="#!/curator/{{vm.curatorId}}">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>{{vm.curator.displayName}}'s Collections</h2>
+    </div>
+    <div class="row display-flex">
+        <div class="col-xs-4" ng-repeat="collection in vm.collections">
+            <div class="thumbnail">
+                <a href="#!/curator/{{vm.curatorId}}/collection/{{collection._id}}/selection">
+                    <img class="wd-thumbnail-list-item" ng-src="{{collection.cover}}"/>
+                    <div class="caption">
+                        <h4>{{collection.name}}</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

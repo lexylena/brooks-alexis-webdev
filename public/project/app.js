@@ -3,5 +3,5 @@
  */
 (function() {
     angular
-        .module('project', ['ngRoute', 'wbdvDirectives']);
+        .module('project', ['ngRoute', 'wbdvDirectives', 'localytics.directives']);
 })();

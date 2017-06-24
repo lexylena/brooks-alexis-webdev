@@ -36,7 +36,7 @@
         }
 
         function addCurator(collectionId, userId) {
-            var url = baseUrl + '/' + collectionId + '/add-curator';
+            var url = baseUrl + '/' + collectionId + '/addCurator';
             return $http.put(url, userId)
                 .then(function (response) {
                     return response.data; // status
@@ -44,8 +44,8 @@
         }
 
         function removeCurator(collectionId, userId) {
-            var url = baseUrl + '/' + collectionId + '/remove-curator';
-            return $http.put(url, userId)
+            var url = baseUrl + '/' + collectionId + '/removeCurator';
+            return $http.delete(url, userId)
                 .then(function (response) {
                     return response.data; // status
                 })

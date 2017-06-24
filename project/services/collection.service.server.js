@@ -8,8 +8,8 @@ var collectionModel = require('../models/collection/collection.model.server');
 
 app.post('/api/project/collection', createCollection);
 app.put('/api/project/collection/:collectionId', updateCollection);
-app.put('/api/project/collection/:collectionId/add-curator', addCurator);
-app.put('/api/project/collection/:collectionId/remove-curator', removeCurator);
+app.put('/api/project/collection/:collectionId/addCurator', addCurator);
+app.delete('/api/project/collection/:collectionId/removeCurator', removeCurator);
 app.get('/api/project/collection/:collectionId', findCollectionById);
 app.get('/api/project/collection', findCollectionsForUser);
 app.delete('/api/project/collection/:collectionId', deleteCollection);
@@ -25,6 +25,7 @@ function createCollection(req, res) {
     var collection = req.body;
     collectionModel.createCollection(req.user._id, collection)
         .then(function (collection) {
+            // adds collection to owner AND all additional curators
             userModel.addCollection(req.user._id, collection._id);
             res.json(collection);
         })

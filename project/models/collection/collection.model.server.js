@@ -9,6 +9,7 @@ var collectionModel = mongoose.model('CollectionModel', collectionSchema);
 collectionModel.createCollection = createCollection;
 collectionModel.findCollectionById = findCollectionById;
 collectionModel.findCollectionsForUser = findCollectionsForUser;
+collectionModel.findCollectionsForOwner = findCollectionsForOwner;
 collectionModel.updateCollection = updateCollection;
 collectionModel.addSelection = addSelection;
 collectionModel.removeSelection = removeSelection;
@@ -33,9 +34,17 @@ function findCollectionsForUser(uid) {
     return collectionModel.find({$or: [ {_owner: uid}, {curators: uid} ]});
 }
 
+function findCollectionsForOwner(uid) {
+    return collectionModel.find({_owner: uid});
+}
+
 function updateCollection(collectionId, collection) {
-    return collectionModel.update({_id: collectionId},
-        {$set: {name: collection.name, description: collection.description}});
+    return collectionModel.update({_id: collectionId}, {
+        $set: {
+            name: collection.name,
+            description: collection.description,
+            curators: collection.curators
+        }});
 }
 
 function addSelection(collectionId, selectionId) {

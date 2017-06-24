@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="col-sm-10 col-sm-offset-1">
+        <h1>Edit Collection</h1>
+        <form novalidate name="form">
+            <div ng-show="form.$invalid === true && form.$submitted === true" class="alert alert-danger">
+                Missing required fields
+            </div>
+
+            <label for="name">
+                Name
+                <span ng-show="!vm.coll.name && form.$submitted === true"
+                      class="glyphicon glyphicon-exclamation-sign"></span>
+            </label>
+            <input type="text"
+                   ng-model="vm.coll.name"
+                   id="name"
+                   required="required"
+                   placeholder="My Collection"
+                   class="form-control"/>
+
+
+            <label for="description">
+                Description
+            </label>
+            <textarea id="description" ng-model="vm.coll.description" class="form-control"></textarea>
+
+
+            <label>
+                Additional Curators
+                <a wbdv-popover href="" data-container="body" tabindex="0"
+                   data-toggle="popover" data-placement="right" data-trigger="focus"
+                   data-content="Additional curators can add selections, edit their selections, and remove themselves as a curator from this collection, but as the creator, only you can edit all aspects of the collection.">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+            </label>
+            <select chosen multiple
+                    id="curators"
+                    ng-model="vm.coll.curators"
+                    ng-options="friend._id as friend.displayName for friend in vm.friends">
+                <option value=""></option>
+            </select>
+
+            <button type="submit" ng-click="vm.saveCollection()" class="btn btn-block btn-primary">
+                Save Changes
+            </button>
+            <a href="#!/curator/{{vm.user._id}}/collection/{{vm.coll._id}}/selection" class="btn btn-block btn-danger">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>

@@ -66,7 +66,7 @@
                     currentUser: checkLoggedIn
                 }
             })
-            .when('/curator/:curatorId/:userListType', {
+            .when('/curator/:curatorId/userList/:userListType', {
                 templateUrl: 'views/user/templates/user-list.view.client.html',
                 controller: 'userListController',
                 controllerAs: 'vm'
@@ -111,9 +111,22 @@
             .when('/curator/:curatorId/collection', {
                 templateUrl: 'views/collection/templates/collection-list.view.client.html',
                 controller: 'collectionListController',
+                controllerAs: 'vm'
+            })
+            .when('/collection/new', {
+                templateUrl: 'views/collection/templates/collection-new.view.client.html',
+                controller: 'collectionNewController',
                 controllerAs: 'vm',
                 resolve: {
-                    currentUser: checkCurrentUser
+                    currentUser: checkLoggedInCurator
+                }
+            })
+            .when('/collection/:collectionId', {
+                templateUrl: 'views/collection/templates/collection-edit.view.client.html',
+                controller: 'collectionEditController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkCollectionCurator
                 }
             })
 
@@ -167,7 +180,7 @@
         return deferred.promise;
     }
 
-    function checkArtworkArtist($q, $route, userService, artworkService) {
+    function checkArtworkArtist($q, $location, $route, userService, artworkService) {
         var deferred = $q.defer();
         var artworkId = $route.current.params['artworkId'];
         userService.isLoggedIn()
@@ -190,7 +203,7 @@
         return deferred.promise;
     }
 
-    function checkLoggedInArtist($q, userService) {
+    function checkLoggedInArtist($q, $location, userService) {
         var deferred = $q.defer();
         userService.isLoggedIn()
             .then(function (currentUser) {
@@ -202,6 +215,46 @@
                     $location.url('/home');
                 } else {
                     deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function checkLoggedInCurator($q, $location, userService) {
+        var deferred = $q.defer();
+        userService.isLoggedIn()
+            .then(function (currentUser) {
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/login');
+                } else if (currentUser.roles.indexOf('CURATOR') === -1) {
+                    deferred.reject();
+                    $location.url('/home');
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function checkCollectionCurator($q, $location, $route, userService, collectionService) {
+        var deferred = $q.defer();
+        var collectionId = $route.current.params['collectionId'];
+        userService.isLoggedIn()
+            .then(function (currentUser) {
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/login');
+                } else {
+                    collectionService.findCollectionById(collectionId)
+                        .then(function (collection) {
+                            if (currentUser._id !== collection._owner) {
+                                deferred.reject();
+                                $location.url('/home');
+                            } else {
+                                deferred.resolve(currentUser);
+                            }
+                        });
                 }
             });
         return deferred.promise;

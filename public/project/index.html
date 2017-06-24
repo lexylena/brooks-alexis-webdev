@@ -8,6 +8,9 @@
     <script src="../lib/css/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../lib/js/angular/angular.min.js"></script>
     <script src="../lib/js/angular/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chosen-localytics/1.7.0/angular-chosen.min.js"></script>
+    <!--<script src="../lib/js/chosen-js/chosen.jquery.js"></script>-->
 
     <script src="../directives/wbdvDirectives.js"></script>
     <script src="app.js"></script>
@@ -19,7 +22,7 @@
     <script src="views/poc/poc.controller.client.js"></script>
     <script src="views/poc/poc.service.client.js"></script>
 
-    <!--&lt;!&ndash; search &ndash;&gt;-->
+    <!-- search -->
     <script src="views/search/controllers/search.controller.client.js"></script>
 
 
@@ -30,6 +33,7 @@
     <script src="views/user/controllers/curator-profile.controller.client.js"></script>
     <script src="views/user/controllers/artist-profile.controller.client.js"></script>
     <script src="views/user/controllers/settings.controller.client.js"></script>
+    <script src="views/user/controllers/user-list.controller.client.js"></script>
 
 
     <!-- artwork -->
@@ -37,17 +41,18 @@
     <script src="services/harvardArtMuseum.service.client.js"></script>
     <script src="views/artwork/controllers/artwork-details.controller.client.js"></script>
     <script src="views/artwork/controllers/artwork-list.controller.client.js"></script>
+    <script src="views/artwork/controllers/artwork-new.controller.client.js"></script>
 
-    <!--&lt;!&ndash; collection &ndash;&gt;-->
+    <!-- collection -->
     <script src="services/collection.service.client.js"></script>
-    <!--<script src="views/collection/controllers/collection-list.controller.client.js"></script>-->
-    <!--<script src="views/collection/controllers/collection-edit.controller.client.js"></script>-->
-    <!--<script src="views/collection/controllers/collection-new.controller.client.js"></script>-->
+    <script src="views/collection/controllers/collection-list.controller.client.js"></script>
+    <script src="views/collection/controllers/collection-edit.controller.client.js"></script>
+    <script src="views/collection/controllers/collection-new.controller.client.js"></script>
 
 
-    <!--&lt;!&ndash; selection &ndash;&gt;-->
-    <!--<script src="services/selection.service.client.js"></script>-->
-    <!--<script src="views/selection/controllers/selection-list.controller.client.js"></script>-->
+    <!-- selection -->
+    <script src="services/selection.service.client.js"></script>
+    <script src="views/selection/controllers/selection-list.controller.client.js"></script>
     <!--<script src="views/selection/controllers/selection-edit.controller.client.js"></script>-->
     <!--<script src="views/selection/controllers/selection-new.controller.client.js"></script>-->
     <!--<script src="views/selection/controllers/selection.controller.client.js"></script>-->
@@ -69,6 +74,8 @@
     <!-- Bootstrap theme -->
     <link href="../lib/css/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">-->
+    <link href="../lib/js/chosen-js/chosen.css" rel="stylesheet">
     <link href="../lib/css/bootstrap/theme/theme.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -122,29 +129,32 @@
                             Dropdown <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" ng-show="vm.user._id">
-                            <li><a href="#!/curator/{{vm.user._id}}">My Profile</a></li>
-
+                            <li ng-show="vm.isCurator">
+                                <a href="#!/curator/{{vm.user._id}}">My Profile</a>
+                            </li>
                             <li ng-show="vm.isCurator">
                                 <a href="#!/collection">
                                     My Collections
                                 </a>
                             </li>
-                            <!--<li ng-show="vm.isCurator">-->
-                                <!--<a href="#!/collection/new">-->
-                                    <!--Create New Collection-->
-                                <!--</a>-->
-                            <!--</li>-->
-
+                            <li ng-show="vm.isCurator">
+                                <a href="#!/collection/new">
+                                    Create New Collection
+                                </a>
+                            </li>
+                            <li ng-hide="vm.isCurator">
+                                <a href="#!/artist/{{vm.user._id}}">My Profile</a>
+                            </li>
                             <li ng-hide="vm.isCurator">
                                 <a href="#!/artist/{{vm.user._id}}/artwork">
                                     My Portfolio
                                 </a>
                             </li>
-                            <!--<li ng-hide="vm.isCurator">-->
-                                <!--<a href="#!/artwork/new">-->
-                                    <!--Add New Artwork-->
-                                <!--</a>-->
-                            <!--</li>-->
+                            <li ng-hide="vm.isCurator">
+                                <a href="#!/artwork/new">
+                                    Add New Artwork
+                                </a>
+                            </li>
 
                             <li role="separator" class="divider"></li>
                             <li><a href="#!/settings">Account Settings</a></li>
