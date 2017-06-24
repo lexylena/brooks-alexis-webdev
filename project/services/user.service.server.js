@@ -268,7 +268,12 @@ function findUserList(req, res) {
     var uid = req.params['uid'];
     var listType = req.params['listType'];
     var filter = {};
-    filter[listType] = uid;
+    var filterKeys = {
+        "friends": "friends",
+        "followers": "followedArtists",
+        "followedArtists": "followers"
+    };
+    filter[filterKeys[listType]] = uid;
     userModel.findUserById(uid)
         .then(function (user) {
             if ((user.roles.indexOf('ARTIST') > -1 && listType !== 'followers') ||

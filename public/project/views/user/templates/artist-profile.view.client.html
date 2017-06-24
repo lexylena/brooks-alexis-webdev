@@ -65,5 +65,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- followers -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Followers</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row display-flex">
+                    <div class="col-xs-3 col-sm-6" ng-repeat="user in vm.followers | limitTo:12">
+                        <div class="thumbnail">
+                            <a href="#!/curator/{{user._id}}">
+                                <div class="caption">
+                                    <h6>{{user.displayName}}</h6>
+                                </div>
+                                <img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a href="#!/artist/{{vm.artistId}}/userList/followers">
+                    View All Followers >>
+                </a>
+            </div>
+        </div>
     </div>
 </div>

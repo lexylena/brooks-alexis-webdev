@@ -21,6 +21,11 @@
                     vm.artist = user;
                 });
 
+            userService.findUserList(vm.artistId, 'followers')
+                .then(function (followers) {
+                    vm.followers = followers;
+                });
+
             artworkService.findArtworksByArtistId(vm.artistId)
                 .then(function (artworks) {
                     vm.portfolio = artworks;
@@ -38,6 +43,11 @@
                     function (response) {
                         vm.message = "Now following" + vm.artist.displayName;
                         vm.isFollowing = true;
+
+                        userService.findUserList(vm.artistId, 'followers')
+                            .then(function (followers) {
+                                vm.followers = followers;
+                            });
                     },
                     function (err) {
                         vm.error = "Oops! You must sign in to follow artists";
@@ -49,6 +59,11 @@
                 .then(function (response) {
                     vm.message = "Unfollowed" + vm.artist.displayName;
                     vm.isFollowing = false;
+
+                    userService.findUserList(vm.artistId, 'followers')
+                        .then(function (followers) {
+                            vm.followers = followers;
+                        });
                 });
         }
     }
