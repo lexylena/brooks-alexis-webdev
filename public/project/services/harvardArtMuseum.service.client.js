@@ -7,8 +7,15 @@
         .factory('harvardArtMuseumService', harvardArtMuseumService);
     
     function harvardArtMuseumService($http) {
-        var baseUrl = process.env.HAM_API_URL;
-        var key = process.env.HAM_API_KEY;
+        var baseUrl = 'http://api.harvardartmuseums.org';
+
+        function init() {
+            $http.get('/hamApiKey')
+                .then(function (response) {
+                    key = response.data;
+                });
+        }
+        init();
         var keyParam = 'apikey=' + key;
 
         var artworkKeyConversion = {
@@ -29,7 +36,7 @@
             findArtistById: findArtistById,
             findRelatedWorks: findRelatedWorks,
             findArtworksByArtistId: findArtworksByArtistId,
-            getClassificationOptions: getClassificationOptions,
+            getClassificationOptions: getClassificationOptions
             // filterSearch: filterSearch
         };
 
@@ -143,10 +150,12 @@
             return $http.get(url)
                 .then(function (response) {
                     var data = response.data.records;
-                    var options = [];
+                    var options = ["Other"];
                     for (var ii in data) {
                         options.push(data[ii]["name"]);
                     }
+                    var notAssigned = options.indexOf('(not assigned)');
+                    options.splice(notAssigned, 1);
                     return options;
                 })
         }
