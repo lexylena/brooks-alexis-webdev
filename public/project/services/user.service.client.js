@@ -24,6 +24,7 @@
             removeFriend: removeFriend,
             followArtist: followArtist,
             unfollowArtist: unfollowArtist,
+            removeCollection: removeCollection,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
             findUserList: findUserList,
@@ -126,6 +127,14 @@
         function unfollowArtist(artistId) {
             var url = baseUrl + '/unfollowArtist?artistId=' + artistId;
             return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
+        function removeCollection(uid, collectionId) {
+            var url = baseUrl + '/' + uid + '/removeCollection';
+            return $http.put(url, {collection: collectionId})
                 .then(function (response) {
                     return response.data;
                 })

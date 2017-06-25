@@ -13,8 +13,7 @@
         return {
             createCollection: createCollection,
             updateCollection: updateCollection,
-            addCurator: addCurator,
-            removeCurator: removeCurator,
+            findCuratorsForCollection: findCuratorsForCollections,
             findCollectionById: findCollectionById,
             findCollectionsForUser: findCollectionsForUser,
             deleteCollection: deleteCollection
@@ -35,19 +34,11 @@
                 })
         }
 
-        function addCurator(collectionId, userId) {
-            var url = baseUrl + '/' + collectionId + '/addCurator';
-            return $http.put(url, userId)
+        function findCuratorsForCollections(collectionId) {
+            var url = baseUrl + '/' + collectionId + '/curators';
+            return $http.get(url)
                 .then(function (response) {
-                    return response.data; // status
-                })
-        }
-
-        function removeCurator(collectionId, userId) {
-            var url = baseUrl + '/' + collectionId + '/removeCurator';
-            return $http.delete(url, userId)
-                .then(function (response) {
-                    return response.data; // status
+                    return response.data;
                 })
         }
 

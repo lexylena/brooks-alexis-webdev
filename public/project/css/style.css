@@ -200,3 +200,11 @@ img.wd-artwork {
 .wd-edit-image {
     position: relative;
 }
+
+h1.panel-title .btn.btn-default {
+    margin: 3px;
+}
+
+#searchButton.btn.btn-default {
+    margin-bottom: 13px;
+}

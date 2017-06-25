@@ -181,6 +181,10 @@ function removeCollection(uid, collectionId) {
     return userModel.update({_id: uid}, {
         $pull: {collections: collectionId}
     })
+        .then(function (status) {
+            return collectionModel.update(
+                {_id: collectionId}, {$pull: {curators: uid}});
+        });
 }
 
 function removeCollectionFromAllUsers(collectionId) {

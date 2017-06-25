@@ -31,6 +31,7 @@ app.post('/api/project/logout', logout);
 app.post('/api/project/register', register);
 app.delete('/api/project/unregister', checkLoggedIn, unregister);
 app.put('/api/project/user/:uid', checkLoggedIn, updateUser);
+app.put('/api/project/user/:uid/removeCollection', removeCollection);
 app.post('/api/project/user/resetTmp', checkLoggedIn, resetTmp);
 app.post('/api/project/user/uploadProfileImage', upload.single('myFile'), uploadImage);
 app.post('/api/project/user/addFriend', checkLoggedIn, addFriend); // current user adds another user as friend; friendId as req.query
@@ -187,6 +188,20 @@ function updateUser(req, res) {
         .then(function (status) {
             res.sendStatus(200);
         })
+}
+
+function removeCollection(req, res) {
+    var uid = req.params['uid'];
+    var collectionId = req.body.collection;
+    if (uid.toString() !== req.user._id.toString() && !isAdminHelp(req)) {
+        res.sendStatus(401);
+        return;
+    }
+
+    return userModel.removeCollection(uid, collectionId)
+        .then(function (status) {
+            res.sendStatus(200);
+        });
 }
 
 function resetTmp(req, res) {

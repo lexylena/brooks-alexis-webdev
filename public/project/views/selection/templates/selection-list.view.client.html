@@ -1,33 +1,68 @@
 <div class="container-fluid">
+    <div class="panel-group" id="accordion">
+        <div id="selection-list" class="panel panel-info">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    <a href="#!/curator/{{vm.curatorId}}">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        {{vm.coll.name}}
+                    </a>
 
-    <div id="selection-list" class="panel panel-info">
-        <div class="panel-heading">
-            <h1 class="panel-title">
-                <a href="#!/curator/{{vm.curatorId}}"><span class="glyphicon glyphicon-chevron-left"></span>
-                {{vm.coll.name}}
-                </a>
-            </h1>
-            <a ng-show="vm.user._id === vm.coll._owner && vm.user._id === vm.curatorId"
-               class="btn btn-default pull-right" href="#!/collection/{{vm.collectionId}}">
-                Edit Collection
-            </a>
+                    <a ng-show="vm.user._id === vm.coll._owner && vm.user._id === vm.curatorId"
+                       class="btn btn-default" href="#!/collection/{{vm.collectionId}}">
+                        Edit Collection
+                    </a>
 
-            <a ng-show="vm.user._id !== vm.coll._owner && vm.user._id === vm.curatorId"
-               class="btn btn-default pull-right" ng-click="removeCurator()">
-                Remove From My Collections
-            </a>
+                    <a ng-show="vm.user._id !== vm.coll._owner && vm.user._id === vm.curatorId"
+                       class="btn btn-default" ng-click="vm.removeCurator()">
+                        Remove From My Collections
+                    </a>
+                </h1>
+            </div>
         </div>
-        <div class="panel-body">
-            <div class="row display-flex">
-                <div class="col-xs-6 col-sm-3" ng-repeat="selection in vm.selections">
-                    <div class="thumbnail">
-                        <a href="#!/curator/{{vm.curatorId}}/collection/{{vm.collectionId}}/selection/{{selection._id}}">
-                            <div class="caption">
-                                <h5>{{selection.meta.title}}</h5>
-                                <h6>{{selection.meta.artistName}}</h6>
-                            </div>
-                            <img ng-src="{{selection.meta.primaryImageUrl}}"/>
-                        </a>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       data-target="#collDetails">
+                        Collection Details
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collDetails" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>{{vm.collection.description}}</p>
+
+                    <b>Curators: </b>
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            ng-repeat="curator in vm.curators">
+                            <a href="#!/curator/{{curator._id}}">
+                                {{curator.displayName}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Selections</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row display-flex">
+                    <div class="col-xs-6 col-sm-3"
+                         ng-repeat="selection in vm.selections">
+                        <div class="thumbnail">
+                            <a href="#!/curator/{{vm.curatorId}}/collection/{{vm.collectionId}}/selection/{{selection._id}}">
+                                <div class="caption">
+                                    <h5>{{selection.meta.title}}</h5>
+                                    <h6>{{selection.meta.artistName}}</h6>
+                                </div>
+                                <img ng-src="{{selection.meta.primaryImageUrl}}"/>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

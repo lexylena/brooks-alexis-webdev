@@ -2,14 +2,14 @@
  * Created by alexisbrooks on 6/19/17.
  */
 var app = require('../../express');
+var verify = require('./user.service.server');
 
 var userModel = require('../models/user/user.model.server');
 var collectionModel = require('../models/collection/collection.model.server');
 
 app.post('/api/project/collection', createCollection);
 app.put('/api/project/collection/:collectionId', updateCollection);
-app.put('/api/project/collection/:collectionId/addCurator', addCurator);
-app.delete('/api/project/collection/:collectionId/removeCurator', removeCurator);
+app.get('/api/project/collection/:collectionId/curators', getCurators);
 app.get('/api/project/collection/:collectionId', findCollectionById);
 app.get('/api/project/collection', findCollectionsForUser);
 app.delete('/api/project/collection/:collectionId', deleteCollection);
@@ -47,36 +47,13 @@ function updateCollection(req, res) {
         })
 }
 
-function addCurator(req, res) {
+function getCurators(req, res) {
     var collectionId = req.params['collectionId'];
-    var userId = req.body;
-    userModel.findUserById(req.user._id)
-        .then(function (user) {
-            if (curatesCollection(user, collectionId)) {
-                collectionModel.addCurator(collectionId, userId)
-                    .then(function (response) {
-                        res.sendStatus(200);
-                    });
-            } else {
-                res.status(401).send(errMsg);
-            }
-        })
-}
-
-function removeCurator(req, res) {
-    var collectionId = req.params['collectionId'];
-    var userId = req.body;
-    userModel.findUserById(req.user._id)
-        .then(function (user) {
-            if (curatesCollection(user, collectionId)) {
-                collectionModel.removeCurator(collectionId, userId)
-                    .then(function (response) {
-                        res.sendStatus(200);
-                    });
-            } else {
-                res.status(401).send(errMsg);
-            }
-        })
+    var filter = {collections: collectionId};
+    userModel.filterUsers(filter)
+        .then(function (curators) {
+            res.json(curators);
+        });
 }
 
 function findCollectionById(req, res) {
