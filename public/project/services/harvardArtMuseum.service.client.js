@@ -8,14 +8,7 @@
     
     function harvardArtMuseumService($http) {
         var baseUrl = 'http://api.harvardartmuseums.org';
-
-        function init() {
-            $http.get('/hamApiKey')
-                .then(function (response) {
-                    return response.data;
-                });
-        }
-        var key = init();
+        var key = '24befe50-4acc-11e7-8fe0-e55a894aeb34';
         var keyParam = 'apikey=' + key;
 
         var artworkKeyConversion = {
