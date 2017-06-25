@@ -4,19 +4,15 @@
             <h1 class="panel-title">{{vm.artist.displayName}} - Portfolio</h1>
         </div>
         <div class="panel-body">
-            <div class="row">
-                <div ng-repeat="artwork in vm.artworks">
-                    <div class="col-xs-6 col-sm-3">
-                        <div class="thumbnail">
-                            <div class="wd-thumbnail-container">
-                                <a href="#!/artist/{{vm.artistId}}/artwork/{{artwork._id}}">
-                                    <div class="caption">
-                                        <h4>{{artwork.title}}</h4>
-                                    </div>
-                                    <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
-                                </a>
+            <div class="row display-flex">
+                <div class="col-xs-6 col-sm-3" ng-repeat="artwork in vm.artworks">
+                    <div class="thumbnail">
+                        <a href="#!/artist/{{vm.artistId}}/artwork/{{artwork._id}}">
+                            <div class="caption">
+                                <h4>{{artwork.title}}</h4>
                             </div>
-                        </div>
+                            <img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+                        </a>
                     </div>
                 </div>
             </div>
