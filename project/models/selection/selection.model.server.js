@@ -9,6 +9,7 @@ var selectionModel = mongoose.model('SelectionModel', selectionSchema);
 selectionModel.createSelection = createSelection;
 selectionModel.findSelectionById = findSelectionById;
 selectionModel.findSelectionsForCollection = findSelectionsForCollection;
+selectionModel.findSelectionDuplicate = findSelectionDuplicate;
 selectionModel.updateSelection = updateSelection;
 selectionModel.addComment = addComment;
 selectionModel.removeComment = removeComment;
@@ -19,6 +20,14 @@ module.exports = selectionModel;
 
 function createSelection(curatorId, selection) {
     selection._curator = curatorId;
+    // if (selection._artwork) {
+    //     return artworkModel.incrementSelectedCount(selection._artwork)
+    //         .then(function () {
+    //             return selectionModel.create(selection);
+    //         })
+    // } else {
+    //     return selectionModel.create(selection);
+    // }
     return selectionModel.create(selection);
 }
 
@@ -30,8 +39,24 @@ function findSelectionsForCollection(collectionId) {
     return selectionModel.find({_collection: collectionId});
 }
 
-function updateSelection(selectionId, description) {
-    return selectionModel.update({_id: selectionId}, {$set: {description: description}});
+function findSelectionDuplicate(collectionId, artworkId) {
+    var cid = mongoose.Types.ObjectId(collectionId);
+    var artObjectId = artworkId;
+    if (artworkId.substring(0, 4) !== 'HAM_') {
+        artObjectId = mongoose.Types.ObjectId(artworkId);
+    }
+
+    return selectionModel.findOne({_collection: cid,
+        $or: [ { _artwork: artObjectId }, { hamArtworkId: artworkId } ]
+    });
+}
+
+function updateSelection(selectionId, selection) {
+    return selectionModel.update({_id: selectionId}, {
+        $set: {
+            description: selection.description,
+            defaultDescription: selection.defaultDescription
+        }});
 }
 
 function addComment(selectionId, commentId) {

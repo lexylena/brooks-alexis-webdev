@@ -25,6 +25,8 @@
             <div class="col-sm-4">
                 <div class="page-header">
                     <h1>{{vm.artwork.title}}</h1>
+                    <button class="btn btn-primary" data-toggle="modal"
+                            data-target="#newSelection">Add to Collection</button>
                 </div>
 
                 <h3>Date: {{vm.artwork.date | date}}</h3>
@@ -62,6 +64,78 @@
                                 <img class="wd-thumbnail-list-item" ng-src="{{related.primaryImageUrl}}"/>
                             </a>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newSelection" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Add Artwork to Collection</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div ng-switch="vm.isCurator">
+                    <div ng-switch-when="false">
+                        <div class="modal-body">
+                            <div class="alert alert-danger">
+                                Oops! You must logged in as a curator user to add artwork to a collection.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-switch-when="true">
+                        <form novalidate name="newSel">
+                        <div class="modal-body">
+                            <div ng-show="vm.error" class="alert alert-danger">
+                                {{vm.error}}
+                            </div>
+
+                            <div ng-show="newSel.$invalid === true && newSel.$submitted === true"
+                                 class="alert alert-danger">
+                                Please select a collection
+                            </div>
+
+                                <div class="form-group">
+                                    <label for="collection" class="form-control-label">
+                                        Collection
+                                    </label>
+                                    <select chosen
+                                            id="collection"
+                                            required="required"
+                                            ng-options="collection._id as collection.name for collection in vm.collectionOptions"
+                                            ng-model="newSel.collection">
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="description" class="form-control-label">
+                                        Custom Description
+                                    </label>
+                                    <textarea class="form-control" ng-model="newSel.description" id="description"></textarea>
+                                </div>
+
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               ng-model="newSel.defaultDescription">
+                                        Use Default Description
+                                    </label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" ng-click="vm.createSelection(newSel)"
+                                    class="btn btn-primary">Save to Collection</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

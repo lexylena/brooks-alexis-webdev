@@ -43,7 +43,7 @@
         }
 
         function findSelectionsForCollection(collectionId) {
-            var url = baseUrl + '?collection-id=' + collectionId;
+            var url = baseUrl + '?collectionId=' + collectionId;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
