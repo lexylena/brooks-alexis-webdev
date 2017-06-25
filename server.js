@@ -31,7 +31,7 @@ myApp('this is the message');
 var todo = require('./lectures/todo/app.js');
 todo(app);
 
-require('./assignment/app.js');
+// require('./assignment/app.js');
 require('./project/app.js');
 
 require('./lectures/ejs/crud');

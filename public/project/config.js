@@ -14,15 +14,23 @@
                 controllerAs: 'vm'
             })
 
-
-            .when('/home', {
-                templateUrl: 'views/home/templates/home.html',
-                controller: 'homeController',
-                controllerAs: 'vm'
-                // resolve: {
-                //     currentUser: checkCurrentUser
-                // }
-            })
+            // .when('/', {
+            //     templateUrl: 'views/homepage/templates/html5up-parallelism/index.html',
+            //     controller: 'homeController',
+            //     controllerAs: 'vm'
+            //     // resolve: {
+            //     //     currentUser: checkCurrentUser
+            //     // }
+            // })
+            //
+            // .when('/home', {
+            //     templateUrl: 'views/homepage/templates/html5up-parallelism/index.html',
+            //     controller: 'homeController',
+            //     controllerAs: 'vm'
+            //     // resolve: {
+            //     //     currentUser: checkCurrentUser
+            //     // }
+            // })
             .when('/search', { //?keyword=___&searchType=_____
                 templateUrl: 'views/search/templates/search.view.client.html',
                 controller: 'searchController',
@@ -96,14 +104,14 @@
                     currentUser: checkLoggedInArtist // check if currentUser is artist
                 }
             })
-            .when('/artwork/:artworkId', {
-                templateUrl: 'views/artwork/templates/artwork-edit.view.client.html',
-                controller: 'artworkEditController',
-                controllerAs: 'vm',
-                resolve: {
-                    currentUser: checkArtworkArtist // check if artwork._artist === currentUser._id
-                }
-            })
+            // .when('/artwork/:artworkId', {
+            //     templateUrl: 'views/artwork/templates/artwork-edit.view.client.html',
+            //     controller: 'artworkEditController',
+            //     controllerAs: 'vm',
+            //     resolve: {
+            //         currentUser: checkArtworkArtist // check if artwork._artist === currentUser._id
+            //     }
+            // })
 
 
 
