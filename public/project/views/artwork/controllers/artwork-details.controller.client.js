@@ -85,9 +85,8 @@
 
             selectionService.createSelection(selection)
                 .then(function (selection) {
-                    $(".modal-backdrop").hide();
-                    $location.url('/curator/' + vm.user._id + '/collection/' +
-                        selection._collection + '/selection/' + selection._id);
+                    vm.message = 'Saved to collection';
+                    $("#newSelection").modal('hide');
                 }, function (err) {
                     vm.error = 'Error: ' + err.data;
                 });

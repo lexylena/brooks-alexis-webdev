@@ -25,8 +25,21 @@
             <div class="col-sm-4">
                 <div class="page-header">
                     <h1>{{vm.artwork.title}}</h1>
-                    <button class="btn btn-primary" data-toggle="modal"
-                            data-target="#newSelection">Add to Collection</button>
+
+                    <div ng-show="vm.message" class="alert alert-success">
+                        {{vm.message}}
+                    </div>
+
+                    <button ng-hide="vm.artwork._artist === vm.user._id"
+                            class="btn btn-primary" data-toggle="modal"
+                            data-target="#newSelection">
+                        Add to Collection
+                    </button>
+
+                    <a ng-show="vm.artwork._artist === vm.user._id"
+                            class="btn btn-success" href="#!/artwork/{{vm.artworkId}}">
+                        Edit Artwork
+                    </a>
                 </div>
 
                 <h3>Date: {{vm.artwork.date | date}}</h3>
