@@ -5,6 +5,7 @@ var app = require('../../express');
 var verification = require('./user.service.server');
 
 var commentModel = require('../models/comment/comment.model.server');
+var userModel = require('../models/user/user.model.server');
 
 app.post('/api/project/comment', verification.checkLoggedIn, addComment);
 app.get('/api/project/comment/:commentId', findCommentById);
@@ -14,10 +15,17 @@ app.delete('/api/project/comment/:commentId', verification.checkLoggedIn, delete
 
 function addComment(req, res) {
     var comment = req.body;
-    commentModel.createComment(req.user._id, comment)
-        .then(function (comment) {
-            res.json(comment);
-        })
+    comment.meta = { user: {} };
+    userModel.findUserById(req.user._id)
+        .then(function (user) {
+            comment.meta.user.displayName = user.displayName;
+            comment.meta.user.profileImageUrl = user.profileImageUrl;
+
+            commentModel.createComment(req.user._id, comment)
+                .then(function (comment) {
+                    res.json(comment);
+                })
+        });
 }
 
 function findCommentById(req, res) {

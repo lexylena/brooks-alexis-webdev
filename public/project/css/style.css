@@ -182,6 +182,21 @@ img.wd-artwork {
     padding-top: 20px;
 }
 
+.wd-comment {
+    padding: 20px;
+    border-bottom-style: solid;
+    border-bottom-color: #4c4848;
+}
+
 .wd-comment img {
     height: 75px;
+}
+
+.wd-uploaded-image {
+    /*height: 100px;*/
+    padding: 10px;
+}
+
+.wd-edit-image {
+    position: relative;
 }
