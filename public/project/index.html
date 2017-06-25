@@ -10,24 +10,31 @@
     <script src="../lib/js/angular/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chosen-localytics/1.7.0/angular-chosen.min.js"></script>
-    <!--<script src="../lib/js/chosen-js/chosen.jquery.js"></script>-->
 
     <script src="../directives/wbdvDirectives.js"></script>
     <script src="app.js"></script>
     <script src="config.js"></script>
 
+    <!-- services -->
+    <script src="services/user.service.client.js"></script>
+    <script src="services/poc.service.client.js"></script>
+    <script src="services/artwork.service.client.js"></script>
+    <script src="services/harvardArtMuseum.service.client.js"></script>
+    <script src="services/collection.service.client.js"></script>
+    <script src="services/comment.service.client.js"></script>
+    <script src="services/selection.service.client.js"></script>
+
+
+    <!-- navigation -->
     <script src="main.controller.client.js"></script>
 
     <!-- proof of concept (project 3) -->
     <script src="views/poc/poc.controller.client.js"></script>
-    <script src="services/poc.service.client.js"></script>
 
     <!-- search -->
     <script src="views/search/controllers/search.controller.client.js"></script>
 
-
     <!-- user -->
-    <script src="services/user.service.client.js"></script>
     <script src="views/user/controllers/login.controller.client.js"></script>
     <script src="views/user/controllers/register.controller.client.js"></script>
     <script src="views/user/controllers/curator-profile.controller.client.js"></script>
@@ -35,30 +42,20 @@
     <script src="views/user/controllers/settings.controller.client.js"></script>
     <script src="views/user/controllers/user-list.controller.client.js"></script>
 
-
     <!-- artwork -->
-    <script src="services/artwork.service.client.js"></script>
-    <script src="services/harvardArtMuseum.service.client.js"></script>
     <script src="views/artwork/controllers/artwork-details.controller.client.js"></script>
     <script src="views/artwork/controllers/artwork-list.controller.client.js"></script>
     <script src="views/artwork/controllers/artwork-new.controller.client.js"></script>
     <script src="views/artwork/controllers/artwork-edit.controller.client.js"></script>
 
     <!-- collection -->
-    <script src="services/collection.service.client.js"></script>
     <script src="views/collection/controllers/collection-list.controller.client.js"></script>
     <script src="views/collection/controllers/collection-edit.controller.client.js"></script>
     <script src="views/collection/controllers/collection-new.controller.client.js"></script>
 
-
     <!-- selection -->
-    <script src="services/comment.service.client.js"></script>
-    <script src="services/selection.service.client.js"></script>
     <script src="views/selection/controllers/selection-list.controller.client.js"></script>
-    <!--<script src="views/selection/controllers/selection-edit.controller.client.js"></script>-->
-    <!--<script src="views/selection/controllers/selection-new.controller.client.js"></script>-->
     <script src="views/selection/controllers/selection.controller.client.js"></script>
-
 
 
 
@@ -98,7 +95,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">PROJECT_NAME</a>
+                <a class="navbar-brand" href="#">ArtExplore</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -135,7 +132,7 @@
                                 <a href="#!/curator/{{vm.user._id}}">My Profile</a>
                             </li>
                             <li ng-show="vm.isCurator">
-                                <a href="#!/collection">
+                                <a href="#!/curator/{{vm.user._id}}/collection">
                                     My Collections
                                 </a>
                             </li>
