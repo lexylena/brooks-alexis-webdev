@@ -1,0 +1,124 @@
+<div class="navbar navbar-default navbar-fixed-top wd-secondary-nav">
+    <div class="navbar-header navbar-brand">
+        <a href="#!/curator/{{vm.curatorId}}/collection/{{vm.collectionId}}/selection">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back to Collection
+        </a>
+
+        <button ng-show="vm.user._id && vm.user._id === vm.collection._owner && vm.user._id !== vm.selection._curator"
+                class="btn btn-danger" ng-click="vm.deleteSelection()">
+            Delete Selection
+        </button>
+
+        <button ng-show="vm.user._id && vm.user._id === vm.selection._curator"
+                data-toggle="modal" data-target="#editSelection">
+            Edit Selection
+        </button>
+    </div>
+</div>
+<div class="container-fluid wd-double-nav-content">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="row">
+            <div class="col-sm-8 hidden-xs">
+                <div class="row">
+                    <img class="wd-artwork" ng-src="{{vm.currentImage}}" width="100%"/>
+                </div>
+                <div class="row display-flex">
+                    <div class="col-xs-3" ng-repeat="image in vm.artwork.images">
+                        <img ng-click="vm.changeCurrentImage(image)" ng-src="{{image}}" width="100%"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden-sm hidden-md hidden-lg">
+                <img class="wd-artwork" ng-src="{{vm.currentImage}}" width="100%"/>
+                <div class="row display-flex">
+                    <div class="col-xs-3" ng-repeat="image in vm.artwork.images">
+                        <img ng-click="vm.changeCurrentImage(image)" ng-src="{{image}}" width="100%"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4">
+                <div class="page-header">
+                    <h1>{{vm.artwork.title}}</h1>
+                    <h4>Added by
+                        <a href="#!/curator/{{vm.selection._curator}}">
+                            {{vm.selectionCurator.displayName}}</a>
+                    </h4>
+
+                </div>
+
+                <h3>Date: {{vm.artwork.date | date}}</h3>
+
+                <h3><a href="#!/artist/{{vm.artwork._artist}}">
+                    {{vm.artwork.meta.artistName}}</a>
+                </h3>
+
+                <h4>Classification: {{vm.artwork.classification}}</h4>
+                <h4>Medium: {{vm.artwork.medium}}</h4>
+                <h4 ng-show="vm.artwork.style">
+                    Style: {{vm.artwork.style}}
+                </h4>
+                <h4 ng-show="vm.artwork.technique">
+                    Technique: {{vm.artwork.technique}}
+                </h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-show="(vm.selection.description && !vm.selection.defaultDescription) || (vm.artwork.description && vm.selection.defaultDescription)">
+                <h2>Description</h2>
+                <p ng-show="vm.selection.defaultDescription" class="text-justify">
+                    {{vm.artwork.description}}
+                </p>
+
+                <p ng-show="vm.selection.description && !vm.selection.defaultDescription"
+                   class="text-justify">
+                    {{vm.selection.description}}
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <h2>{{vm.comments.length}} Comments</h2>
+                <div ng-repeat="comment in vm.comments">
+                    <div class="row media wd-comment">
+                        <div class="media-left">
+                            <a href="#!/curator/{{comment._user}}">
+                                <img ng-src="{{comment.meta.user.profileImageUrl}}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">{{comment.meta.user.displayName}}</h5>
+                            <h6>{{comment.createdDate | date : medium}}</h6>
+                            <p>{{comment.text}}</p>
+
+                            <button ng-show="[comment._user, vm.selection._curator, vm.collection._owner].indexOf(vm.user._id) > -1"
+                                    ng-click="vm.deleteComment(comment._id)" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="vm.user._id" class="media wd-comment">
+                    <div class="media-left">
+                        <img ng-src="{{vm.user.profileImageUrl}}"/>
+                    </div>
+                    <div class="media-body">
+                        <form novalidate name="commentForm">
+                            <textarea class="form-control" ng-model="commentForm.text"></textarea>
+
+                            <button type="submit" class="btn btn-primary"
+                                    ng-click="vm.addComment(commentForm)">
+                                Add Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

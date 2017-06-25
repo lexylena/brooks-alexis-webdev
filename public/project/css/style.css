@@ -170,3 +170,18 @@ img.wd-artwork {
     padding-bottom: 20px;
     margin-top: 35px;
 }
+
+.navbar.navbar-default.navbar-fixed-top.wd-secondary-nav {
+    color: whitesmoke;
+    background-color: #4442a9;
+    padding-top: 70px;
+    z-index: 1;
+}
+
+.wd-double-nav-content {
+    padding-top: 20px;
+}
+
+.wd-comment img {
+    height: 75px;
+}
