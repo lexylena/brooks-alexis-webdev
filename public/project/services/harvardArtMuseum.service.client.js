@@ -12,10 +12,10 @@
         function init() {
             $http.get('/hamApiKey')
                 .then(function (response) {
-                    key = response.data;
+                    return response.data;
                 });
         }
-        init();
+        var key = init();
         var keyParam = 'apikey=' + key;
 
         var artworkKeyConversion = {
