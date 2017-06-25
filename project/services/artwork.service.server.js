@@ -84,11 +84,20 @@ function findArtworkById(req, res) {
 }
 
 function searchArtworks(req, res) {
-    var keyword = req.query['keyword'];
-    artworkModel.searchArtwork(keyword)
-        .then(function (artworks) {
-            res.json(artworks); // may be empty list
-        })
+    var artistId = req.query['artistId'];
+    if (artistId) {
+        artworkModel.findAllArtworksByArtist(artistId)
+            .then(function (artworks) {
+                res.json(artworks);
+            });
+    } else {
+
+        var keyword = req.query['keyword'];
+        artworkModel.searchArtwork(keyword)
+            .then(function (artworks) {
+                res.json(artworks); // may be empty list
+            })
+    }
 }
 
 function updateArtwork(req, res) {
