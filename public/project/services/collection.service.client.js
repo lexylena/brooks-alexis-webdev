@@ -60,7 +60,7 @@
         }
 
         function findCollectionsForUser(userId) {
-            var url = baseUrl + '?curator-id=' + userId;
+            var url = baseUrl + '?curatorId=' + userId;
             return $http.get(url)
                 .then(function (response) {
                     return response.data; // list of collections

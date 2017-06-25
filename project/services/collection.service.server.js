@@ -88,7 +88,7 @@ function findCollectionById(req, res) {
 }
 
 function findCollectionsForUser(req, res) {
-    var userId = req.query['curator-id'];
+    var userId = req.query['curatorId'];
     collectionModel.findCollectionsForUser(userId)
         .then(function (collections) {
             res.json(collections);

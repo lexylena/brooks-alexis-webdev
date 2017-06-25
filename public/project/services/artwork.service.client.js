@@ -37,7 +37,7 @@
         }
 
         function findArtworksByArtistId(artistId) {
-            var url = baseUrl + '?artist-id=' + artistId;
+            var url = baseUrl + '?artistId=' + artistId;
             return $http.get(url)
                 .then(function (response) {
                     return response.data;
