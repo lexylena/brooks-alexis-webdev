@@ -53,8 +53,18 @@
 						<br />
 						<footer>
 							<ul class="buttons vertical">
-								<li><a href="#!/login" class="button fit scrolly">Sign In</a></li>
-								<li><a href="#!/register" class="button fit scrolly">Register</a></li>
+								<li ng-hide="vm.user._id">
+									<a href="#!/login" class="button fit scrolly">Sign In</a>
+								</li>
+								<li ng-hide="vm.user._id">
+									<a href="#!/register" class="button fit scrolly">Register</a>
+								</li>
+
+								<li ng-show="vm.isCurator">
+									<a href="#!/collection/new" class="button fit scrolly">Create New Collection</a>
+								</li>
+
+
 							</ul>
 						</footer>
 
