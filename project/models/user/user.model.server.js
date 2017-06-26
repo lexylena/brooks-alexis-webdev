@@ -35,9 +35,11 @@ userModel.updateTmp = updateTmp;
 module.exports = userModel;
 
 function createUser(user) {
-    user.displayName = user.firstName;
-    if (user.lastName) {
-        user.displayName += ' ' + user.lastName;
+    if (!user.displayName) {
+        user.displayName = user.firstName;
+        if (user.lastName) {
+            user.displayName += ' ' + user.lastName;
+        }
     }
 
     user.password = bcrypt.hashSync(user.password);

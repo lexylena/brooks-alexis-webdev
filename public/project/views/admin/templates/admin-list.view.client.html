@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="page-header">
+        <h2>Admin</h2>
+    </div>
+
+    <ul class="list-group">
+        <li class="list-group-item-heading">
+            Username
+        </li>
+        <li class="list-group-item" ng-repeat="user in vm.users">
+            {{user.username}}
+            <a href="#!/admin/user/{{user._id}}">
+                <span class="glyphicon glyphicon-cog pull-right"></span>
+            </a>
+            <span class="glyphicon glyphicon-remove pull-right"
+                  ng-click="vm.deleteUser(user)"></span>
+        </li>
+    </ul>
+</div>
