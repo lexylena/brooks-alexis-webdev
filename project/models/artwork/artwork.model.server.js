@@ -9,13 +9,14 @@ var artworkModel = mongoose.model('ArtworkModel', artworkSchema);
 artworkModel.createArtwork = createArtwork;
 artworkModel.findArtworkById = findArtworkById;
 artworkModel.findAllArtworksByArtist = findAllArtworksByArtist;
+artworkModel.findRelatedWorks = findRelatedWorks;
 artworkModel.searchArtwork = searchArtwork;
 // artworkModel.filterSearch = filterSearch;
 artworkModel.updateArtwork = updateArtwork;
 artworkModel.incrementSelectedCount = incrementSelectedCount;
 artworkModel.deleteArtwork = deleteArtwork;
 artworkModel.deleteAllArtworksByArtist = deleteAllArtworksByArtist;
-// artworkModel.addRelatedWorks = addRelatedWorks;
+artworkModel.addRelatedWorks = addRelatedWorks;
 // artworkModel.removeRelatedWork = removeRelatedWork;
 artworkModel.addImages = addImages;
 artworkModel.removeImage = removeImage;
@@ -35,6 +36,13 @@ function findAllArtworksByArtist(artistId) {
     return artworkModel.find({_artist: artistId});
 }
 
+function findRelatedWorks(artworkId) {
+    return artworkModel.findOne({_id: artworkId})
+        .then(function (artwork) {
+            return artworkModel.find({_id: { $in: artwork.relatedWorks }});
+        });
+}
+
 function searchArtwork(keyword) {
     return artworkModel.find({$or: [
         {"title": {$regex: keyword+'.*'}},
@@ -43,18 +51,7 @@ function searchArtwork(keyword) {
 }
 
 function updateArtwork(artworkId, artwork) {
-    return artworkModel.update({_id: artworkId}, {
-        $set: {
-            title: artwork.title,
-            description: artwork.description,
-            dated: artwork.dated,
-            classification: artwork.classification,
-            medium: artwork.medium,
-            technique: artwork.technique,
-            style: artwork.style,
-            contextualText: artwork.contextualText,
-            primaryImageUrl: artwork.primaryImageUrl
-        }})
+    return artworkModel.update({_id: artworkId}, { $set: artwork })
 }
 
 function incrementSelectedCount(artworkId) {
@@ -63,12 +60,36 @@ function incrementSelectedCount(artworkId) {
 
 // if artwork is deleted and selection still exists with that artwork, show some like oops this has been deleted thingy
 function deleteArtwork(artworkId) {
-    return artworkModel.remove({_id: artworkId});
+    return artworkModel.findOne({_id: artworkId})
+        .then(function (artwork) {
+            return artworkModel.update({_id: {$in: artwork.relatedWorks}}, {
+                $pull: {relatedWorks: artworkId},
+                $inc: {"meta.relatedCount": -1}
+            })
+                .then(function (status) {
+                    return artworkModel.remove({_id: artworkId});
+                });
+        });
     // then remove from artist's portfolio using userModel.removeArtwork in service.server where this is called
 }
 
 function deleteAllArtworksByArtist(artistId) {
     return artworkModel.remove({_artist: artistId});
+}
+
+function addRelatedWorks(artworkId, relatedWorks) {
+    return artworkModel.findOne({_id: artworkId})
+        .then(function (artwork) {
+            artwork.relatedWorks.push(relatedWorks);
+            artwork.meta.relatedCount = artwork.relatedWorks.length;
+            return artwork.save()
+                .then(function () {
+                    return artworkModel.update({_id: {$in: relatedWorks}}, {
+                        $push: {relatedWorks: artworkId},
+                        $inc: {"meta.relatedCount": 1}
+                    });
+                });
+        });
 }
 
 function addImages(artworkId, images) {

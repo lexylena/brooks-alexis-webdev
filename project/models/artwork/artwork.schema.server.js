@@ -12,6 +12,7 @@ var artworkSchema = mongoose.Schema({
     medium: {type: String, required: true},
     technique: String,
     style: String,
+    tags: [String],
     relatedWorks: [{type: mongoose.Schema.Types.ObjectId, ref: 'ArtworkModel'}],
     images: [{type: String, required: true}],
     primaryImageUrl: {type: String, required: true},
