@@ -41,6 +41,7 @@
                 userService.register(user)
                     .then(function (user) {
                         $location.url('/settings');
+                        window.location.reload();
                     })
             }
         }
