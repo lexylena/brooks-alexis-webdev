@@ -71,7 +71,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row display-flex">
-                        <div class="col-xs-4 col-sm-3"
+                        <div class="col-xs-6 col-sm-4"
                              ng-repeat="collection in vm.collections | orderBy:collection.createdDate | limitTo:6">
                             <div class="thumbnail">
                                 <a href="#!/curator/{{vm.curatorId}}/collection/{{collection._id}}/selection">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row display-flex">
-                        <div class="col-xs-3 col-sm-6" ng-repeat="user in vm.friends | limitTo:12">
+                        <div class="col-xs-6 col-sm-4" ng-repeat="user in vm.friends | limitTo:12">
                             <div class="thumbnail">
                                 <a href="#!/curator/{{user._id}}">
                                     <div class="caption">
@@ -124,7 +124,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="row display-flex">
-                        <div class="col-xs-3 col-sm-6" ng-repeat="user in vm.followedArtists | limitTo:12">
+                        <div class="col-xs-6 col-sm-3" ng-repeat="user in vm.followedArtists | limitTo:12">
                             <div class="thumbnail">
                                 <a href="#!/artist/{{user._id}}">
                                     <div class="caption">

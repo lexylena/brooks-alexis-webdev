@@ -14,10 +14,10 @@
             createArtwork: createArtwork,
             findArtworkById: findArtworkById,
             findArtworksByArtistId: findArtworksByArtistId,
+            findRelatedWorks: findRelatedWorks,
             updateArtwork: updateArtwork,
-            // addArtworkImage: addArtworkImage,
             searchArtwork: searchArtwork,
-            // filterSearch: filterSearch,
+            filterSearch: filterSearch,
             deleteArtwork: deleteArtwork
         };
 
@@ -44,6 +44,14 @@
                 })
         }
 
+        function findRelatedWorks(artworkId) {
+            var url = baseUrl + '/' + artworkId + '/findRelatedWorks';
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
+
         function updateArtwork(artworkId, artwork) {
             var url = baseUrl + '/' + artworkId;
             return $http.put(url, artwork)
@@ -59,6 +67,10 @@
                     return response.data;
                 })
             }
+
+        function filterSearch(filter) {
+
+        }
 
         function deleteArtwork(artworkId) {
             var url = baseUrl + '/' + artworkId;

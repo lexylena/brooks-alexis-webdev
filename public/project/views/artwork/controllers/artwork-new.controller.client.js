@@ -44,10 +44,8 @@
                 return;
             }
 
-            if (form.dateBegin && form.dateEnd && form.dateBegin > form.dateEnd) {
-                vm.error = "Date completed cannot be before start date";
-                return;
-            }
+
+
 
             var artwork = {
                 title: form.title,
@@ -57,9 +55,14 @@
                 medium: form.medium,
                 technique: form.technique,
                 style: form.style,
+                tags: form.tags.replace(/ /g, '').split('#'),
                 relatedWorks: form.relatedWorks,
                 images: vm.tmp
             };
+
+            if (form.classification === 'Other') {
+                artwork.classification = 'Other: ' + form.otherClassification;
+            }
 
             artworkService.createArtwork(artwork)
                 .then(function (artwork) {

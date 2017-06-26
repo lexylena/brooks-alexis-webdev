@@ -15,15 +15,13 @@
               method="post"
               enctype="multipart/form-data">
             <input  name="artworkFiles" type="file" class="form-control" multiple/>
-            <input name="uid" value="{{vm.currentUser._id}}" style="display: none"/>
+            <input name="redirectUrl" value="#!/artwork/new" style="display: none"/>
             <button type="submit" ng-click="vm.updateTmp()" class="btn btn-block btn-primary">Upload</button>
         </form>
 
-        <div ng-show="vm.tmp !== []" class="wd-uploaded-images">
-            <div ng-repeat="image in vm.tmp">
-                <div class="col-xs-4 col-sm-3">
-                    <img ng-src="{{image}}" style="height:100px; padding: 8px;"/>
-                </div>
+        <div ng-show="vm.tmp !== []" class="row display-flex">
+            <div class="col-xs-4 col-sm-3" ng-repeat="image in vm.tmp">
+                <img ng-src="{{image}}" class="wd-uploaded-image"/>
             </div>
         </div>
     </div>
@@ -89,6 +87,16 @@
                     <option value=""></option>
                 </select>
 
+                <div ng-show="form.classification === 'Other'">
+                    <label>
+                        <span ng-show="!form.otherClassification && form.$submitted === true"
+                              class="glyphicon glyphicon-exclamation-sign"></span>
+                        Please specify:
+                    </label>
+                    <input type="text"
+                           ng-model="form.otherClassification"
+                           class="form-control"/>
+                </div>
             </div>
         </div>
 
@@ -143,6 +151,23 @@
 
 
         <div class="form-group">
+            <label class="col-sm-2" for="tags">
+                Tags
+                <a wbdv-popover href="" data-container="body" tabindex="0"
+                   data-toggle="popover" data-placement="right"
+                   data-trigger="focus"
+                   data-content="Help other users find your artwork in searches by adding relevant tags. List them by using hashtags (#).">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </a>
+            </label>
+            <div class="col-sm-9 col-sm-push-1">
+                <textarea class="form-control" ng-model="form.tags" id="tags"></textarea>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
             <label class="col-sm-2" for="relatedWorks">
                 Related Works
                 <a wbdv-popover href="" data-container="body" tabindex="0"
@@ -155,7 +180,7 @@
             <div class="col-sm-9 col-sm-push-1">
                 <select chosen multiple
                         id="relatedWorks"
-                        ng-options="work.title for work in vm.artworks"
+                        ng-options="work._id as work.title for work in vm.artworks"
                         ng-model="form.relatedWorks">
                     <option value=""></option>
                 </select>

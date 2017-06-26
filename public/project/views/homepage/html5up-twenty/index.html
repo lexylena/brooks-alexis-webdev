@@ -1,0 +1,204 @@
+
+		<div id="page-wrapper">
+
+			<!--  USE NON TEMPLATED NAVBAR IN PROJECT/INDEX.HTML -->
+
+			<!-- Header -->
+				<!--<header id="header" class="alt">-->
+					<!--<h1 id="logo"><a href="#!/">ArtExplore</a></h1>-->
+					<!--<nav id="nav">-->
+						<!--<ul>-->
+							<!--<li class="current"><a href="#!/">Welcome</a></li>-->
+							<!--<li class="submenu">-->
+								<!--<a href="#">Layouts</a>-->
+								<!--<ul>-->
+									<!--<li><a href="left-sidebar.html">Left Sidebar</a></li>-->
+									<!--<li><a href="right-sidebar.html">Right Sidebar</a></li>-->
+									<!--<li><a href="no-sidebar.html">No Sidebar</a></li>-->
+									<!--<li><a href="contact.html">Contact</a></li>-->
+									<!--<li class="submenu">-->
+										<!--<a href="#">Submenu</a>-->
+										<!--<ul>-->
+											<!--<li><a href="#">Dolore Sed</a></li>-->
+											<!--<li><a href="#">Consequat</a></li>-->
+											<!--<li><a href="#">Lorem Magna</a></li>-->
+											<!--<li><a href="#">Sed Magna</a></li>-->
+											<!--<li><a href="#">Ipsum Nisl</a></li>-->
+										<!--</ul>-->
+									<!--</li>-->
+								<!--</ul>-->
+							<!--</li>-->
+							<!--<li><a href="#" class="button special">Sign Up</a></li>-->
+						<!--</ul>-->
+					<!--</nav>-->
+				<!--</header>-->
+
+			<!-- Banner -->
+				<section id="banner">
+
+					<!--
+						".inner" is set up as an inline-block so it automatically expands
+						in both directions to fit whatever's inside it. This means it won't
+						automatically wrap lines, so be sure to use line breaks where
+						appropriate (<br />).
+					-->
+					<div class="inner">
+
+						<header>
+							<h2>Art•Explore</h2>
+						</header>
+						<h4 class="text-left">D i s c o v e r</h4>
+						<h4 class="text-center">C o n n e c t</h4>
+						<h4 class="text-right">C o l l e c t</h4>
+						<br />
+						<footer>
+							<ul class="buttons vertical">
+								<li><a href="#!/register" class="button fit scrolly">Sign Up</a></li>
+							</ul>
+						</footer>
+
+					</div>
+
+				</section>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<!--<span class="icon fa-bar-chart-o"></span>-->
+						<h2>Results for the exploration of {{vm.keyword}} in {{vm.searchType}}</h2>
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style2 container special-alt">
+							<div ng-show="vm.searchType && vm.searchType === 'artwork'">
+								<div id="search-results-db" class="panel panel-info">
+									<div class="panel-heading">
+										<h1 class="panel-title">{{vm.localCount}} Artworks Found in Art•Explore's Database</h1>
+									</div>
+									<div class="panel-body">
+										<div class="row display-flex">
+											<div ng-repeat="artwork in vm.artworks" class="col-xs-6 col-sm-3">
+												<div class="thumbnail">
+													<a href="#!/artist/{{artwork._artist}}/artwork/{{artwork._id}}">
+														<div class="caption">
+															<h4>{{artwork.title}}</h4>
+														</div>
+														<img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div id="search-results-ham" class="panel panel-info">
+									<div class="panel-heading">
+										<h1 class="panel-title">{{vm.hamCount}} Artworks Found From 3rd Party Sources</h1>
+									</div>
+									<div class="panel-body">
+										<div class="row display-flex">
+											<div ng-repeat="artwork in vm.hamArtworks" class="col-xs-6 col-sm-3">
+												<div class="thumbnail">
+													<a href="#!/artist/{{artwork._artist}}/artwork/{{artwork._id}}">
+														<div class="caption">
+															<h4>{{artwork.title}}</h4>
+														</div>
+														<img class="wd-thumbnail-list-item" ng-src="{{artwork.primaryImageUrl}}"/>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<nav aria-label="Page navigation">
+									<ul class="pagination">
+										<li>
+											<a href="" ng-click="vm.getArtworksPage(vm.currentPage - 1)" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+
+										<li ng-repeat="page in vm.pages">
+											<a href="" ng-click="vm.getArtworksPage(page)">{{page}}</a>
+										</li>
+
+										<li>
+											<a href="" ng-click="vm.getArtworksPage(vm.currentPage + 1)" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+
+							<div ng-show="vm.searchType && vm.searchType === 'user'">
+								<div id="user-results" class="panel panel-info">
+									<div class="panel-heading">
+										<h1 class="panel-title">{{vm.localCount}} Users Found</h1>
+									</div>
+									<div class="panel-body">
+										<div class="row display-flex">
+											<div ng-repeat="user in vm.userResults" class="col-xs-6 col-sm-3">
+												<div class="thumbnail">
+													<a href="#!/{{user.roles[0] | lowercase}}/{{user._id}}">
+														<div class="caption">
+															<h4>{{user.displayName}}</h4>
+															<h6>{{user.roles[0]}}</h6>
+														</div>
+														<img class="wd-thumbnail-list-item" ng-src="{{user.profileImageUrl}}"/>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</section>
+
+			<!-- CTA -->
+				<section id="cta">
+
+					<header>
+						<h2>Ready to do <strong>something</strong>?</h2>
+						<p>Proin a ullamcorper elit, et sagittis turpis integer ut fermentum.</p>
+					</header>
+					<footer>
+						<ul class="buttons">
+							<li><a href="#" class="button special">Take My Money</a></li>
+							<li><a href="#" class="button">LOL Wut</a></li>
+						</ul>
+					</footer>
+
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
+						<li><a href="#" class="icon circle fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+					</ul>
+
+					<ul class="copyright">
+						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+				</footer>
+				</article>
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>

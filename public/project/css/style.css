@@ -5,7 +5,7 @@ select.form-control {
 }
 
 body {
-    padding-top: 80px;
+    padding-top: 100px;
     padding-bottom: 48px;
     height: 100%;
     /*background-color: #eeaa7b;*/
@@ -182,7 +182,7 @@ img.wd-artwork {
     padding-top: 20px;
 }
 
-.wd-comment {
+.media.wd-comment {
     padding: 20px;
     border-bottom-style: solid;
     border-bottom-color: #4c4848;
@@ -211,4 +211,12 @@ h1.panel-title .btn.btn-default {
 
 #uploadProfileImageButton {
     margin-bottom: 15px;
+}
+
+#searchForm {
+    color: whitesmoke;
+}
+
+#searchForm input.form-control {
+    min-width: 250px;
 }

@@ -30,7 +30,7 @@
                 return;
             }
 
-            $location.url('/search?searchType=' + vm.searchType + '&keyword=' + searchForm.text);
+            $location.url('/search?searchType=' + vm.searchType + '&keyword=' + searchForm.text+'#main');
         }
 
         function logout() {

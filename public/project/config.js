@@ -14,29 +14,17 @@
                 controllerAs: 'vm'
             })
 
-            // .when('/', {
-            //     templateUrl: 'views/homepage/templates/html5up-parallelism/index.html',
-            //     controller: 'homeController',
-            //     controllerAs: 'vm'
-            //     // resolve: {
-            //     //     currentUser: checkCurrentUser
-            //     // }
-            // })
-            //
-            // .when('/home', {
-            //     templateUrl: 'views/homepage/templates/html5up-parallelism/index.html',
-            //     controller: 'homeController',
-            //     controllerAs: 'vm'
-            //     // resolve: {
-            //     //     currentUser: checkCurrentUser
-            //     // }
-            // })
-            .when('/search', { //?keyword=___&searchType=_____
-                templateUrl: 'views/search/templates/search.view.client.html',
+            .when('/', {
+                templateUrl: 'views/homepage/html5up-twenty/index.html',
                 controller: 'searchController',
                 controllerAs: 'vm'
             })
 
+            .when('/search', { //?keyword=___&searchType=_____
+                templateUrl: 'views/homepage/html5up-twenty/index.html',
+                controller: 'searchController',
+                controllerAs: 'vm'
+            })
 
 
             // user routes
