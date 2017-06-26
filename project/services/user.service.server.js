@@ -11,21 +11,14 @@ var collectionModel = require('../models/collection/collection.model.server');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-// var googleConfig = {
-//     clientID     : process.env.GOOGLE_CLIENT_ID,
-//     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-//     callbackURL  : process.env.GOOGLE_CALLBACK_URL
-// };
-// passport.use(new GoogleStrategy(googleConfig, googleStrategy));
-
-var TwitterStrategy = require('passport-twitter').Strategy;
-var twitterConfig = {
-    consumerKey: 'wlok1vw7HM2LoM0xrIwmaYD3y', //process.env.TWITTER_CONSUMER_KEY,
-    consumerSecret: '0iKLxgLccmI3gZyCrcE9AvfLLQhxJNw0G7bEIQ5CZ1zFUuDZSs', //process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: 'oob' //process.env.TWITTER_CALLBACK_URL
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var googleConfig = {
+    clientID     : process.env.GOOGLE_CLIENT_ID,
+    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL  : process.env.GOOGLE_CALLBACK_URL
 };
-passport.use(new TwitterStrategy(twitterConfig, twitterStrategy));
+passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+
 
 passport.use('local', new LocalStrategy(localStrategy));
 passport.serializeUser(serializeUser);
@@ -56,17 +49,8 @@ app.post('/api/project/user', checkAdmin, createUser);
 app.delete('/api/project/user/:uid', checkAdmin, deleteUser);
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-app.get('oob',
+app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/project/index.html#!/settings',
-        failureRedirect: '/project/index.html#!/login'
-    }));
-
-app.get('/auth/twitter',
-    passport.authenticate('twitter'));
-
-app.get('/auth/twitter/callback',
-    passport.authenticate('twitter', {
         successRedirect: '/project/index.html#!/settings',
         failureRedirect: '/project/index.html#!/login'
     }));
@@ -80,43 +64,6 @@ function localStrategy(username, password, done) {
                 return done(null, user);
             },
             function(err) {
-                if (err) { return done(err); }
-            }
-        );
-}
-
-function twitterStrategy(accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    userModel
-        .findUserByTwitterId(profile.id)
-        .then(
-            function(user) {
-                if(user) {
-                    return done(null, user);
-                } else {
-                    var email = profile.displayName;
-                    var newTwitterUser = {
-                        username:  profile.displayName,
-                        firstName: profile.name.givenName,
-                        lastName:  profile.name.familyName,
-                        email:     email,
-                        twitter: {
-                            id:    profile.id,
-                            token: accessToken
-                        }
-                    };
-                    return userModel.createUser(newTwitterUser);
-                }
-            },
-            function(err) {
-                if (err) { return done(err); }
-            }
-        )
-        .then(
-            function(user){
-                return done(null, user);
-            },
-            function(err){
                 if (err) { return done(err); }
             }
         );

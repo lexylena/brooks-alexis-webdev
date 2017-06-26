@@ -11,7 +11,6 @@ var userModel = mongoose.model('PUserModel', userSchema);
 userModel.createUser = createUser;
 userModel.findUserById = findUserById;
 userModel.findUserByGoogleId = findUserByGoogleId;
-userModel.findUserByFacebookId = findUserByFacebookId;
 userModel.findUserByUsername = findUserByUsername;
 userModel.findUserByEmail = findUserByEmail;
 userModel.searchUsers = searchUsers;
@@ -52,10 +51,6 @@ function findUserById(uid) {
 
 function findUserByGoogleId(googleId) {
     return userModel.findOne({"google.id": googleId});
-}
-
-function findUserByFacebookId(facebookId) {
-    return userModel.findOne({"facebook.id": facebookId});
 }
 
 function findUserByUsername(username) {

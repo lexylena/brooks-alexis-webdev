@@ -18,7 +18,11 @@ var userSchema = mongoose.Schema( {
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}],
     followedArtists: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}],
     followers: [{type: mongoose.Schema.Types.ObjectId, ref: "PUserModel"}],
-    tmp: [{type: String}] // for uploaded images of not yet saved objects
+    tmp: [{type: String}], // for uploaded images of not yet saved objects
+    google: {
+        id: String,
+        token: String
+    }
 }, {collection: "project_user"});
 
 module.exports = userSchema;
