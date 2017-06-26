@@ -96,20 +96,7 @@ function filterUsers(filter) {
 }
 
 function deleteUser(uid) {
-    return userModel.findOne({_id: uid})
-        .then(function (user) {
-            if (user.roles.indexOf('ARTIST') > -1) {
-                return artworkModel.deleteAllArtworksByArtist(uid)
-                    .then(function () {
-                        return userModel.remove({_id: uid});
-                    });
-            } else {
-                return collectionModel.deleteCollectionsByOwner(uid) // delete all collections where user is owner
-                    .then(function () {
-                        return userModel.remove({_id: uid});
-                    });
-            }
-        })
+    return userModel.remove({_id: uid});
 }
 
 function updateUser(uid, user) {

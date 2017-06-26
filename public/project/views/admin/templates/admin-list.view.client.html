@@ -7,13 +7,15 @@
         <li class="list-group-item-heading">
             Username
         </li>
+        <li></li>
         <li class="list-group-item" ng-repeat="user in vm.users">
             {{user.username}}
-            <a href="#!/admin/user/{{user._id}}">
+            <a href="#!/admin/update/{{user._id}}">
                 <span class="glyphicon glyphicon-cog pull-right"></span>
             </a>
-            <span class="glyphicon glyphicon-remove pull-right"
-                  ng-click="vm.deleteUser(user)"></span>
+            <a href="" ng-click="vm.deleteUser(user)">
+                <span class="glyphicon glyphicon-remove pull-right"></span>
+            </a>
         </li>
     </ul>
 </div>

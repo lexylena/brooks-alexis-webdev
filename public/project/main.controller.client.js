@@ -21,6 +21,15 @@
                         vm.user = user;
                         vm.isCurator = user.roles.indexOf('CURATOR') > -1;
                     }
+                });
+
+            userService.isAdmin()
+                .then(function (user) {
+                    if (user === '0') {
+                        vm.admin = {};
+                    } else {
+                        vm.admin = user;
+                    }
                 })
         }
         init();
@@ -37,6 +46,7 @@
             userService.logout();
             $location.url('/');
             vm.user = {};
+            vm.admin = {};
         }
     }
 

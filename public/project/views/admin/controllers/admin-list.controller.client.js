@@ -21,7 +21,7 @@
         function deleteUser(user) {
             userService.deleteUser(user._id)
                 .then(function (status) {
-                    $location.url('/admin');
+                    init();
                 });
         }
     }

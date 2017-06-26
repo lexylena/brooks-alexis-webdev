@@ -31,6 +31,12 @@
     <!-- proof of concept (project 3) -->
     <script src="views/poc/poc.controller.client.js"></script>
 
+    <!-- admin -->
+    <script src="views/admin/controllers/admin-create.controller.client.js"></script>
+    <script src="views/admin/controllers/admin-edit.controller.client.js"></script>
+    <script src="views/admin/controllers/admin-list.controller.client.js"></script>
+
+
     <!-- search -->
     <script src="views/search/controllers/search.controller.client.js"></script>
 
@@ -166,6 +172,11 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="#!/settings">Account Settings</a></li>
                             <li><a href="" ng-click="vm.logout()">Logout</a></li>
+
+                            <li ng-show="vm.admin._id" role="separator" class="divider"></li>
+                            <li ng-show="vm.admin._id">
+                                <a href="#!/admin">Admin</a>
+                            </li>
                         </ul>
 
                         <ul class="dropdown-menu" ng-hide="vm.user._id">

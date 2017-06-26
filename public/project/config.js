@@ -14,6 +14,32 @@
                 controllerAs: 'vm'
             })
 
+            .when('/admin', {
+                templateUrl: 'views/admin/templates/admin-list.view.client.html',
+                controller: 'adminListController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkAdmin
+                }
+            })
+            .when('/admin/update/:userId', {
+                templateUrl: 'views/admin/templates/admin-edit.view.client.html',
+                controller: 'adminEditController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkAdmin
+                }
+            })
+            .when('/admin/create', {
+                templateUrl: 'views/admin/templates/admin-create.view.client.html',
+                controller: 'adminCreateController',
+                controllerAs: 'vm',
+                resolve: {
+                    currentUser: checkAdmin
+                }
+            })
+
+
             .when('/', {
                 templateUrl: 'views/homepage/html5up-twenty/index.html',
                 controller: 'searchController',
@@ -156,6 +182,20 @@
                 if (currentUser === '0') {
                     deferred.reject();
                     $location.url('/login');
+                } else {
+                    deferred.resolve(currentUser);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function checkAdmin($q, $location, userService) {
+        var deferred = $q.defer();
+        userService.isAdmin()
+            .then(function (currentUser) { // either user object or 0
+                if (currentUser === '0') {
+                    deferred.reject();
+                    $location.url('/');
                 } else {
                     deferred.resolve(currentUser);
                 }
