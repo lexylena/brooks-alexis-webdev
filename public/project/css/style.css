@@ -208,3 +208,7 @@ h1.panel-title .btn.btn-default {
 #searchButton.btn.btn-default {
     margin-bottom: 13px;
 }
+
+#uploadProfileImageButton {
+    margin-bottom: 15px;
+}

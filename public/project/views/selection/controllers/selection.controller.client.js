@@ -6,7 +6,7 @@
         .module('project')
         .controller('selectionController', selectionController);
 
-    function selectionController($routeParams, $location, currentUser, collectionService,
+    function selectionController($routeParams, $location, $timeout, currentUser, collectionService,
                                  selectionService, artworkService, harvardArtMuseumService,
                                  commentService, userService) {
 
@@ -84,7 +84,11 @@
         function deleteSelection() {
             selectionService.deleteSelection(vm.selectionId)
                 .then(function (status) {
-                    $location.url('/curator/' + vm.curatorId + '/collection/' + vm.collectionId);
+                    $('#editSelection').modal('hide');
+                    $timeout(next, 1500);
+                    function next() {
+                        $location.url('/curator/' + vm.curatorId + '/collection/' + vm.collectionId + '/selection');
+                    }
                 });
         }
 

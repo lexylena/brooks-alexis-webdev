@@ -16,7 +16,7 @@
             findSelectionById: findSelectionById,
             findSelectionsForCollection: findSelectionsForCollection,
             // findSelectionsForCollectionByUser: findSelectionsForCollectionByUser,
-            deleteCollection: deleteSelection
+            deleteSelection: deleteSelection
         };
 
         function createSelection(selection) {
