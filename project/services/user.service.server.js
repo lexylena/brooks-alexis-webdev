@@ -18,6 +18,14 @@ var LocalStrategy = require('passport-local').Strategy;
 // };
 // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
+var FacebookStrategy = require('passport-facebook').Strategy;
+var facebookConfig = {
+    clientID: '119367671998991', //process.env.FACEBOOK_APP_ID,
+    clientSecret: '781b1f11a018eb2c070b7be2837ec691', //process.env.FACEBOOK_APP_SECRET,
+    callbackURL: '/auth/facebook/callback' //process.env.FACEBOOK_CALLBACK_URL
+};
+passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+
 passport.use('local.project', new LocalStrategy(localStrategy));
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
@@ -49,7 +57,16 @@ app.delete('/api/project/user/:uid', checkAdmin, deleteUser);
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect: '/project/index.html#!/profile',
+        successRedirect: '/project/index.html#!/settings',
+        failureRedirect: '/project/index.html#!/login'
+    }));
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook', { scope: ['public_profile', 'email']}));
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/project/index.html#!/settings',
         failureRedirect: '/project/index.html#!/login'
     }));
 
@@ -62,6 +79,43 @@ function localStrategy(username, password, done) {
                 return done(null, user);
             },
             function(err) {
+                if (err) { return done(err); }
+            }
+        );
+}
+
+function facebookStrategy(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    userModel
+        .findUserByFacebookId(profile.id)
+        .then(
+            function(user) {
+                if(user) {
+                    return done(null, user);
+                } else {
+                    var email = profile.displayName;
+                    var newFacebookUser = {
+                        username:  profile.displayName,
+                        firstName: profile.name.givenName,
+                        lastName:  profile.name.familyName,
+                        email:     email,
+                        facebook: {
+                            id:    profile.id,
+                            token: accessToken
+                        }
+                    };
+                    return userModel.createUser(newFacebookUser);
+                }
+            },
+            function(err) {
+                if (err) { return done(err); }
+            }
+        )
+        .then(
+            function(user){
+                return done(null, user);
+            },
+            function(err){
                 if (err) { return done(err); }
             }
         );

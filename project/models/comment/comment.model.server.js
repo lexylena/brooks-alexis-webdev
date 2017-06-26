@@ -20,7 +20,7 @@ function createComment(uid, comment) {
 }
 
 function findCommentById(commentId) {
-
+    return commentModel.findOne({_id: commentId});
 }
 
 function findCommentsForSelection(selectionId) {

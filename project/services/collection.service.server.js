@@ -77,13 +77,9 @@ function deleteCollection(req, res) {
     userModel.findUserById(req.user._id)
         .then(function (user) {
             if (curatesCollection(user, collectionId)) {
-                userModel.removeCollectionFromAllUsers(collectionId)
-                    .then(function () {
-                        collectionModel.deleteCollection(collectionId)
-                            .then(function () {
-                                res.sendStatus(200);
-                            });
-                    })
+                userModel.removeCollectionFromAllUsers(collectionId);
+                collectionModel.deleteCollection(collectionId);
+                res.sendStatus(200);
             } else {
                 res.status(401).send(errMsg);
             }

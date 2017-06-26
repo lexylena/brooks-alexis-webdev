@@ -48,7 +48,19 @@ function updateCollection(collectionId, collection) {
 }
 
 function addSelection(collectionId, selectionId) {
-    return collectionModel.update({_id: collectionId}, {$push: {selections: selectionId}});
+    return collectionModel.findOne({_id: collectionId})
+        .then(function (collection) {
+            if (collection.cover === '/project/uploads/image_placeholder.png') {
+                return selectionModel.findOne({_id: selectionId})
+                    .then(function (selection) {
+                        var newCover = selection.meta.primaryImageUrl;
+                        return collectionModel.update({_id: collectionId}, {
+                            $push: {selections: selectionId},
+                            $set: {cover: newCover}
+                        });
+                    })
+            }
+        })
 }
 
 function removeSelection(collectionId, selectionId) {
@@ -65,7 +77,7 @@ function removeCurator(collectionId, uid) {
 
 function deleteCollection(collectionId) {
     // before this is called, userModel.removeCollectionFromAllUsers should be called in service.server
-    return selectionModel.deleteSelections([collection])
+    return selectionModel.deleteSelections([collectionId])
         .then(function () {
             return collectionModel.remove({_id: collectionId});
         })

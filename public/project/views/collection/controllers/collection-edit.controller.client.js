@@ -12,6 +12,7 @@
         vm.collectionId = $routeParams['collectionId'];
 
         vm.saveCollection = saveCollection;
+        vm.deleteCollection = deleteCollection;
 
         function init() {
             collectionService.findCollectionById(vm.collectionId)
@@ -30,6 +31,13 @@
             collectionService.updateCollection(vm.collectionId, vm.coll)
                 .then(function (status) {
                     $location.url('/curator/' + vm.user._id + '/collection/' + vm.collectionId + '/selection');
+                });
+        }
+
+        function deleteCollection() {
+            collectionService.deleteCollection(vm.collectionId)
+                .then(function (status) {
+                    $location.url('/curator/' + vm.user._id + '/collection/');
                 });
         }
     }

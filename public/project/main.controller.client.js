@@ -34,10 +34,9 @@
         }
 
         function logout() {
-            var rootUrl = 'localhost:3000'; //process.env.ROOT_URL;
-            window.location.href = rootUrl + '/project/index.html#!/home';
             userService.logout();
-            window.location.reload();
+            $location.url('/');
+            vm.user = {};
         }
     }
 

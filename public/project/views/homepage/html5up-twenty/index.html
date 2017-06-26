@@ -45,7 +45,7 @@
 					<div class="inner">
 
 						<header>
-							<h2>Art•Explore</h2>
+							<h2>ART•EXPLORE</h2>
 						</header>
 						<h4 class="text-left">D i s c o v e r</h4>
 						<h4 class="text-center">C o n n e c t</h4>
@@ -53,7 +53,8 @@
 						<br />
 						<footer>
 							<ul class="buttons vertical">
-								<li><a href="#!/register" class="button fit scrolly">Sign Up</a></li>
+								<li><a href="#!/login" class="button fit scrolly">Sign In</a></li>
+								<li><a href="#!/register" class="button fit scrolly">Register</a></li>
 							</ul>
 						</footer>
 
@@ -64,7 +65,7 @@
 			<!-- Main -->
 				<article id="main">
 
-					<header class="special container">
+					<header ng-show="vm.keyword" class="special container">
 						<!--<span class="icon fa-bar-chart-o"></span>-->
 						<h2>Results for the exploration of {{vm.keyword}} in {{vm.searchType}}</h2>
 					</header>
@@ -74,7 +75,7 @@
 							<div ng-show="vm.searchType && vm.searchType === 'artwork'">
 								<div id="search-results-db" class="panel panel-info">
 									<div class="panel-heading">
-										<h1 class="panel-title">{{vm.localCount}} Artworks Found in Art•Explore's Database</h1>
+										<h1 class="panel-title">{{vm.localCount}} Artworks Found in ART•EXPLORE's Database</h1>
 									</div>
 									<div class="panel-body">
 										<div class="row display-flex">
@@ -163,12 +164,13 @@
 
 					<header>
 						<h2>Ready to do <strong>something</strong>?</h2>
-						<p>Proin a ullamcorper elit, et sagittis turpis integer ut fermentum.</p>
+						<p>Start searching for artworks to add to <strong>your</strong> collection
+						in the top navigation bar.</p>
 					</header>
 					<footer>
 						<ul class="buttons">
-							<li><a href="#" class="button special">Take My Money</a></li>
-							<li><a href="#" class="button">LOL Wut</a></li>
+							<li><a href="#!/collection/new" class="button special">Create a Collection</a></li>
+							<!--<li><a href="#" class="button">LOL Wut</a></li>-->
 						</ul>
 					</footer>
 
@@ -184,6 +186,11 @@
 						<li><a href="#" class="icon circle fa-github"><span class="label">Github</span></a></li>
 						<li><a href="#" class="icon circle fa-dribbble"><span class="label">Dribbble</span></a></li>
 					</ul>
+
+					<p class="text-center">Third party artwork provided by <a
+							href="https://github.com/harvardartmuseums/api-docs">
+						Harvard Art Museums API.
+					</a></p>
 
 					<ul class="copyright">
 						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>

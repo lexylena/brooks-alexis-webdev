@@ -16,34 +16,32 @@
             {{vm.message}}
         </div>
 
-        <div class="row">
-            <div class="hidden-xs wd-artist-info-container">
-                <img ng-src="{{vm.artist.profileImageUrl}}" class="wd-artist-profile-image"/>
+        <div class="hidden-xs wd-artist-info-container">
+            <img ng-src="{{vm.artist.profileImageUrl}}" class="wd-artist-profile-image"/>
 
-                <div class="well well-sm">
-                    <h1>{{vm.artist.displayName}}</h1>
-                    <h4>Artist</h4>
-                    <a ng-hide="vm.isFollowing" class="btn btn-primary"
-                       ng-click="vm.followArtist()">Follow Artist</a>
-                    <a ng-show="vm.isFollowing" class="btn btn-primary"
-                       ng-click="vm.unfollowArtist()">Unfollow Artist</a>
-                </div>
-                <p class="text-justify">{{vm.artist.bio}}</p>
+            <div class="well well-sm">
+                <h1>{{vm.artist.displayName}}</h1>
+                <h4>Artist</h4>
+                <a ng-hide="vm.isFollowing" class="btn btn-primary"
+                   ng-click="vm.followArtist()">Follow Artist</a>
+                <a ng-show="vm.isFollowing" class="btn btn-primary"
+                   ng-click="vm.unfollowArtist()">Unfollow Artist</a>
             </div>
+            <p class="text-justify">{{vm.artist.bio}}</p>
+        </div>
 
-            <div class="hidden-sm hidden-md hidden-lg">
-                <img ng-src="{{vm.artist.profileImageUrl}}" class="wd-mobile-profile-image"/>
+        <div class="hidden-sm hidden-md hidden-lg">
+            <img ng-src="{{vm.artist.profileImageUrl}}" class="wd-mobile-profile-image"/>
 
-                <div class="well well-sm">
-                    <h1>{{vm.artist.displayName}}</h1>
-                    <h4>Artist</h4>
-                    <a ng-hide="vm.isFollowing" class="btn btn-primary"
-                       ng-click="vm.followArtist()">Follow Artist</a>
-                    <a ng-show="vm.isFollowing" class="btn btn-primary"
-                       ng-click="vm.unfollowArtist()">Unfollow Artist</a>
-                </div>
-                <p class="text-justify">{{vm.artist.bio}}</p>
+            <div class="well well-sm">
+                <h1>{{vm.artist.displayName}}</h1>
+                <h4>Artist</h4>
+                <a ng-hide="vm.isFollowing" class="btn btn-primary"
+                   ng-click="vm.followArtist()">Follow Artist</a>
+                <a ng-show="vm.isFollowing" class="btn btn-primary"
+                   ng-click="vm.unfollowArtist()">Unfollow Artist</a>
             </div>
+            <p class="text-justify">{{vm.artist.bio}}</p>
         </div>
 
         <!-- portfolio -->

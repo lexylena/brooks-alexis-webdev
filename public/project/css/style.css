@@ -5,8 +5,8 @@ select.form-control {
 }
 
 body {
-    padding-top: 100px;
-    padding-bottom: 48px;
+    padding-top: 75px;
+    padding-bottom: 15px;
     height: 100%;
     /*background-color: #eeaa7b;*/
 }
@@ -125,16 +125,7 @@ img.wd-artist-profile-image {
     margin-left: 300px;
 }
 
-.wd-profile-image {
-    overflow: hidden;
-}
-
-.wd-profile-image img {
-    width: 100%;
-}
-
 img.wd-mobile-profile-image {
-    width: 325px;
     border-style: solid;
     border-color: #5e5e5e;
     border-width: 8px;
@@ -144,7 +135,7 @@ img.wd-mobile-profile-image {
 }
 
 .wd-profile-content {
-    padding-top: 20px;
+    padding-top: 30px;
 }
 
 .wd-profile-info-left {
@@ -201,15 +192,15 @@ img.wd-artwork {
     position: relative;
 }
 
-h1.panel-title .btn.btn-default {
-    margin: 3px;
-}
+/*h1.panel-title .btn.btn-default {*/
+    /*margin: 3px;*/
+/*}*/
 
-#searchButton.btn.btn-default {
+#search-button.btn.btn-default {
     margin-bottom: 13px;
 }
 
-#uploadProfileImageButton {
+#upload-profile-image-button {
     margin-bottom: 15px;
 }
 
@@ -219,4 +210,17 @@ h1.panel-title .btn.btn-default {
 
 #searchForm input.form-control {
     min-width: 250px;
+}
+
+h1 a, h2 a, h3 a,
+h4 a, h5 a, h6 a {
+    color: #3fb1a3;
+}
+
+.panel-title .wd-panel-title-button.btn {
+    margin: 4px;
+}
+
+#account-type-register {
+    padding: 15px;
 }

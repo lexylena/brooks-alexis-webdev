@@ -6,7 +6,7 @@
         .module('project')
         .controller('settingsController', settingsController);
 
-    function settingsController(currentUser, userService) {
+    function settingsController($location, currentUser, userService) {
         var vm = this;
         vm.user = currentUser;
 
@@ -42,7 +42,7 @@
         function unregister() {
             userService.unregister()
                 .then(function () {
-                    $location.url('/home');
+                    $location.url('/');
                 });
         }
 

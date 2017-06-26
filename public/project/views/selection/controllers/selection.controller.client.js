@@ -37,6 +37,11 @@
             selectionService.findSelectionById(vm.selectionId)
                 .then(function (selection) {
                     vm.selection = selection;
+                    // don't immediately show changes as they are being made in edit modal
+                    vm.display = {};
+                    vm.display.description = vm.selection.description;
+                    vm.display.defaultDescription = vm.selection.defaultDescription;
+
                     vm.currentImage = selection.meta.primaryImageUrl;
 
                     userService.findUserById(vm.selection._curator)
@@ -69,15 +74,15 @@
             }
 
             var selection = {
-                description: form.description,
-                defaultDescription: form.defaultDescription
+                description: vm.selection.description,
+                defaultDescription: vm.selection.defaultDescription
             };
 
             selectionService.updateSelection(vm.selectionId, selection)
                 .then(function (status) {
                     $('#editSelection').modal('hide');
-                    vm.selection.description = form.description;
-                    vm.selection.defaultDescription = form.defaultDescription;
+                    vm.display.description = vm.selection.description;
+                    vm.display.defaultDescription = vm.selection.defaultDescription;
                 });
         }
 
@@ -109,7 +114,7 @@
 
         function deleteComment(comment) {
             var idx = vm.comments.indexOf(comment);
-            commentService.deletecomment(comment._id)
+            commentService.deleteComment(comment._id)
                 .then(function (status) {
                     vm.comments.splice(idx, 1);
                 })

@@ -66,7 +66,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Art•Explore</title>
+    <title>ART•EXPLORE</title>
 
 
 
@@ -82,7 +82,6 @@
     <!-- Bootstrap theme -->
     <link href="../lib/css/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">-->
     <link href="../lib/js/chosen-js/chosen.css" rel="stylesheet">
     <link href="../lib/css/bootstrap/theme/theme.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -104,7 +103,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Art•Explore</a>
+                <a class="navbar-brand" href="#">ART•EXPLORE</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -123,18 +122,18 @@
                             <option ng-selected="vm.selected === 'user'"
                                     value="user">Users</option>
                         </select>
-                        <button ng-click="vm.search(searchForm)" id="searchButton"
+                        <button ng-click="vm.search(searchForm)" id="search-button"
                                 type="submit" class="btn btn-default">Search</button>
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="views/homepage/templates/index.html">
+                    <li><a href="#!/">
                         <span class="glyphicon glyphicon-home"></span>
                     </a></li>
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
-                            Dropdown <span class="caret"></span>
+                            <span class="glyphicon glyphicon-user"></span> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" ng-show="vm.user._id">
                             <li ng-show="vm.isCurator">

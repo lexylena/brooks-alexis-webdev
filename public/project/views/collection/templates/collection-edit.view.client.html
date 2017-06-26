@@ -43,6 +43,11 @@
             <button type="submit" ng-click="vm.saveCollection()" class="btn btn-block btn-primary">
                 Save Changes
             </button>
+
+            <button type="submit" ng-click="vm.deleteCollection()" class="btn btn-block btn-danger">
+                Delete
+            </button>
+
             <a href="#!/curator/{{vm.user._id}}/collection/{{vm.coll._id}}/selection" class="btn btn-block btn-danger">
                 Cancel
             </a>

@@ -11,7 +11,7 @@ app.post('/api/project/comment', verification.checkLoggedIn, addComment);
 app.get('/api/project/comment/:commentId', findCommentById);
 app.get('/api/project/comment', findCommentsForSelection);
 // app.put('/api/project/comment/:commendId', updateComment);
-app.delete('/api/project/comment/:commentId', verification.checkLoggedIn, deleteComment);
+app.delete('/api/project/comment/:commentId', deleteComment);
 
 function addComment(req, res) {
     var comment = req.body;
@@ -48,7 +48,7 @@ function deleteComment(req, res) {
     var commentId = req.params['commentId'];
     commentModel.findCommentById(commentId)
         .then(function (comment) {
-            if (comment._user !== req.user._id &&
+            if (comment._user.toString() !== req.user._id.toString() &&
                 !verification.isAdminHelp(req)) {
                 res.sendStatus(401);
                 return;

@@ -9,12 +9,12 @@
                     </a>
 
                     <a ng-show="vm.user._id === vm.coll._owner && vm.user._id === vm.curatorId"
-                       class="btn btn-default" href="#!/collection/{{vm.collectionId}}">
+                       class="btn btn-default wd-panel-title-button" href="#!/collection/{{vm.collectionId}}">
                         Edit Collection
                     </a>
 
                     <a ng-show="vm.user._id !== vm.coll._owner && vm.user._id === vm.curatorId"
-                       class="btn btn-default" ng-click="vm.removeCurator()">
+                       class="btn btn-default wd-panel-title-button" ng-click="vm.removeCurator()">
                         Remove From My Collections
                     </a>
                 </h1>
@@ -52,7 +52,7 @@
             </div>
             <div class="panel-body">
                 <div class="row display-flex">
-                    <div class="col-xs-6 col-sm-3"
+                    <div class="col-xs-12 col-sm-4 col-md-3"
                          ng-repeat="selection in vm.selections">
                         <div class="thumbnail">
                             <a href="#!/curator/{{vm.curatorId}}/collection/{{vm.collectionId}}/selection/{{selection._id}}">
